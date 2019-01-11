@@ -42,15 +42,15 @@ namespace Detyra___EPacient {
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new SizeF(6F, 13F);
+            //this.AutoScaleDimensions = new SizeF(6F, 13F);
             this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new Size(Dimensions.VIEW_WIDTH, Dimensions.VIEW_HEIGHT);
-            this.MinimumSize = new Size(Dimensions.VIEW_WIDTH, Dimensions.VIEW_HEIGHT);
-            this.MaximumSize = new Size(Dimensions.VIEW_WIDTH, Dimensions.VIEW_HEIGHT);
+            //this.FormBorderStyle = FormBorderStyle.None;
             this.Icon = ((Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            this.Left = this.Top = 0;
+            this.MaximumSize = new Size(Dimensions.VIEW_WIDTH, Dimensions.VIEW_HEIGHT);
+            this.MinimumSize = this.MaximumSize;
             this.Name = "MainForm";
+            this.MaximizeBox = false;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "E-Pacient GG";
             this.ResumeLayout(false);

@@ -87,6 +87,10 @@
     <Folder Include="Config\" />
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Doctor\" />
+    <Folder Include="Views\Manager\" />
+    <Folder Include="Views\Nurse\" />
+    <Folder Include="Views\Operator\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

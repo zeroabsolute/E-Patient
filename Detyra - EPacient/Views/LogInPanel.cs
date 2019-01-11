@@ -59,5 +59,5 @@ namespace Detyra___EPacient.Views {
         private void onLogInBtnClicked(object sender, EventArgs e) {
             Panels.switchPanels(this.panel, this.nextPanelToShow);
         }
-    }
+    } 
 }
