@@ -32,7 +32,7 @@ namespace Detyra___EPacient.Views {
         public LogInPanel() {
             // Init dimensions
             this.formComponentWidth = this.formContainerWidth - 2 * this.formContainerPadding;
-            Padding headerLabelMargins = new Padding(this.formContainerPadding, this.formContainerPadding, this.formContainerPadding, 50);
+            Padding headerLabelMargins = new Padding(this.formContainerPadding);
             Padding txtBoxMargins = new Padding(this.formContainerPadding, this.formContainerPadding, 0, 0);
             Padding labelMargins = new Padding(this.formContainerPadding, this.formContainerPadding, 0, 0);
 
