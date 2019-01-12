@@ -12,8 +12,12 @@ namespace Detyra___EPacient.Helpers {
             panelToShow.Visible = true;
         }
 
-        public static int getComponentStartingPosition(int parentWidth, int componentWidth) {
+        public static int getComponentStartingPositionX(int parentWidth, int componentWidth) {
             return (int) ((parentWidth - componentWidth ) / 2);
+        }
+
+        public static int getComponentStartingPositionY(int parentHeight, int componentHeight) {
+            return (int) ((parentHeight - componentHeight) / 2);
         }
     }
 }

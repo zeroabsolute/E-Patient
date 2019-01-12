@@ -29,7 +29,7 @@ namespace Detyra___EPacient.Views {
             this.panel.BackColor = Color.CornflowerBlue;
 
             // Init log in button
-            int logInBtnX = Panels.getComponentStartingPosition(Dimensions.VIEW_WIDTH, logInBtnWidth);
+            int logInBtnX = Panels.getComponentStartingPositionX(Dimensions.VIEW_WIDTH, logInBtnWidth);
             this.logInBtn = new Button();
             this.logInBtn.Location = new Point(logInBtnX, 450);
             this.logInBtn.Name = "logInBtn";

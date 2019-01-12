@@ -48,6 +48,8 @@
   <ItemGroup>
     <Compile Include="Constants\Dimensions.cs" />
     <Compile Include="Helpers\Panels.cs" />
+    <Compile Include="Styles\Colors.cs" />
+    <Compile Include="Styles\Fonts.cs" />
     <Compile Include="Views\TestPanel.cs" />
     <Compile Include="Views\LogInPanel.cs" />
     <Compile Include="Views\MainForm.cs">
