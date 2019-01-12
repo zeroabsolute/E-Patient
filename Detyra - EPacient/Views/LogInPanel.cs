@@ -6,11 +6,12 @@ using System.Windows.Forms;
 using Detyra___EPacient.Constants;
 using Detyra___EPacient.Helpers;
 using Detyra___EPacient.Styles;
+using Detyra___EPacient.Views;
 
 namespace Detyra___EPacient.Views {
     class LogInPanel {
         // UI Form components
-        private Panel nextPanelToShow = null;
+        private Panel operatorMainPanel = null;
         private Panel panel = null;
         private TableLayoutPanel formContainer = null;
         private Label headerLabel = null;
@@ -131,9 +132,11 @@ namespace Detyra___EPacient.Views {
 
         /* Setters */
 
-        public void setNextPanel(Panel nextPanel) {
-            if (nextPanel != null) {
-                this.nextPanelToShow = nextPanel;
+        public void initNextPanels(Panel operatorMainPanel)
+        {
+            if (operatorMainPanel != null)
+            {
+                this.operatorMainPanel = operatorMainPanel;
             }
         }
 
@@ -146,7 +149,9 @@ namespace Detyra___EPacient.Views {
         /* Button click handlers */
 
         private void onLogInBtnClicked(object sender, EventArgs e) {
-            Panels.switchPanels(this.panel, this.nextPanelToShow);
+            
+           Panels.switchPanels(this.panel, this.operatorMainPanel);
+           
         }
     } 
 }

@@ -4,6 +4,7 @@ using System.Drawing;
 using Detyra___EPacient.Constants;
 using Detyra___EPacient.Views;
 
+
 namespace Detyra___EPacient {
     partial class MainForm {
         /// <summary>
@@ -35,10 +36,11 @@ namespace Detyra___EPacient {
             // Panels
             // 
             LogInPanel logInPanel = new LogInPanel();
-            TestPanel testPanel = new TestPanel();
+            OperatorMainPanel operatorMainPanel = new OperatorMainPanel();
 
-            logInPanel.setNextPanel(testPanel.getPanel());
-            testPanel.setPreviousPanel(logInPanel.getPanel());
+            logInPanel.initNextPanels(operatorMainPanel.getPanel());
+            operatorMainPanel.setPreviousPanel(logInPanel.getPanel());
+            
             // 
             // MainForm
             // 
@@ -55,7 +57,7 @@ namespace Detyra___EPacient {
             this.PerformLayout();
 
             this.Controls.Add(logInPanel.getPanel());
-            this.Controls.Add(testPanel.getPanel());
+            this.Controls.Add(operatorMainPanel.getPanel());
         }
 
         #endregion

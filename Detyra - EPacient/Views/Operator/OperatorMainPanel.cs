@@ -6,7 +6,8 @@ using Detyra___EPacient.Constants;
 using Detyra___EPacient.Helpers;
 
 namespace Detyra___EPacient.Views {
-    class TestPanel {
+    class OperatorMainPanel
+    {
         private Panel previousPanel;
 
         private Panel panel;
@@ -17,7 +18,7 @@ namespace Detyra___EPacient.Views {
 
         /* Constructor */
 
-        public TestPanel() {
+        public OperatorMainPanel() {
             // Init panel
             this.panel = new Panel();
             this.panel.AutoSize = true;
