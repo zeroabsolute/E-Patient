@@ -42,9 +42,7 @@ namespace Detyra___EPacient {
             // 
             // MainForm
             // 
-            //this.AutoScaleDimensions = new SizeF(6F, 13F);
             this.AutoScaleMode = AutoScaleMode.Font;
-            //this.FormBorderStyle = FormBorderStyle.None;
             this.Icon = ((Icon)(resources.GetObject("$this.Icon")));
             this.Left = this.Top = 0;
             this.MaximumSize = new Size(Dimensions.VIEW_WIDTH, Dimensions.VIEW_HEIGHT);
