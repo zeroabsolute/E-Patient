@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data, Version=8.0.13.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,9 +47,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\DB.cs" />
+    <Compile Include="Constants\DBTables.cs" />
     <Compile Include="Constants\Roles.cs" />
     <Compile Include="Constants\Dimensions.cs" />
+    <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Helpers\Panels.cs" />
+    <Compile Include="Helpers\PasswordHash.cs" />
+    <Compile Include="Helpers\Validators.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Styles\Colors.cs" />
     <Compile Include="Styles\Fonts.cs" />
     <Compile Include="Views\Operator\OperatorMainPanel.cs" />
@@ -87,9 +94,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Config\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
     <Folder Include="Views\Doctor\" />
     <Folder Include="Views\Manager\" />
     <Folder Include="Views\Nurse\" />

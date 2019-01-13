@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Printing;
 using System.Windows.Forms;
 
 using Detyra___EPacient.Constants;
 using Detyra___EPacient.Helpers;
 using Detyra___EPacient.Styles;
-using Detyra___EPacient.Views;
+using Detyra___EPacient.Controllers;
 
 namespace Detyra___EPacient.Views {
     class LogInPanel {
@@ -28,9 +27,14 @@ namespace Detyra___EPacient.Views {
         private int formComponentWidth = 0;
         private int labelHeight = 20;
 
+        // Variables
+        LogInController controller;
+
         /* Constructor */
 
         public LogInPanel() {
+            controller = new LogInController();
+
             // Init dimensions
             this.formComponentWidth = this.formContainerWidth - 2 * this.formContainerPadding;
             Padding headerLabelMargins = new Padding(this.formContainerPadding);
@@ -146,12 +150,15 @@ namespace Detyra___EPacient.Views {
             return this.panel;
         }
 
-        /* Button click handlers */
+        /* Event handlers */
 
         private void onLogInBtnClicked(object sender, EventArgs e) {
-            
-           Panels.switchPanels(this.panel, this.operatorMainPanel);
-           
+            string email = this.emailTxtBox.Text;
+            string password = this.passwordTxtBox.Text;
+
+            controller.logIn(email, password);
+
+           //Panels.switchPanels(this.panel, this.operatorMainPanel);
         }
     } 
 }
