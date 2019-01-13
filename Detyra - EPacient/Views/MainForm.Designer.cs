@@ -38,8 +38,7 @@ namespace Detyra___EPacient {
             LogInPanel logInPanel = new LogInPanel();
             OperatorMainPanel operatorMainPanel = new OperatorMainPanel();
 
-            logInPanel.initNextPanels(operatorMainPanel.getPanel());
-            operatorMainPanel.setPreviousPanel(logInPanel.getPanel());
+            logInPanel.initNextPanels(operatorMainPanel);
             
             // 
             // MainForm
@@ -56,8 +55,8 @@ namespace Detyra___EPacient {
             this.ResumeLayout(false);
             this.PerformLayout();
 
-            this.Controls.Add(logInPanel.getPanel());
-            this.Controls.Add(operatorMainPanel.getPanel());
+            this.Controls.Add(logInPanel.Panel);
+            this.Controls.Add(operatorMainPanel.Panel);
         }
 
         #endregion

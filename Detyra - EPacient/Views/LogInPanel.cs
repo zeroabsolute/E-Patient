@@ -6,19 +6,19 @@ using Detyra___EPacient.Constants;
 using Detyra___EPacient.Helpers;
 using Detyra___EPacient.Styles;
 using Detyra___EPacient.Controllers;
-using Detyra___EPacient.Models;
 
 namespace Detyra___EPacient.Views {
     class LogInPanel {
         // UI Form components
-        private Panel operatorMainPanel = null;
-        private Panel panel = null;
+        public Panel Panel { get; set; }
+        public OperatorMainPanel OperatorMainPanel { get; set; }
+        public TextBox EmailTextBox { get; set; }
+        public TextBox PasswordTxtBox { get; set; }
+
         private TableLayoutPanel formContainer = null;
         private Label headerLabel = null;
         private Label emailLabel = null;
-        private TextBox emailTxtBox = null;
         private Label passwordLabel = null;
-        private TextBox passwordTxtBox = null;
         private Button logInBtn = null;
 
         // Dimensions
@@ -34,7 +34,7 @@ namespace Detyra___EPacient.Views {
         /* Constructor */
 
         public LogInPanel() {
-            controller = new LogInController();
+            controller = new LogInController(this);
 
             // Init dimensions
             this.formComponentWidth = this.formContainerWidth - 2 * this.formContainerPadding;
@@ -42,13 +42,13 @@ namespace Detyra___EPacient.Views {
             Padding txtBoxMargins = new Padding(this.formContainerPadding, this.formContainerPadding, 0, 0);
             Padding labelMargins = new Padding(this.formContainerPadding, this.formContainerPadding, 0, 0);
 
-            // Init panel
-            this.panel = new Panel();
-            this.panel.AutoSize = true;
-            this.panel.Location = new Point(0, 0);
-            this.panel.Name = "logInPanel";
-            this.panel.Size = new Size(Dimensions.VIEW_WIDTH, Dimensions.VIEW_HEIGHT);
-            this.panel.BackColor = Colors.ALTO;
+            // Init Panel
+            this.Panel = new Panel();
+            this.Panel.AutoSize = true;
+            this.Panel.Location = new Point(0, 0);
+            this.Panel.Name = "logInPanel";
+            this.Panel.Size = new Size(Dimensions.VIEW_WIDTH, Dimensions.VIEW_HEIGHT);
+            this.Panel.BackColor = Colors.ALTO;
 
             // Init log in form container
             int formContainerX = Panels.getComponentStartingPositionX(Dimensions.VIEW_WIDTH, formContainerWidth);
@@ -60,7 +60,7 @@ namespace Detyra___EPacient.Views {
             this.formContainer.Size = new Size(formContainerWidth, formContainerHeight);
             this.formContainer.BackColor = Colors.WHITE;
 
-            this.panel.Controls.Add(this.formContainer);
+            this.Panel.Controls.Add(this.formContainer);
 
             // Init header label
             this.headerLabel = new Label();
@@ -87,12 +87,12 @@ namespace Detyra___EPacient.Views {
             this.formContainer.Controls.Add(emailLabel, 0, 1);
 
             // Init email text box
-            this.emailTxtBox = new TextBox();
-            this.emailTxtBox.Width = this.formComponentWidth;
-            this.emailTxtBox.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
-            this.emailTxtBox.Margin = txtBoxMargins;
+            this.EmailTextBox = new TextBox();
+            this.EmailTextBox.Width = this.formComponentWidth;
+            this.EmailTextBox.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
+            this.EmailTextBox.Margin = txtBoxMargins;
 
-            this.formContainer.Controls.Add(emailTxtBox, 0, 2);
+            this.formContainer.Controls.Add(EmailTextBox, 0, 2);
 
             // Init password label
             this.passwordLabel = new Label();
@@ -109,13 +109,13 @@ namespace Detyra___EPacient.Views {
             // Init password text box
             Padding passwordTxtBoxMargins = new Padding(this.formContainerPadding, this.formContainerPadding, 0, 50);
 
-            this.passwordTxtBox = new TextBox();
-            this.passwordTxtBox.PasswordChar = '*';
-            this.passwordTxtBox.Width = this.formComponentWidth;
-            this.passwordTxtBox.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
-            this.passwordTxtBox.Margin = passwordTxtBoxMargins;
+            this.PasswordTxtBox = new TextBox();
+            this.PasswordTxtBox.PasswordChar = '*';
+            this.PasswordTxtBox.Width = this.formComponentWidth;
+            this.PasswordTxtBox.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
+            this.PasswordTxtBox.Margin = passwordTxtBoxMargins;
 
-            this.formContainer.Controls.Add(passwordTxtBox, 0, 4);
+            this.formContainer.Controls.Add(PasswordTxtBox, 0, 4);
 
             // Init log in button
             Padding logInButtonMargins = new Padding(this.formContainerPadding, this.formContainerPadding, 100, 0);
@@ -135,43 +135,20 @@ namespace Detyra___EPacient.Views {
             this.formContainer.Controls.Add(this.logInBtn, 0, 6);
         }
 
+
         /* Setters */
 
-        public void initNextPanels(Panel operatorMainPanel)
-        {
-            if (operatorMainPanel != null)
-            {
-                this.operatorMainPanel = operatorMainPanel;
+        public void initNextPanels(OperatorMainPanel operatorMainPanel) {
+            if (operatorMainPanel != null) {
+                this.OperatorMainPanel = operatorMainPanel;
             }
         }
 
-        /* Getters */
-
-        public Panel getPanel() {
-            return this.panel;
-        }
 
         /* Event handlers */
 
         private void onLogInBtnClicked(object sender, EventArgs e) {
-            string email = this.emailTxtBox.Text;
-            string password = this.passwordTxtBox.Text;
-
-            try {
-                User user = controller.logIn(email, password);
-
-                // Based on user role, decide where to go next
-                switch (user.getRole()) {
-                    case Roles.OPERATOR:
-                        Panels.switchPanels(this.panel, this.operatorMainPanel);
-                        break;
-                    default:
-                        break;
-                }
-            } catch (Exception ex) {
-                string caption = "Problem në identifikim";
-                MessageBox.Show(ex.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            controller.handleLogIn();
         }
     } 
 }

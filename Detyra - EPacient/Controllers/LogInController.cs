@@ -1,27 +1,44 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 
 using Detyra___EPacient.Models;
+using Detyra___EPacient.Views;
+using Detyra___EPacient.Constants;
+using Detyra___EPacient.Helpers;
 
 namespace Detyra___EPacient.Controllers {
     class LogInController {
-        public LogInController() {
+        private LogInPanel view;
 
+        public LogInController(LogInPanel view) {
+            this.view = view;
         }
 
-        public User logIn(string email, string password) {
+        public void handleLogIn() {
             try {
-                User userModel = new User();
-                User loggedInUser = userModel.userLogIn(email, password);
+                User user = new User();
+                string email = this.view.EmailTextBox.Text;
+                string password = this.view.PasswordTxtBox.Text;
 
-                Console.WriteLine(loggedInUser.toString());
+                user.userLogIn(email, password);
 
-                return loggedInUser;
+                Console.WriteLine();
+                Console.WriteLine("--------------------------------------------------------------------");
+                Console.WriteLine(user.toString());
+                Console.WriteLine("--------------------------------------------------------------------");
+
+                // Based on user role, decide where to go next
+                switch (user.Role) {
+                    case Roles.OPERATOR:
+                        this.view.OperatorMainPanel.LoggedInUser = user;
+                        Panels.switchPanels(this.view.Panel, this.view.OperatorMainPanel.Panel);
+                        break;
+                    default:
+                        break;
+                }
             } catch (Exception e) {
-                throw e;
+                string caption = "Problem në identifikim";
+                MessageBox.Show(e.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

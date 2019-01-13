@@ -11,25 +11,25 @@ using MySql.Data.MySqlClient;
 
 namespace Detyra___EPacient.Models {
     class User {
-        private int id;
-        private int roleId;
-        private string role;
-        private string email;
+        public int Id { get; set; }
+        public int RoleId { get; set; }
+        public string Role { get; set; }
+        public string Email { get; set; }
         private string password;
 
         public User() {
-            this.id = 0;
-            this.roleId = 0;
-            this.role = null;
-            this.email = null;
+            this.Id = 0;
+            this.RoleId = 0;
+            this.Role = null;
+            this.Email = null;
             this.password = null;
         }
 
         public User(int id, int roleId, string role, string email, string password) {
-            this.id = id;
-            this.roleId = roleId;
-            this.role = role;
-            this.email = email;
+            this.Id = id;
+            this.RoleId = roleId;
+            this.Role = role;
+            this.Email = email;
             this.password = password;
         }
 
@@ -41,47 +41,10 @@ namespace Detyra___EPacient.Models {
             return $@"
                 User Attributes:
                 
-                Id: {this.id}
-                Role Id: {this.roleId}
-                Role: {this.role}
-                Email: {this.email}";
-        }
-
-        /**
-         * Getters and setters
-         */
-
-        // ID
-        public void setId(int id) {
-            if (id != 0) {
-                this.id = id;
-            }
-        }
-
-        public int getId() {
-            return this.id;
-        }
-
-        // Role
-        public void setRole(string role) {
-            if (role != null) {
-                this.role = role;
-            }
-        }
-
-        public string getRole() {
-            return this.role;
-        }
-
-        // Email
-        public void setEmail(string email) {
-            if (email != null) {
-                this.email = email;
-            }
-        }
-
-        public string getEmail() {
-            return this.email;
+                Id: {this.Id}
+                Role Id: {this.RoleId}
+                Role: {this.Role}
+                Email: {this.Email}";
         }
 
         /**
@@ -96,7 +59,7 @@ namespace Detyra___EPacient.Models {
 
         /* Log in */
 
-        public User userLogIn(string email, string password) {
+        public void userLogIn(string email, string password) {
             try {
                 bool emailIsValid = Validators.validateEmail(email);
                 bool passwordIsValid = Validators.validatePassword(password);
@@ -152,12 +115,14 @@ namespace Detyra___EPacient.Models {
                         throw new Exception("Fjalëkalimi i vendosur është i gabuar");
                     }
 
-                    // Password is correct => create a user object and return it
-                    User loggedInUser = new User(userId, roleId, role, userEmail, userPassword);
+                    // Password is correct => initialize user object
+                    this.Id = userId;
+                    this.RoleId = roleId;
+                    this.Role = role;
+                    this.Email = email;
 
                     reader.Close();
                     connection.Close();
-                    return loggedInUser;
                 } else {
                     throw new Exception("Format i gabuar i email-it ose fjalëkalimit");
                 }
