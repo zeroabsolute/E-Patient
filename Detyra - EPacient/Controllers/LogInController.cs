@@ -12,9 +12,17 @@ namespace Detyra___EPacient.Controllers {
 
         }
 
-        public void logIn(string email, string password) {
-            User userModel = new User();
-            userModel.userLogIn(email, password);
+        public User logIn(string email, string password) {
+            try {
+                User userModel = new User();
+                User loggedInUser = userModel.userLogIn(email, password);
+
+                Console.WriteLine(loggedInUser.toString());
+
+                return loggedInUser;
+            } catch (Exception e) {
+                throw e;
+            }
         }
     }
 }

@@ -11,12 +11,16 @@ namespace Detyra___EPacient.Helpers {
          */
         
         public static bool validateEmail(string email) {
-            if (email == null || email == "") {
+            try {
+                if (email == null || email == "") {
+                    return false;
+                }
+
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            } catch (Exception e) {
                 return false;
             }
-
-            var addr = new System.Net.Mail.MailAddress(email);
-            return addr.Address == email;
         }
 
         /**
@@ -24,7 +28,7 @@ namespace Detyra___EPacient.Helpers {
          */
         
         public static bool validatePassword(string password) {
-            if (password == null || password.Length == 0) {
+            if (password == null || password.Length < 6) {
                 return false;
             } else {
                 return true;

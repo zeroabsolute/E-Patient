@@ -7,43 +7,45 @@ using System.Threading.Tasks;
 
 namespace Detyra___EPacient.Helpers {
     public class PasswordHash {
-        const int SaltSize = 16, HashSize = 20, HashIter = 10000;
-        readonly byte[] _salt, _hash;
+        private const int SALT_SIZE = 16;
+        private const int HASH_SIZE = 20;
+        private const int HASH_ITER = 10000;
+
+        private readonly byte[] salt, hash;
 
         public PasswordHash(string password) {
-            new RNGCryptoServiceProvider().GetBytes(_salt = new byte[SaltSize]);
-            _hash = new Rfc2898DeriveBytes(password, _salt, HashIter).GetBytes(HashSize);
-        }
-        public PasswordHash(byte[] hashBytes) {
-            Array.Copy(hashBytes, 0, _salt = new byte[SaltSize], 0, SaltSize);
-            Array.Copy(hashBytes, SaltSize, _hash = new byte[HashSize], 0, HashSize);
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[SALT_SIZE]);
+            hash = new Rfc2898DeriveBytes(password, salt, HASH_ITER).GetBytes(HASH_SIZE);
         }
 
-        public PasswordHash(byte[] salt, byte[] hash) {
-            Array.Copy(salt, 0, _salt = new byte[SaltSize], 0, SaltSize);
-            Array.Copy(hash, 0, _hash = new byte[HashSize], 0, HashSize);
+        public string toString() {
+            byte[] hashBytes = new byte[SALT_SIZE + HASH_SIZE];
+            Array.Copy(salt, 0, hashBytes, 0, SALT_SIZE);
+            Array.Copy(hash, 0, hashBytes, SALT_SIZE, HASH_SIZE);
+            string savedPasswordHash = Convert.ToBase64String(hashBytes);
+
+            return savedPasswordHash;
         }
 
-        public byte[] toArray() {
-            byte[] hashBytes = new byte[SaltSize + HashSize];
-            Array.Copy(_salt, 0, hashBytes, 0, SaltSize);
-            Array.Copy(_hash, 0, hashBytes, SaltSize, HashSize);
-            return hashBytes;
-        }
+        public bool verify(string savedPasswordHash, string enteredPassword) {
+            // Extract the bytes
+            byte[] hashBytes = Convert.FromBase64String(savedPasswordHash);
 
-        public byte[] salt { get { return (byte[]) _salt.Clone(); } }
+            // Get the salt
+            byte[] salt = new byte[16];
+            Array.Copy(hashBytes, 0, salt, 0, 16);
 
-        public byte[] hash { get { return (byte[]) _hash.Clone(); } }
+            // Compute the hash on the password the user entered
+            var pbkdf2 = new Rfc2898DeriveBytes(enteredPassword, salt, 10000);
+            byte[] hash = pbkdf2.GetBytes(20);
 
-        public string getHashedPassword() {
-            return System.Text.Encoding.Default.GetString((byte[]) this._hash.Clone());
-        }
-
-        public bool verify(string password) {
-            byte[] test = new Rfc2898DeriveBytes(password, _salt, HashIter).GetBytes(HashSize);
-            for (int i = 0; i < HashSize; i++)
-                if (test[i] != _hash[i])
+            // Compare the results
+            for (int i = 0; i < 20; i++) {
+                if (hashBytes[i + 16] != hash[i]) {
                     return false;
+                }
+            }
+
             return true;
         }
     }

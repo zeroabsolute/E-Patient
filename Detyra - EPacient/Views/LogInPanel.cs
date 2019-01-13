@@ -6,6 +6,7 @@ using Detyra___EPacient.Constants;
 using Detyra___EPacient.Helpers;
 using Detyra___EPacient.Styles;
 using Detyra___EPacient.Controllers;
+using Detyra___EPacient.Models;
 
 namespace Detyra___EPacient.Views {
     class LogInPanel {
@@ -88,7 +89,7 @@ namespace Detyra___EPacient.Views {
             // Init email text box
             this.emailTxtBox = new TextBox();
             this.emailTxtBox.Width = this.formComponentWidth;
-            this.emailTxtBox.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.emailTxtBox.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
             this.emailTxtBox.Margin = txtBoxMargins;
 
             this.formContainer.Controls.Add(emailTxtBox, 0, 2);
@@ -111,7 +112,7 @@ namespace Detyra___EPacient.Views {
             this.passwordTxtBox = new TextBox();
             this.passwordTxtBox.PasswordChar = '*';
             this.passwordTxtBox.Width = this.formComponentWidth;
-            this.passwordTxtBox.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.passwordTxtBox.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
             this.passwordTxtBox.Margin = passwordTxtBoxMargins;
 
             this.formContainer.Controls.Add(passwordTxtBox, 0, 4);
@@ -156,9 +157,21 @@ namespace Detyra___EPacient.Views {
             string email = this.emailTxtBox.Text;
             string password = this.passwordTxtBox.Text;
 
-            controller.logIn(email, password);
+            try {
+                User user = controller.logIn(email, password);
 
-           //Panels.switchPanels(this.panel, this.operatorMainPanel);
+                // Based on user role, decide where to go next
+                switch (user.getRole()) {
+                    case Roles.OPERATOR:
+                        Panels.switchPanels(this.panel, this.operatorMainPanel);
+                        break;
+                    default:
+                        break;
+                }
+            } catch (Exception ex) {
+                string caption = "Problem në identifikim";
+                MessageBox.Show(ex.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     } 
 }

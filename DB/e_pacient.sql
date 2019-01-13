@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 09, 2019 at 10:25 PM
+-- Generation Time: Jan 13, 2019 at 10:52 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -206,6 +206,16 @@ CREATE TABLE `role` (
   `name` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `role`
+--
+
+INSERT INTO `role` (`id`, `name`) VALUES
+(1, 'operator'),
+(2, 'manager'),
+(3, 'nurse'),
+(4, 'doctor');
+
 -- --------------------------------------------------------
 
 --
@@ -226,9 +236,19 @@ CREATE TABLE `service` (
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `email` text NOT NULL,
-  `password` int(255) NOT NULL,
+  `password` text NOT NULL,
   `role` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `email`, `password`, `role`) VALUES
+(1, 'operator1@epacient.al', 'lOK3eARkD6HpVqWrR/XwqkaIPRZN481FQXias4ioJrEPR6bl', 1),
+(2, 'manager1@epacient.al', 'hLRx8jFeExamFEOx+9VttCMJDbnugy6HuWGX2Zaa/ae48Kdo', 2),
+(3, 'doctor1@epacient.al', '/vCNzPCxdC6xbeJujz/poV5e7Gl/8NoVYoC/MC7l195uiiPy', 4),
+(4, 'nurse1@epacient.al', 'hDwwlUS12iBOHb5U+hWottB+QmFJPL9cTdTebhbozKtfClhW', 3);
 
 --
 -- Indexes for dumped tables
@@ -422,7 +442,7 @@ ALTER TABLE `reservation`
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `service`
@@ -434,7 +454,7 @@ ALTER TABLE `service`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables

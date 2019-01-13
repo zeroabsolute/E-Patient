@@ -8,6 +8,6 @@ namespace Detyra___EPacient.Constants
 {
     class Roles
     {
-        public static string OPERATOR = "operator";
+        public const string OPERATOR = "operator";
     }
 }
