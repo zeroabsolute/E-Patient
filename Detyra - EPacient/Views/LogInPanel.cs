@@ -52,6 +52,7 @@ namespace Detyra___EPacient.Views {
             this.Panel.Name = "logInPanel";
             this.Panel.Size = new Size(Dimensions.VIEW_WIDTH, Dimensions.VIEW_HEIGHT);
             this.Panel.BackColor = Colors.ALTO;
+            this.Panel.Visible = true;
 
             // Init log in form container
             int formContainerX = Panels.getComponentStartingPositionX(Dimensions.VIEW_WIDTH, formContainerWidth);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Detyra___EPacient.Constants;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace Detyra___EPacient.Helpers {
         }
 
         public static int getComponentStartingPositionY(int parentHeight, int componentHeight) {
-            return (int) ((parentHeight - componentHeight) / 2);
+            return (int) ((parentHeight - componentHeight - Dimensions.TOOLBAR_HEIGHT) / 2);
         }
     }
 }
