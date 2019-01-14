@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 13, 2019 at 10:52 AM
+-- Generation Time: Jan 14, 2019 at 09:21 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -67,6 +67,13 @@ CREATE TABLE `doctor` (
   `user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `doctor`
+--
+
+INSERT INTO `doctor` (`id`, `first_name`, `last_name`, `phone_number`, `date_of_birth`, `specialized_in`, `working_hours_start`, `working_hours_end`, `user`) VALUES
+(2, 'Doctor', '1', '0123456789', '1960-01-01', 'Sëmundjet e zemrës', '06:00:00', '15:00:00', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -79,6 +86,13 @@ CREATE TABLE `manager` (
   `last_name` text NOT NULL,
   `user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `manager`
+--
+
+INSERT INTO `manager` (`id`, `first_name`, `last_name`, `user`) VALUES
+(1, 'Manager', '1', 2);
 
 -- --------------------------------------------------------
 
@@ -111,6 +125,13 @@ CREATE TABLE `nurse` (
   `user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `nurse`
+--
+
+INSERT INTO `nurse` (`id`, `first_name`, `last_name`, `date_of_birth`, `phone_number`, `working_hours_start`, `working_hours_end`, `user`) VALUES
+(1, 'Nurse', '1', '1985-01-01', '0987654321', '10:00:00', '19:00:00', 4);
+
 -- --------------------------------------------------------
 
 --
@@ -124,6 +145,13 @@ CREATE TABLE `operator` (
   `date_of_birth` date NOT NULL,
   `user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `operator`
+--
+
+INSERT INTO `operator` (`id`, `first_name`, `last_name`, `date_of_birth`, `user`) VALUES
+(1, 'Operator', '1', '1970-01-01', 1);
 
 -- --------------------------------------------------------
 
@@ -382,13 +410,13 @@ ALTER TABLE `chart_document`
 -- AUTO_INCREMENT for table `doctor`
 --
 ALTER TABLE `doctor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `manager`
 --
 ALTER TABLE `manager`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `medicament`
@@ -400,13 +428,13 @@ ALTER TABLE `medicament`
 -- AUTO_INCREMENT for table `nurse`
 --
 ALTER TABLE `nurse`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `operator`
 --
 ALTER TABLE `operator`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `patient`
