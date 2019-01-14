@@ -36,9 +36,17 @@ namespace Detyra___EPacient {
             // Panels
             // 
             LogInPanel logInPanel = new LogInPanel();
+            ManagerMainPanel managerMainPanel = new ManagerMainPanel();
             OperatorMainPanel operatorMainPanel = new OperatorMainPanel();
+            DoctorMainPanel doctorMainPanel = new DoctorMainPanel();
+            NurseMainPanel nurseMainPanel = new NurseMainPanel();
 
-            logInPanel.initNextPanels(operatorMainPanel);
+            logInPanel.initNextPanels(
+                managerMainPanel,
+                operatorMainPanel,
+                doctorMainPanel,
+                nurseMainPanel
+            );
             
             // 
             // MainForm
@@ -56,7 +64,10 @@ namespace Detyra___EPacient {
             this.PerformLayout();
 
             this.Controls.Add(logInPanel.Panel);
+            this.Controls.Add(managerMainPanel.Panel);
             this.Controls.Add(operatorMainPanel.Panel);
+            this.Controls.Add(doctorMainPanel.Panel);
+            this.Controls.Add(nurseMainPanel.Panel);
         }
 
         #endregion

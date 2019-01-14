@@ -58,6 +58,9 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Styles\Colors.cs" />
     <Compile Include="Styles\Fonts.cs" />
+    <Compile Include="Views\Doctor\DoctorMainPanel.cs" />
+    <Compile Include="Views\Manager\ManagerMainPanel.cs" />
+    <Compile Include="Views\Nurse\NurseMainPanel.cs" />
     <Compile Include="Views\Operator\OperatorMainPanel.cs" />
     <Compile Include="Views\LogInPanel.cs" />
     <Compile Include="Views\MainForm.cs">
@@ -93,10 +96,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Doctor\" />
-    <Folder Include="Views\Manager\" />
-    <Folder Include="Views\Nurse\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

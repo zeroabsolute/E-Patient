@@ -29,9 +29,21 @@ namespace Detyra___EPacient.Controllers {
 
                 // Based on user role, decide where to go next
                 switch (user.Role) {
+                    case Roles.MANAGER:
+                        this.view.ManagerMainPanel.LoggedInUser = user;
+                        Panels.switchPanels(this.view.Panel, this.view.ManagerMainPanel.Panel);
+                        break;
                     case Roles.OPERATOR:
                         this.view.OperatorMainPanel.LoggedInUser = user;
                         Panels.switchPanels(this.view.Panel, this.view.OperatorMainPanel.Panel);
+                        break;
+                    case Roles.DOCTOR:
+                        this.view.DoctorMainPanel.LoggedInUser = user;
+                        Panels.switchPanels(this.view.Panel, this.view.DoctorMainPanel.Panel);
+                        break;
+                    case Roles.NURSE:
+                        this.view.NurseMainPanel.LoggedInUser = user;
+                        Panels.switchPanels(this.view.Panel, this.view.NurseMainPanel.Panel);
                         break;
                     default:
                         break;

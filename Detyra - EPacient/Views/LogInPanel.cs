@@ -11,7 +11,10 @@ namespace Detyra___EPacient.Views {
     class LogInPanel {
         // UI Form components
         public Panel Panel { get; set; }
+        public ManagerMainPanel ManagerMainPanel { get; set; }
         public OperatorMainPanel OperatorMainPanel { get; set; }
+        public DoctorMainPanel DoctorMainPanel { get; set; }
+        public NurseMainPanel NurseMainPanel { get; set; }
         public TextBox EmailTextBox { get; set; }
         public TextBox PasswordTxtBox { get; set; }
 
@@ -138,9 +141,18 @@ namespace Detyra___EPacient.Views {
 
         /* Setters */
 
-        public void initNextPanels(OperatorMainPanel operatorMainPanel) {
-            if (operatorMainPanel != null) {
-                this.OperatorMainPanel = operatorMainPanel;
+        public void initNextPanels(ManagerMainPanel m, OperatorMainPanel o, DoctorMainPanel d, NurseMainPanel n) {
+            if (m != null) {
+                this.ManagerMainPanel = m;
+            }
+            if (o != null) {
+                this.OperatorMainPanel = o;
+            }
+            if (d != null) {
+                this.DoctorMainPanel = d;
+            }
+            if (n != null) {
+                this.NurseMainPanel = n;
             }
         }
 

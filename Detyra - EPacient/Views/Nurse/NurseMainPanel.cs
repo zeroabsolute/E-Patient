@@ -7,7 +7,7 @@ using Detyra___EPacient.Helpers;
 using Detyra___EPacient.Models;
 
 namespace Detyra___EPacient.Views {
-    class OperatorMainPanel
+    class NurseMainPanel
     {
         public User LoggedInUser { get; set; }
 
@@ -15,15 +15,15 @@ namespace Detyra___EPacient.Views {
 
         /* Constructor */
 
-        public OperatorMainPanel() {
+        public NurseMainPanel() {
             // Init panel
             this.Panel = new Panel();
             this.Panel.AutoSize = true;
             this.Panel.Location = new Point(0, 0);
-            this.Panel.Name = "operatorMainPanel";
+            this.Panel.Name = "nurseMainPanel";
             this.Panel.Size = new Size(Dimensions.VIEW_WIDTH, Dimensions.VIEW_HEIGHT);
             this.Panel.TabIndex = 0;
-            this.Panel.BackColor = Color.CornflowerBlue;
+            this.Panel.BackColor = Color.ForestGreen;
             this.Panel.Visible = false;
         }
     }
