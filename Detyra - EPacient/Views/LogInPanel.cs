@@ -26,7 +26,7 @@ namespace Detyra___EPacient.Views {
 
         // Dimensions
         private int formContainerHeight = Dimensions.VIEW_HEIGHT - 300;
-        private int formContainerWidth = (int) Dimensions.VIEW_WIDTH / 3;
+        private int formContainerWidth = (int) Dimensions.PANEL_WIDTH / 3;
         private int formContainerPadding = 20;
         private int formComponentWidth = 0;
         private int labelHeight = 20;
@@ -50,13 +50,13 @@ namespace Detyra___EPacient.Views {
             this.Panel.AutoSize = true;
             this.Panel.Location = new Point(0, 0);
             this.Panel.Name = "logInPanel";
-            this.Panel.Size = new Size(Dimensions.VIEW_WIDTH, Dimensions.VIEW_HEIGHT);
+            this.Panel.Size = new Size(Dimensions.PANEL_WIDTH, Dimensions.PANEL_HEIGHT);
             this.Panel.BackColor = Colors.ALTO;
             this.Panel.Visible = true;
 
             // Init log in form container
-            int formContainerX = Panels.getComponentStartingPositionX(Dimensions.VIEW_WIDTH, formContainerWidth);
-            int formContainerY = Panels.getComponentStartingPositionY(Dimensions.VIEW_HEIGHT, formContainerHeight);
+            int formContainerX = Panels.getComponentStartingPositionX(Dimensions.PANEL_WIDTH, formContainerWidth);
+            int formContainerY = Panels.getComponentStartingPositionY(Dimensions.PANEL_HEIGHT, formContainerHeight);
 
             this.formContainer = new TableLayoutPanel();
             this.formContainer.Location = new Point(formContainerX, formContainerY);

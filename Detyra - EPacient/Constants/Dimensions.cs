@@ -17,6 +17,8 @@ namespace Detyra___EPacient.Constants {
         public static int TOOLBAR_HEIGHT = 40;
         public static int VIEW_HEIGHT = Screen.PrimaryScreen.WorkingArea.Height;
         public static int VIEW_WIDTH = Screen.PrimaryScreen.WorkingArea.Width;
+        public static int PANEL_HEIGHT = VIEW_HEIGHT - TOOLBAR_HEIGHT;
+        public static int PANEL_WIDTH = VIEW_WIDTH - 16;
 
         /**
          * Panel menu dimensions and coordinates
@@ -31,5 +33,11 @@ namespace Detyra___EPacient.Constants {
         public static int MENU_CONTAINER_X_COORD = Dimensions.VIEW_WIDTH - MENU_CONTAINER_WIDTH - 40;
         public static int MENU_CONTAINER_Y_COORD = Panels.getComponentStartingPositionY(Dimensions.VIEW_HEIGHT, MENU_CONTAINER_HEIGHT);
         public static Point MENU_LOCATION = new Point(MENU_CONTAINER_X_COORD, MENU_CONTAINER_Y_COORD);
+
+        /**
+         * Navigation bar dimensions
+         */
+
+        public static int NAV_BAR_HEIGHT = 60;
     }
 }

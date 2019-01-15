@@ -1,36 +1,58 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 using Detyra___EPacient.Constants;
+using Detyra___EPacient.Controllers.Manager;
 using Detyra___EPacient.Models;
 using Detyra___EPacient.Styles;
+using Detyra___EPacient.Views.Manager;
 
 namespace Detyra___EPacient.Views {
-    class ManagerMainPanel
-    {
+    class ManagerMainPanel {
         public User LoggedInUser { get; set; }
 
         public Panel Panel { get; set; }
         public Button Users { get; set; }
-        public Button Reservations { get; set; }
+        public Button Timetables { get; set; }
         public Button DoctorInCharge { get; set; }
         public Button Services { get; set; }
         public Button Medicaments { get; set; }
         public Button Analytics { get; set; }
         public Button LogOut { get; set; }
 
+        public Users UsersPanel { get; set; }
+        public Timetables TimetablesPanel { get; set; }
+        public Services ServicesPanel { get; set; }
+        public Medicaments MedicamentsPanel { get; set; }
+        public DoctorInCharge DoctorInChargePanel { get; set; }
+        public Analytics AnalyticsPanel { get; set; }
+        public LogInPanel LogInPanel { get; set; }
+
+        public const string USERS_BTN = "managerUsersBtn";
+        public const string TIMETABLES_BTN = "managerTimetablesBtn";
+        public const string DOCTOR_IN_CHARGE_BTN = "managerDoctorInChargeBtn";
+        public const string SERVICES_BTN = "managerServicesBtn";
+        public const string MEDICAMENTS_BTN = "managerMedicamentsBtn";
+        public const string ANALYTICS_BTN = "managerAnalyticsBtn";
+        public const string LOG_OUT_BTN = "managerLogOutBtn";
+
         private PictureBox avatar;
         private TableLayoutPanel menuContainer = null;
+        private ManagerMainController controller;
 
         /* Constructor */
 
         public ManagerMainPanel() {
+            controller = new ManagerMainController(this);
+
             // Init panel
             this.Panel = new Panel();
             this.Panel.AutoSize = true;
             this.Panel.Location = new Point(0, 0);
             this.Panel.Name = "managerMainPanel";
-            this.Panel.Size = new Size(Dimensions.VIEW_WIDTH, Dimensions.VIEW_HEIGHT);
+            this.Panel.Size = new Size(Dimensions.PANEL_WIDTH, Dimensions.PANEL_HEIGHT);
             this.Panel.TabIndex = 0;
             this.Panel.BackColor = Colors.WHITE;
             this.Panel.Visible = false;
@@ -61,7 +83,7 @@ namespace Detyra___EPacient.Views {
 
             // Users
             this.Users = new Button();
-            this.Users.Name = "usersButton";
+            this.Users.Name = USERS_BTN;
             this.Users.Text = "Përdoruesit";
             this.Users.Size = new Size(smallButtonWidth, buttonHeight);
             this.Users.Image = Image.FromFile("../../Resources/users.png");
@@ -73,36 +95,36 @@ namespace Detyra___EPacient.Views {
             this.Users.ForeColor = Colors.WHITE;
             this.Users.BackColor = Colors.DENIM;
             this.Users.FlatStyle = FlatStyle.Flat;
-            //this.Users.Click += new EventHandler(onMenuButtonClicked);
+            this.Users.Click += new EventHandler(onMenuButtonClicked);
 
             this.menuContainer.Controls.Add(this.Users);
             this.menuContainer.SetRow(this.Users, 0);
             this.menuContainer.SetColumn(this.Users, 0);
 
-            // Reservations
-            this.Reservations = new Button();
-            this.Reservations.Name = "reservationsButton";
-            this.Reservations.Text = "Rezervimet";
-            this.Reservations.Size = new Size(bigButtonWidth, buttonHeight);
-            this.Reservations.Image = Image.FromFile("../../Resources/clock.png");
-            this.Reservations.ImageAlign = ContentAlignment.MiddleCenter;
-            this.Reservations.TextAlign = ContentAlignment.MiddleCenter;
-            this.Reservations.TextImageRelation = TextImageRelation.ImageAboveText;
-            this.Reservations.UseVisualStyleBackColor = true;
-            this.Reservations.Font = new Font(Fonts.primary, 18, FontStyle.Bold);
-            this.Reservations.ForeColor = Colors.WHITE;
-            this.Reservations.BackColor = Colors.MALIBU;
-            this.Reservations.FlatStyle = FlatStyle.Flat;
-            //this.Users.Click += new EventHandler(onMenuButtonClicked);
+            // Timetables
+            this.Timetables = new Button();
+            this.Timetables.Name = TIMETABLES_BTN;
+            this.Timetables.Text = "Oraret";
+            this.Timetables.Size = new Size(bigButtonWidth, buttonHeight);
+            this.Timetables.Image = Image.FromFile("../../Resources/clock.png");
+            this.Timetables.ImageAlign = ContentAlignment.MiddleCenter;
+            this.Timetables.TextAlign = ContentAlignment.MiddleCenter;
+            this.Timetables.TextImageRelation = TextImageRelation.ImageAboveText;
+            this.Timetables.UseVisualStyleBackColor = true;
+            this.Timetables.Font = new Font(Fonts.primary, 18, FontStyle.Bold);
+            this.Timetables.ForeColor = Colors.WHITE;
+            this.Timetables.BackColor = Colors.MALIBU;
+            this.Timetables.FlatStyle = FlatStyle.Flat;
+            this.Timetables.Click += new EventHandler(onMenuButtonClicked);
 
-            this.menuContainer.Controls.Add(this.Reservations);
-            this.menuContainer.SetRow(this.Reservations, 0);
-            this.menuContainer.SetColumn(this.Reservations, 1);
-            this.menuContainer.SetColumnSpan(this.Reservations, 2);
+            this.menuContainer.Controls.Add(this.Timetables);
+            this.menuContainer.SetRow(this.Timetables, 0);
+            this.menuContainer.SetColumn(this.Timetables, 1);
+            this.menuContainer.SetColumnSpan(this.Timetables, 2);
 
             // Doctors in charge
             this.DoctorInCharge = new Button();
-            this.DoctorInCharge.Name = "dicButton";
+            this.DoctorInCharge.Name = DOCTOR_IN_CHARGE_BTN;
             this.DoctorInCharge.Text = "Mjekët Roje";
             this.DoctorInCharge.Size = new Size(smallButtonWidth, buttonHeight);
             this.DoctorInCharge.Image = Image.FromFile("../../Resources/calendar.png");
@@ -114,7 +136,7 @@ namespace Detyra___EPacient.Views {
             this.DoctorInCharge.ForeColor = Colors.WHITE;
             this.DoctorInCharge.BackColor = Colors.DODGER_BLUE;
             this.DoctorInCharge.FlatStyle = FlatStyle.Flat;
-            //this.Users.Click += new EventHandler(onMenuButtonClicked);
+            this.DoctorInCharge.Click += new EventHandler(onMenuButtonClicked);
 
             this.menuContainer.Controls.Add(this.DoctorInCharge);
             this.menuContainer.SetRow(this.DoctorInCharge, 1);
@@ -122,7 +144,7 @@ namespace Detyra___EPacient.Views {
 
             // Services
             this.Services = new Button();
-            this.Services.Name = "servicesButton";
+            this.Services.Name = SERVICES_BTN;
             this.Services.Text = "Shërbimet";
             this.Services.Size = new Size(smallButtonWidth, buttonHeight);
             this.Services.Image = Image.FromFile("../../Resources/assignment.png");
@@ -134,7 +156,7 @@ namespace Detyra___EPacient.Views {
             this.Services.ForeColor = Colors.WHITE;
             this.Services.BackColor = Colors.BAHAMA_BLUE;
             this.Services.FlatStyle = FlatStyle.Flat;
-            //this.Users.Click += new EventHandler(onMenuButtonClicked);
+            this.Services.Click += new EventHandler(onMenuButtonClicked);
 
             this.menuContainer.Controls.Add(this.Services);
             this.menuContainer.SetRow(this.Services, 1);
@@ -142,7 +164,7 @@ namespace Detyra___EPacient.Views {
 
             // Medicaments
             this.Medicaments = new Button();
-            this.Medicaments.Name = "medicamentsButton";
+            this.Medicaments.Name = MEDICAMENTS_BTN;
             this.Medicaments.Text = "Medikamentet";
             this.Medicaments.Size = new Size(smallButtonWidth, buttonHeight);
             this.Medicaments.Image = Image.FromFile("../../Resources/hospital.png");
@@ -154,7 +176,7 @@ namespace Detyra___EPacient.Views {
             this.Medicaments.ForeColor = Colors.WHITE;
             this.Medicaments.BackColor = Colors.BLUE_LAGOON;
             this.Medicaments.FlatStyle = FlatStyle.Flat;
-            //this.Medicaments.Click += new EventHandler(onMenuButtonClicked);
+            this.Medicaments.Click += new EventHandler(onMenuButtonClicked);
 
             this.menuContainer.Controls.Add(this.Medicaments);
             this.menuContainer.SetRow(this.Medicaments, 1);
@@ -162,7 +184,7 @@ namespace Detyra___EPacient.Views {
 
             // Analytics
             this.Analytics = new Button();
-            this.Analytics.Name = "analyticsButton";
+            this.Analytics.Name = ANALYTICS_BTN;
             this.Analytics.Text = "Statistikat";
             this.Analytics.Size = new Size(bigButtonWidth, buttonHeight);
             this.Analytics.Image = Image.FromFile("../../Resources/pie-chart.png");
@@ -174,7 +196,7 @@ namespace Detyra___EPacient.Views {
             this.Analytics.ForeColor = Colors.WHITE;
             this.Analytics.BackColor = Colors.CERULEAN;
             this.Analytics.FlatStyle = FlatStyle.Flat;
-            //this.Analytics.Click += new EventHandler(onMenuButtonClicked);
+            this.Analytics.Click += new EventHandler(onMenuButtonClicked);
 
             this.menuContainer.Controls.Add(this.Analytics);
             this.menuContainer.SetRow(this.Analytics, 2);
@@ -183,7 +205,7 @@ namespace Detyra___EPacient.Views {
 
             // Log out
             this.LogOut = new Button();
-            this.LogOut.Name = "logOutButton";
+            this.LogOut.Name = LOG_OUT_BTN;
             this.LogOut.Text = "Dil";
             this.LogOut.Size = new Size(smallButtonWidth, buttonHeight);
             this.LogOut.Image = Image.FromFile("../../Resources/log-out.png");
@@ -195,11 +217,38 @@ namespace Detyra___EPacient.Views {
             this.LogOut.ForeColor = Colors.WHITE;
             this.LogOut.BackColor = Colors.BLUE_RIBBON;
             this.LogOut.FlatStyle = FlatStyle.Flat;
-            //this.LogOut.Click += new EventHandler(onMenuButtonClicked);
+            this.LogOut.Click += new EventHandler(onMenuButtonClicked);
 
             this.menuContainer.Controls.Add(this.LogOut);
             this.menuContainer.SetRow(this.LogOut, 2);
             this.menuContainer.SetColumn(this.LogOut, 1);
+        }
+
+        /* Setters and getters */
+
+        public void initNextPanels(
+            Users u,
+            Timetables t,
+            Services s,
+            Medicaments m,
+            DoctorInCharge d,
+            Analytics a,
+            LogInPanel l
+        ) {
+            this.UsersPanel = u;
+            this.TimetablesPanel = t;
+            this.ServicesPanel = s;
+            this.MedicamentsPanel = m;
+            this.DoctorInChargePanel = d;
+            this.AnalyticsPanel = a;
+            this.LogInPanel = l;
+        }
+
+        /* Event handlers */
+
+        private void onMenuButtonClicked(object sender, EventArgs e) {
+            Button s = (Button) sender;
+            controller.handleMenuButtonClick(s.Name);
         }
     }
 }

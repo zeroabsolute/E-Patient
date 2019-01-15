@@ -3,7 +3,7 @@ using System.Drawing;
 
 using Detyra___EPacient.Constants;
 using Detyra___EPacient.Views;
-
+using Detyra___EPacient.Views.Manager;
 
 namespace Detyra___EPacient {
     partial class MainForm {
@@ -36,7 +36,15 @@ namespace Detyra___EPacient {
             // Panels
             // 
             LogInPanel logInPanel = new LogInPanel();
+
             ManagerMainPanel managerMainPanel = new ManagerMainPanel();
+            Analytics managerAnalyticsPanel = new Analytics(managerMainPanel.Panel);
+            DoctorInCharge managerDICPanel = new DoctorInCharge(managerMainPanel.Panel);
+            Medicaments managerMedicamentsPanel = new Medicaments(managerMainPanel.Panel);
+            Services managerServicesPanel = new Services(managerMainPanel.Panel);
+            Timetables managerTimetablesPanel = new Timetables(managerMainPanel.Panel);
+            Users managerUsersPanel = new Users(managerMainPanel.Panel);
+
             OperatorMainPanel operatorMainPanel = new OperatorMainPanel();
             DoctorMainPanel doctorMainPanel = new DoctorMainPanel();
             NurseMainPanel nurseMainPanel = new NurseMainPanel();
@@ -46,6 +54,16 @@ namespace Detyra___EPacient {
                 operatorMainPanel,
                 doctorMainPanel,
                 nurseMainPanel
+            );
+
+            managerMainPanel.initNextPanels(
+                managerUsersPanel,
+                managerTimetablesPanel,
+                managerServicesPanel,
+                managerMedicamentsPanel,
+                managerDICPanel,
+                managerAnalyticsPanel,
+                logInPanel
             );
             
             // 
@@ -64,7 +82,15 @@ namespace Detyra___EPacient {
             this.PerformLayout();
 
             this.Controls.Add(logInPanel.Panel);
+
             this.Controls.Add(managerMainPanel.Panel);
+            this.Controls.Add(managerAnalyticsPanel.Panel);
+            this.Controls.Add(managerDICPanel.Panel);
+            this.Controls.Add(managerMedicamentsPanel.Panel);
+            this.Controls.Add(managerTimetablesPanel.Panel);
+            this.Controls.Add(managerUsersPanel.Panel);
+            this.Controls.Add(managerServicesPanel.Panel);
+
             this.Controls.Add(operatorMainPanel.Panel);
             this.Controls.Add(doctorMainPanel.Panel);
             this.Controls.Add(nurseMainPanel.Panel);

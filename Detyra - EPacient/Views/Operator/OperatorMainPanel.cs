@@ -21,7 +21,7 @@ namespace Detyra___EPacient.Views {
             this.Panel.AutoSize = true;
             this.Panel.Location = new Point(0, 0);
             this.Panel.Name = "operatorMainPanel";
-            this.Panel.Size = new Size(Dimensions.VIEW_WIDTH, Dimensions.VIEW_HEIGHT);
+            this.Panel.Size = new Size(Dimensions.PANEL_WIDTH, Dimensions.PANEL_HEIGHT);
             this.Panel.TabIndex = 0;
             this.Panel.BackColor = Color.CornflowerBlue;
             this.Panel.Visible = false;
