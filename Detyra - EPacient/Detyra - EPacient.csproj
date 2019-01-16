@@ -53,9 +53,11 @@
     <Compile Include="Constants\Dimensions.cs" />
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\Manager\ManagerMainController.cs" />
+    <Compile Include="Controllers\Manager\UsersController.cs" />
     <Compile Include="Helpers\Panels.cs" />
     <Compile Include="Helpers\PasswordHash.cs" />
     <Compile Include="Helpers\Validators.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Styles\Colors.cs" />
     <Compile Include="Styles\Fonts.cs" />

@@ -8,9 +8,9 @@ namespace Detyra___EPacient.Constants
 {
     class Roles
     {
-        public const string MANAGER = "manager";
-        public const string OPERATOR = "operator";
-        public const string DOCTOR = "doctor";
-        public const string NURSE = "nurse";
+        public const string MANAGER = "Manager";
+        public const string OPERATOR = "Operator";
+        public const string DOCTOR = "Doctor";
+        public const string NURSE = "Nurse";
     }
 }

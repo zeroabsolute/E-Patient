@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Detyra___EPacient.Constants;
+using Detyra___EPacient.Controllers.Manager;
 using Detyra___EPacient.Styles;
 using Detyra___EPacient.Views.Common;
 
@@ -14,11 +15,14 @@ namespace Detyra___EPacient.Views.Manager {
     class Users {
         public Panel PreviousPanel { get; set; }
         public Panel Panel { get; set; }
+        public DynamicComboBox CBox;
 
         private NavigationBar header;
-        private DynamicComboBox cBox;
+        private UsersController controller;
 
         public Users(Panel previousPanel) {
+            controller = new UsersController(this);
+
             // Init previous panel
             this.PreviousPanel = previousPanel;
 
@@ -30,7 +34,7 @@ namespace Detyra___EPacient.Views.Manager {
             this.Panel.Size = new Size(Dimensions.PANEL_WIDTH, Dimensions.PANEL_HEIGHT);
             this.Panel.TabIndex = 0;
             this.Panel.BackColor = Colors.WHITE;
-            this.Panel.Visible = true;
+            this.Panel.Visible = false;
 
             // Init header
             this.header = new NavigationBar(
@@ -44,12 +48,20 @@ namespace Detyra___EPacient.Views.Manager {
 
             // Init combo box
             Point cBoxLocation = new Point(50, 100);
-            Size cBoxSize = new Size(100, 30);
-            this.cBox = new DynamicComboBox(
+            Size cBoxSize = new Size(200, 50);
+            this.CBox = new DynamicComboBox(
                 cBoxSize,
                 cBoxLocation
             );
-            this.Panel.Controls.Add(cBox.comboBox);
+            this.Panel.Controls.Add(CBox.comboBox);
+        }
+
+        /**
+         * Method to initialize components and fetch necessary data
+         */
+        
+        public void readInitialData() {
+            this.controller.init();
         }
     }
 }

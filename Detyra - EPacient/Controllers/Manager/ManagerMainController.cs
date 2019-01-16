@@ -24,6 +24,7 @@ namespace Detyra___EPacient.Controllers.Manager {
             switch (eventOrigin) {
                 case ManagerMainPanel.USERS_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.UsersPanel.Panel);
+                    this.view.UsersPanel.readInitialData();
                     break;
                 case ManagerMainPanel.SERVICES_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.ServicesPanel.Panel);
