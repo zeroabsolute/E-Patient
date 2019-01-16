@@ -16,6 +16,7 @@ namespace Detyra___EPacient.Views.Manager {
         public Panel Panel { get; set; }
 
         private NavigationBar header;
+        private DynamicComboBox cBox;
 
         public Users(Panel previousPanel) {
             // Init previous panel
@@ -29,7 +30,7 @@ namespace Detyra___EPacient.Views.Manager {
             this.Panel.Size = new Size(Dimensions.PANEL_WIDTH, Dimensions.PANEL_HEIGHT);
             this.Panel.TabIndex = 0;
             this.Panel.BackColor = Colors.WHITE;
-            this.Panel.Visible = false;
+            this.Panel.Visible = true;
 
             // Init header
             this.header = new NavigationBar(
@@ -40,6 +41,15 @@ namespace Detyra___EPacient.Views.Manager {
                 "../../Resources/manager.png"
             );
             this.Panel.Controls.Add(this.header.Panel);
+
+            // Init combo box
+            Point cBoxLocation = new Point(50, 100);
+            Size cBoxSize = new Size(100, 30);
+            this.cBox = new DynamicComboBox(
+                cBoxSize,
+                cBoxLocation
+            );
+            this.Panel.Controls.Add(cBox.comboBox);
         }
     }
 }

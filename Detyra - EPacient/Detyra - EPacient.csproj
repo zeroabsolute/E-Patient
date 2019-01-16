@@ -59,6 +59,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Styles\Colors.cs" />
     <Compile Include="Styles\Fonts.cs" />
+    <Compile Include="Views\Common\DynamicComboBox.cs" />
     <Compile Include="Views\Common\NavigationBar.cs" />
     <Compile Include="Views\Doctor\DoctorMainPanel.cs" />
     <Compile Include="Views\Manager\ManagerMainPanel.cs" />
