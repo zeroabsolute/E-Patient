@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,13 +16,28 @@ namespace Detyra___EPacient.Views.Manager {
     class Users {
         public Panel PreviousPanel { get; set; }
         public Panel Panel { get; set; }
-        public DynamicComboBox CBox;
+        public DynamicComboBox CBox { get; set; }
+        public DataTable UsersTable { get; set; }
 
         private NavigationBar header;
         private UsersController controller;
+        private GroupBox left;
+        private GroupBox right;
+        private Label selectRoleLabel;
+
+        private int cardHeight = Dimensions.PANEL_HEIGHT - 100;
+        private int cardWidth = Dimensions.PANEL_WIDTH / 2 - 100;
+        private int formComponentWidthForKeys;
+        private int formComponentWidthForValues;
+        private int formComponentHeight;
+        private int keyValueMargin = 50;
 
         public Users(Panel previousPanel) {
             controller = new UsersController(this);
+
+            formComponentWidthForKeys = cardWidth / 2 - this.keyValueMargin;
+            formComponentWidthForValues = cardWidth / 2;
+            formComponentHeight = 50;
 
             // Init previous panel
             this.PreviousPanel = previousPanel;
@@ -34,7 +50,7 @@ namespace Detyra___EPacient.Views.Manager {
             this.Panel.Size = new Size(Dimensions.PANEL_WIDTH, Dimensions.PANEL_HEIGHT);
             this.Panel.TabIndex = 0;
             this.Panel.BackColor = Colors.WHITE;
-            this.Panel.Visible = false;
+            this.Panel.Visible = true;
 
             // Init header
             this.header = new NavigationBar(
@@ -46,14 +62,41 @@ namespace Detyra___EPacient.Views.Manager {
             );
             this.Panel.Controls.Add(this.header.Panel);
 
+            // Init left container
+            left = new GroupBox();
+            left.Text = "Lista e përdoruesve të regjistruar";
+            left.Location = new Point(Dimensions.PANEL_PADDING_HORIZONTAL, Dimensions.NAV_BAR_HEIGHT + Dimensions.PANEL_PADDING_HORIZONTAL);
+            left.Size = new Size(this.cardWidth, this.cardHeight);
+            left.FlatStyle = FlatStyle.Flat;
+            left.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
+
+            this.Panel.Controls.Add(left);
+
+            // Init role label
+            this.selectRoleLabel = new Label();
+            this.selectRoleLabel.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL, 
+                Dimensions.PANEL_CARD_PADDING_VERTICAL * 2
+            );
+            this.selectRoleLabel.Width = this.formComponentWidthForKeys;
+            this.selectRoleLabel.Height = this.formComponentHeight;
+            this.selectRoleLabel.Text = "Roli";
+            this.selectRoleLabel.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.selectRoleLabel.ForeColor = Colors.BLACK;
+
+            this.left.Controls.Add(this.selectRoleLabel);
+
             // Init combo box
-            Point cBoxLocation = new Point(50, 100);
-            Size cBoxSize = new Size(200, 50);
+            Point cBoxLocation = new Point(
+                this.formComponentWidthForKeys + (this.keyValueMargin - Dimensions.PANEL_CARD_PADDING_HORIZONTAL), 
+                Dimensions.PANEL_CARD_PADDING_VERTICAL * 2
+            );
+            Size cBoxSize = new Size(this.formComponentWidthForValues, this.formComponentHeight);
             this.CBox = new DynamicComboBox(
                 cBoxSize,
                 cBoxLocation
             );
-            this.Panel.Controls.Add(CBox.comboBox);
+            this.left.Controls.Add(CBox.comboBox);
         }
 
         /**

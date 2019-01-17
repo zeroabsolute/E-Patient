@@ -24,6 +24,11 @@ namespace Detyra___EPacient.Constants {
          * Panel menu dimensions and coordinates
          */
 
+        public static int PANEL_PADDING_HORIZONTAL = 20;
+        public static int PANEL_PADDING_TOP = 40;
+        public static int PANEL_CARD_PADDING_HORIZONTAL = 8;
+        public static int PANEL_CARD_PADDING_VERTICAL = 20;
+
         public static int AVATAR_SIZE = VIEW_HEIGHT - 300;
         public static int AVATAR_Y_COORD = Panels.getComponentStartingPositionY(Dimensions.VIEW_HEIGHT, AVATAR_SIZE);
         public static Point AVATAR_LOCATION = new Point(20, AVATAR_Y_COORD);
