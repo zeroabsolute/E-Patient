@@ -8,6 +8,7 @@ using Detyra___EPacient.Config;
 using Detyra___EPacient.Helpers;
 using Detyra___EPacient.Constants;
 using MySql.Data.MySqlClient;
+using System.Data.Common;
 
 namespace Detyra___EPacient.Models {
     class User {
@@ -59,7 +60,7 @@ namespace Detyra___EPacient.Models {
 
         /* Log in */
 
-        public void userLogIn(string email, string password) {
+        public async Task userLogIn(string email, string password) {
             try {
                 bool emailIsValid = Validators.validateEmail(email);
                 bool passwordIsValid = Validators.validatePassword(password);
@@ -89,16 +90,16 @@ namespace Detyra___EPacient.Models {
                     cmd.Parameters.AddWithValue("@email", email);
                     cmd.Prepare();
 
-                    MySqlDataReader reader = cmd.ExecuteReader();
+                    DbDataReader reader = await cmd.ExecuteReaderAsync();
                     int userId = -1, roleId = -1;
                     string userEmail = "", userPassword = "", role = "";
 
                     while(reader.Read()) {
-                        userId = reader.GetInt32("userId");
-                        roleId = reader.GetInt32("roleId");
-                        userEmail = reader.GetString("email");
-                        userPassword = reader.GetString("password");
-                        role = reader.GetString("role");
+                        userId = reader.GetInt32(reader.GetOrdinal("userId"));
+                        roleId = reader.GetInt32(reader.GetOrdinal("roleId"));
+                        userEmail = reader.GetString(reader.GetOrdinal("email"));
+                        userPassword = reader.GetString(reader.GetOrdinal("password"));
+                        role = reader.GetString(reader.GetOrdinal("role"));
 
                         break;
                     }

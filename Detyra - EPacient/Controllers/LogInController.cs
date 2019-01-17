@@ -14,13 +14,13 @@ namespace Detyra___EPacient.Controllers {
             this.view = view;
         }
 
-        public void handleLogIn() {
+        public async void handleLogIn() {
             try {
                 User user = new User();
                 string email = this.view.EmailTextBox.Text;
                 string password = this.view.PasswordTxtBox.Text;
 
-                user.userLogIn(email, password);
+                await user.userLogIn(email, password);
 
                 Console.WriteLine();
                 Console.WriteLine("--------------------------------------------------------------------");
