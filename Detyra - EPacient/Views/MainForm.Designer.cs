@@ -69,6 +69,13 @@ namespace Detyra___EPacient {
                 managerAnalyticsPanel,
                 logInPanel
             );
+
+            operatorMainPanel.initNextPanels(
+                operatorPatientsPanel,
+                operatorReservationsPanel,
+                operatorTimeTablesPanel,
+                logInPanel
+            );
             
             // 
             // MainForm
