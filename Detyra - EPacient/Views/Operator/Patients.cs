@@ -33,7 +33,7 @@ namespace Detyra___EPacient.Views.Manager {
 
             // Init header
             this.header = new NavigationBar(
-                Colors.JACKSONS_PURPLE,
+                Colors.PERSIAN_INDIGO,
                 "Regjistrimi i Pacientëve",
                 this.Panel,
                 this.PreviousPanel,

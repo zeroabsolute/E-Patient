@@ -21,11 +21,11 @@ namespace Detyra___EPacient.Controllers.Manager {
          * Controller to handle initial data
          */
 
-        public void init() {
+        public async void init() {
             Cursor.Current = Cursors.WaitCursor;
 
             // Read roles from DB and populate combobox
-            List<Role> roles = roleModel.readRoles();
+            List<Role> roles = await roleModel.readRoles();
             this.view.CBox.comboBox.DisplayMember = "name";
             this.view.CBox.comboBox.ValueMember = "id";
             this.view.CBox.comboBox.DataSource = roles;

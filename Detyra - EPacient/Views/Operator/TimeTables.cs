@@ -33,7 +33,7 @@ namespace Detyra___EPacient.Views.Manager {
 
             // Init header
             this.header = new NavigationBar(
-                Colors.JACKSONS_PURPLE,
+                Colors.PERSIAN_INDIGO,
                 "Oraret",
                 this.Panel,
                 this.PreviousPanel,

@@ -50,7 +50,7 @@ namespace Detyra___EPacient.Views.Manager {
             this.Panel.Size = new Size(Dimensions.PANEL_WIDTH, Dimensions.PANEL_HEIGHT);
             this.Panel.TabIndex = 0;
             this.Panel.BackColor = Colors.WHITE;
-            this.Panel.Visible = true;
+            this.Panel.Visible = false;
 
             // Init header
             this.header = new NavigationBar(

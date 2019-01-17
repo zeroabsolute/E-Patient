@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Detyra___EPacient.Config;
 using Detyra___EPacient.Constants;
@@ -26,7 +28,7 @@ namespace Detyra___EPacient.Models {
          * Method to read roles from the database
          */
         
-        public List<Role> readRoles() {
+        public async Task<List<Role>> readRoles() {
             try {
                 string query = $@"
                         SELECT *
@@ -38,12 +40,12 @@ namespace Detyra___EPacient.Models {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 cmd.Prepare();
 
-                MySqlDataReader reader = cmd.ExecuteReader();
+                DbDataReader reader = await cmd.ExecuteReaderAsync();
                 List<Role> roles = new List<Role>();
 
                 while (reader.Read()) {
-                    int roleId = reader.GetInt32("id");
-                    string roleName = reader.GetString("name");
+                    int roleId = reader.GetInt32(reader.GetOrdinal("id"));
+                    string roleName = reader.GetString(reader.GetOrdinal("name"));
                     Role currentRole = new Role(roleId, roleName);
 
                     roles.Add(currentRole);
