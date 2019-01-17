@@ -54,6 +54,7 @@
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\Manager\ManagerMainController.cs" />
     <Compile Include="Controllers\Manager\UsersController.cs" />
+    <Compile Include="Controllers\Operator\OperatorMainController.cs" />
     <Compile Include="Helpers\Panels.cs" />
     <Compile Include="Helpers\PasswordHash.cs" />
     <Compile Include="Helpers\Validators.cs" />
@@ -72,6 +73,9 @@
     <Compile Include="Views\Manager\Services.cs" />
     <Compile Include="Views\Manager\Users.cs" />
     <Compile Include="Views\Nurse\NurseMainPanel.cs" />
+    <Compile Include="Views\Operator\TimeTables.cs" />
+    <Compile Include="Views\Operator\Reservations.cs" />
+    <Compile Include="Views\Operator\Patients.cs" />
     <Compile Include="Views\Operator\OperatorMainPanel.cs" />
     <Compile Include="Views\LogInPanel.cs" />
     <Compile Include="Views\MainForm.cs">

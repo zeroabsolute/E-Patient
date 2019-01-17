@@ -46,6 +46,10 @@ namespace Detyra___EPacient {
             Users managerUsersPanel = new Users(managerMainPanel.Panel);
 
             OperatorMainPanel operatorMainPanel = new OperatorMainPanel();
+            Patients operatorPatientsPanel = new Patients(operatorMainPanel.Panel);
+            Reservations operatorReservationsPanel = new Reservations(operatorMainPanel.Panel);
+            TimeTables operatorTimeTablesPanel = new TimeTables(operatorMainPanel.Panel);
+          
             DoctorMainPanel doctorMainPanel = new DoctorMainPanel();
             NurseMainPanel nurseMainPanel = new NurseMainPanel();
 
@@ -92,6 +96,11 @@ namespace Detyra___EPacient {
             this.Controls.Add(managerServicesPanel.Panel);
 
             this.Controls.Add(operatorMainPanel.Panel);
+            this.Controls.Add(operatorPatientsPanel.Panel);
+            this.Controls.Add(operatorReservationsPanel.Panel);
+            this.Controls.Add(operatorTimeTablesPanel.Panel);
+ 
+
             this.Controls.Add(doctorMainPanel.Panel);
             this.Controls.Add(nurseMainPanel.Panel);
         }
