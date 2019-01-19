@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Detyra___EPacient.Views;
+using Detyra___EPacient.Views.Nurse;
 using Detyra___EPacient.Helpers;
 
 namespace Detyra___EPacient.Controllers.Nurse {

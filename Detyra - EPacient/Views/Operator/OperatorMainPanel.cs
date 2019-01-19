@@ -6,9 +6,8 @@ using Detyra___EPacient.Constants;
 using Detyra___EPacient.Controllers.Operator;
 using Detyra___EPacient.Models;
 using Detyra___EPacient.Styles;
-using Detyra___EPacient.Views.Operator;
 
-namespace Detyra___EPacient.Views {
+namespace Detyra___EPacient.Views.Operator {
     class OperatorMainPanel {
         public User LoggedInUser { get; set; }
         public Panel Panel { get; set; }
@@ -108,6 +107,7 @@ namespace Detyra___EPacient.Views {
             this.menuContainer.Controls.Add(this.TimeTables);
             this.menuContainer.SetRow(this.TimeTables, 1);
             this.menuContainer.SetColumn(this.TimeTables, 0);
+            this.menuContainer.SetColumnSpan(this.TimeTables, 2);
            
             // Reservations
             this.Reservations = new Button();

@@ -6,7 +6,7 @@ using Detyra___EPacient.Constants;
 using Detyra___EPacient.Helpers;
 using Detyra___EPacient.Models;
 
-namespace Detyra___EPacient.Views {
+namespace Detyra___EPacient.Views.Doctor {
     class DoctorMainPanel
     {
         public User LoggedInUser { get; set; }

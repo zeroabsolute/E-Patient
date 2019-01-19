@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Detyra___EPacient.Models;
-using Detyra___EPacient.Views.Operator;
+using Detyra___EPacient.Views.Manager;
 
 namespace Detyra___EPacient.Controllers.Manager {
     class UsersController {

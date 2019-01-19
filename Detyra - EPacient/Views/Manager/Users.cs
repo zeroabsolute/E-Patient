@@ -12,7 +12,7 @@ using Detyra___EPacient.Controllers.Manager;
 using Detyra___EPacient.Styles;
 using Detyra___EPacient.Views.Common;
 
-namespace Detyra___EPacient.Views.Operator {
+namespace Detyra___EPacient.Views.Manager {
     class Users {
         public Panel PreviousPanel { get; set; }
         public Panel Panel { get; set; }

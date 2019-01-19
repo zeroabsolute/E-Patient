@@ -7,9 +7,9 @@ using Detyra___EPacient.Constants;
 using Detyra___EPacient.Controllers.Manager;
 using Detyra___EPacient.Models;
 using Detyra___EPacient.Styles;
-using Detyra___EPacient.Views.Operator;
+using Detyra___EPacient.Views.Manager;
 
-namespace Detyra___EPacient.Views {
+namespace Detyra___EPacient.Views.Manager {
     class ManagerMainPanel {
         public User LoggedInUser { get; set; }
 
@@ -55,7 +55,7 @@ namespace Detyra___EPacient.Views {
             this.Panel.Size = new Size(Dimensions.PANEL_WIDTH, Dimensions.PANEL_HEIGHT);
             this.Panel.TabIndex = 0;
             this.Panel.BackColor = Colors.WHITE;
-            this.Panel.Visible = false;
+            this.Panel.Visible = true;
 
             // Init picture box
             this.avatar = new PictureBox();

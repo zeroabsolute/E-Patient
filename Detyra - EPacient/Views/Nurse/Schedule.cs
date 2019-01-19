@@ -33,11 +33,11 @@ namespace Detyra___EPacient.Views.Nurse {
 
             // Init header
             this.header = new NavigationBar(
-                Colors.BAHAMA_BLUE,
+                Colors.IMPERIAL_RED,
                 "Oraret",
                 this.Panel,
                 this.PreviousPanel,
-                "../../Resources/clock.png"
+                "../../Resources/nurse.png"
             );
             this.Panel.Controls.Add(this.header.Panel);
         }

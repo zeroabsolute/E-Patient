@@ -6,6 +6,10 @@ using Detyra___EPacient.Constants;
 using Detyra___EPacient.Helpers;
 using Detyra___EPacient.Styles;
 using Detyra___EPacient.Controllers;
+using Detyra___EPacient.Views.Doctor;
+using Detyra___EPacient.Views.Operator;
+using Detyra___EPacient.Views.Manager;
+using Detyra___EPacient.Views.Nurse;
 
 namespace Detyra___EPacient.Views {
     class LogInPanel {

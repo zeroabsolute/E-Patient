@@ -6,9 +6,8 @@ using Detyra___EPacient.Constants;
 using Detyra___EPacient.Controllers.Nurse;
 using Detyra___EPacient.Models;
 using Detyra___EPacient.Styles;
-using Detyra___EPacient.Views.Nurse;
 
-namespace Detyra___EPacient.Views {
+namespace Detyra___EPacient.Views.Nurse {
     class NurseMainPanel {
         public User LoggedInUser { get; set; }
         public Panel Panel { get; set; }
@@ -28,6 +27,8 @@ namespace Detyra___EPacient.Views {
         /* Constructor */
 
         public NurseMainPanel() {
+            controller = new NurseMainController(this);
+
             // Init panel
             this.Panel = new Panel();
             this.Panel.AutoSize = true;
@@ -36,7 +37,8 @@ namespace Detyra___EPacient.Views {
             this.Panel.Size = new Size(Dimensions.PANEL_WIDTH, Dimensions.PANEL_HEIGHT);
             this.Panel.TabIndex = 0;
             this.Panel.BackColor = Colors.WHITE;
-            this.Panel.Visible = true;
+            this.Panel.Visible = false;
+
             // Init picture box
             this.avatar = new PictureBox();
             this.avatar.Location = Dimensions.AVATAR_LOCATION;
@@ -46,6 +48,7 @@ namespace Detyra___EPacient.Views {
             this.avatar.ImageLocation = "../../Resources/nurse.png";
 
             this.Panel.Controls.Add(this.avatar);
+
             // Init menu container
             this.menuContainer = new TableLayoutPanel();
             this.menuContainer.Name = "menuContainer";
@@ -53,6 +56,7 @@ namespace Detyra___EPacient.Views {
             this.menuContainer.Size = new Size(Dimensions.MENU_CONTAINER_WIDTH, Dimensions.MENU_CONTAINER_HEIGHT);
 
             this.Panel.Controls.Add(this.menuContainer);
+
             /* Init menu buttons */
 
             int buttonHeight = (int)Dimensions.MENU_CONTAINER_HEIGHT / 2;
@@ -112,7 +116,7 @@ namespace Detyra___EPacient.Views {
 
         private void onMenuButtonClicked(object sender, EventArgs e) {
             Button s = (Button)sender;
-            controller.handleMenuButtonClick(s.Name);
+            this.controller.handleMenuButtonClick(s.Name);
         }
     }
 }

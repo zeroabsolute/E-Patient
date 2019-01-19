@@ -5,6 +5,8 @@ using Detyra___EPacient.Constants;
 using Detyra___EPacient.Views;
 using Detyra___EPacient.Views.Operator;
 using Detyra___EPacient.Views.Nurse;
+using Detyra___EPacient.Views.Manager;
+using Detyra___EPacient.Views.Doctor;
 
 namespace Detyra___EPacient {
     partial class MainForm {

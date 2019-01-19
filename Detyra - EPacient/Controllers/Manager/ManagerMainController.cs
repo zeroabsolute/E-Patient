@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Detyra___EPacient.Views;
 using Detyra___EPacient.Helpers;
+using Detyra___EPacient.Views.Manager;
 
 namespace Detyra___EPacient.Controllers.Manager {
     class ManagerMainController {
