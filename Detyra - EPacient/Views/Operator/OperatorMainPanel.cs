@@ -3,10 +3,10 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using Detyra___EPacient.Constants;
-using Detyra___EPacient.Controllers.Manager;
+using Detyra___EPacient.Controllers.Operator;
 using Detyra___EPacient.Models;
 using Detyra___EPacient.Styles;
-using Detyra___EPacient.Views.Manager;
+using Detyra___EPacient.Views.Operator;
 
 namespace Detyra___EPacient.Views {
     class OperatorMainPanel {
@@ -44,7 +44,7 @@ namespace Detyra___EPacient.Views {
             this.Panel.Size = new Size(Dimensions.PANEL_WIDTH, Dimensions.PANEL_HEIGHT);
             this.Panel.TabIndex = 0;
             this.Panel.BackColor = Colors.WHITE;
-            this.Panel.Visible = true;
+            this.Panel.Visible = false;
 
             // Init picture box
             this.avatar = new PictureBox();
@@ -108,8 +108,7 @@ namespace Detyra___EPacient.Views {
             this.menuContainer.Controls.Add(this.TimeTables);
             this.menuContainer.SetRow(this.TimeTables, 1);
             this.menuContainer.SetColumn(this.TimeTables, 0);
-            this.menuContainer.SetColumnSpan(this.TimeTables, 2);
-
+           
             // Reservations
             this.Reservations = new Button();
             this.Reservations.Name = RESERVATIONS_BTN;
@@ -120,7 +119,7 @@ namespace Detyra___EPacient.Views {
             this.Reservations.TextAlign = ContentAlignment.MiddleCenter;
             this.Reservations.TextImageRelation = TextImageRelation.ImageAboveText;
             this.Reservations.UseVisualStyleBackColor = true;
-            this.Reservations.Font = new Font(Fonts.primary, 18, FontStyle.Bold);
+            this.Reservations.Font = new Font(Fonts.primary, 28, FontStyle.Bold);
             this.Reservations.ForeColor = Colors.WHITE;
             this.Reservations.BackColor = Colors.PERSIAN_INDIGO;
             this.Reservations.FlatStyle = FlatStyle.Flat;

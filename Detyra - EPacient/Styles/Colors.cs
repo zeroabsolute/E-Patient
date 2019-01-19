@@ -30,5 +30,9 @@ namespace Detyra___EPacient.Styles {
         public static Color PANACHE = ColorTranslator.FromHtml("#E8F5E9");
         public static Color MALACHITE = ColorTranslator.FromHtml("#00C853");
         public static Color PERSIAN_GREEN = ColorTranslator.FromHtml("#009688");
+
+        public static Color SALMON_RED = ColorTranslator.FromHtml("#FA8072");
+        public static Color IMPERIAL_RED = ColorTranslator.FromHtml("#7C0A02");
+
     }
 }

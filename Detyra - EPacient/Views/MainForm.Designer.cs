@@ -3,7 +3,8 @@ using System.Drawing;
 
 using Detyra___EPacient.Constants;
 using Detyra___EPacient.Views;
-using Detyra___EPacient.Views.Manager;
+using Detyra___EPacient.Views.Operator;
+using Detyra___EPacient.Views.Nurse;
 
 namespace Detyra___EPacient {
     partial class MainForm {
@@ -51,7 +52,12 @@ namespace Detyra___EPacient {
             TimeTables operatorTimeTablesPanel = new TimeTables(operatorMainPanel.Panel);
           
             DoctorMainPanel doctorMainPanel = new DoctorMainPanel();
+
             NurseMainPanel nurseMainPanel = new NurseMainPanel();
+            Schedule nurseSchedulePanel = new Schedule(nurseMainPanel.Panel);
+
+
+
 
             logInPanel.initNextPanels(
                 managerMainPanel,
@@ -76,7 +82,12 @@ namespace Detyra___EPacient {
                 operatorTimeTablesPanel,
                 logInPanel
             );
-            
+
+            nurseMainPanel.initNextPanels(
+                  nurseSchedulePanel,
+                  logInPanel
+              );
+
             // 
             // MainForm
             // 
@@ -109,7 +120,9 @@ namespace Detyra___EPacient {
  
 
             this.Controls.Add(doctorMainPanel.Panel);
+
             this.Controls.Add(nurseMainPanel.Panel);
+            this.Controls.Add(nurseSchedulePanel.Panel);
         }
 
         #endregion
