@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Detyra___EPacient.Views;
 using Detyra___EPacient.Helpers;
 
-namespace Detyra___EPacient.Controllers.Manager {
+namespace Detyra___EPacient.Controllers.Operator{
     class OperatorMainController {
         private OperatorMainPanel view;
 

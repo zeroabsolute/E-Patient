@@ -10,7 +10,7 @@ using Detyra___EPacient.Constants;
 using Detyra___EPacient.Styles;
 using Detyra___EPacient.Views.Common;
 
-namespace Detyra___EPacient.Views.Manager {
+namespace Detyra___EPacient.Views.Operator {
     class Timetables {
         public Panel PreviousPanel { get; set; }
         public Panel Panel { get; set; }

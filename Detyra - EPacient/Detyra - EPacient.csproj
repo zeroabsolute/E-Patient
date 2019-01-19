@@ -54,6 +54,7 @@
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\Manager\ManagerMainController.cs" />
     <Compile Include="Controllers\Manager\UsersController.cs" />
+    <Compile Include="Controllers\Nurse\NurseMainController.cs" />
     <Compile Include="Controllers\Operator\OperatorMainController.cs" />
     <Compile Include="Helpers\Panels.cs" />
     <Compile Include="Helpers\PasswordHash.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Views\Manager\Services.cs" />
     <Compile Include="Views\Manager\Users.cs" />
     <Compile Include="Views\Nurse\NurseMainPanel.cs" />
+    <Compile Include="Views\Nurse\Schedule.cs" />
     <Compile Include="Views\Operator\TimeTables.cs" />
     <Compile Include="Views\Operator\Reservations.cs" />
     <Compile Include="Views\Operator\Patients.cs" />
@@ -109,7 +111,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="Views\App.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
