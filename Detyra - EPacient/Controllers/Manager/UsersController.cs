@@ -22,16 +22,21 @@ namespace Detyra___EPacient.Controllers.Manager {
          */
 
         public async void init() {
-            Cursor.Current = Cursors.WaitCursor;
+            try {
+                Cursor.Current = Cursors.WaitCursor;
 
-            // Read roles from DB and populate combobox
-            List<Role> roles = await roleModel.readRoles();
-            this.view.CBox.comboBox.DisplayMember = "name";
-            this.view.CBox.comboBox.ValueMember = "id";
-            this.view.CBox.comboBox.DataSource = roles;
+                // Read roles from DB and populate combobox
+                List<Role> roles = await roleModel.readRoles();
+                this.view.CBox.comboBox.DisplayMember = "name";
+                this.view.CBox.comboBox.ValueMember = "id";
+                this.view.CBox.comboBox.DataSource = roles;
 
 
-            Cursor.Current = Cursors.Arrow;
+                Cursor.Current = Cursors.Arrow;
+            } catch (Exception e) {
+                string caption = "Problem në lexim";
+                MessageBox.Show(e.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
 
