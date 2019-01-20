@@ -68,6 +68,7 @@
     <Compile Include="Styles\Colors.cs" />
     <Compile Include="Styles\Fonts.cs" />
     <Compile Include="Views\Common\DynamicComboBox.cs" />
+    <Compile Include="Views\Manager\Users\DynamicUsersTable.cs" />
     <Compile Include="Views\Common\NavigationBar.cs" />
     <Compile Include="Views\Doctor\DoctorMainPanel.cs" />
     <Compile Include="Views\Manager\ManagerMainPanel.cs" />
@@ -76,7 +77,7 @@
     <Compile Include="Views\Manager\Timetables.cs" />
     <Compile Include="Views\Manager\DoctorInCharge.cs" />
     <Compile Include="Views\Manager\Services.cs" />
-    <Compile Include="Views\Manager\Users.cs" />
+    <Compile Include="Views\Manager\Users\Users.cs" />
     <Compile Include="Views\Nurse\NurseMainPanel.cs" />
     <Compile Include="Views\Nurse\Schedule.cs" />
     <Compile Include="Views\Operator\TimeTables.cs" />

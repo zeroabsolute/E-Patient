@@ -69,23 +69,67 @@ namespace Detyra___EPacient.Controllers.Manager {
                     case Roles.OPERATOR:
                         List<Models.Operator> operators = await operatorModel.readOperators();
                         this.view.Operators = operators;
+                        this.view.SelectedRole = Roles.OPERATOR;
                         break;
                     case Roles.DOCTOR:
                         List<Models.Doctor> doctors = await doctorModel.readDoctors();
                         this.view.Doctors = doctors;
+                        this.view.SelectedRole = Roles.DOCTOR;
                         break;
                     case Roles.NURSE:
                         List<Models.Nurse> nurses = await nurseModel.readNurses();
                         this.view.Nurses = nurses;
+                        this.view.SelectedRole = Roles.NURSE;
                         break;
                     default:
                         break;
                 }
 
+                this.populateUsersTable();
+
                 Cursor.Current = Cursors.Arrow;
             } catch (Exception e) {
                 string caption = "Problem në lexim";
                 MessageBox.Show(e.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /**
+         * Controller to populate table with user data.
+         * Output will be dependent on the selected role.
+         */
+
+        private void populateUsersTable() {
+            this.view.UsersTable.DataGrid.Rows.Clear();
+            this.view.UsersTable.DataGrid.Refresh();
+
+            if (this.view.SelectedRole == Roles.OPERATOR) {
+                this.view.Operators.ForEach((item) => {
+                    this.view.UsersTable.DataGrid.Rows.Add(
+                        item.Id,
+                        item.User.Email,
+                        item.FirstName,
+                        item.LastName
+                    );
+                });
+            } else if (this.view.SelectedRole == Roles.DOCTOR) {
+                this.view.Doctors.ForEach((item) => {
+                    this.view.UsersTable.DataGrid.Rows.Add(
+                        item.Id,
+                        item.Employee.User.Email,
+                        item.Employee.FirstName,
+                        item.Employee.LastName
+                    );
+                });
+            } else if (this.view.SelectedRole == Roles.NURSE) {
+                this.view.Nurses.ForEach((item) => {
+                    this.view.UsersTable.DataGrid.Rows.Add(
+                        item.Id,
+                        item.Employee.User.Email,
+                        item.Employee.FirstName,
+                        item.Employee.LastName
+                    );
+                });
             }
         }
     }

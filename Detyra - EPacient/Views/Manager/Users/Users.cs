@@ -17,7 +17,9 @@ namespace Detyra___EPacient.Views.Manager {
         public Panel PreviousPanel { get; set; }
         public Panel Panel { get; set; }
         public DynamicComboBox CBox { get; set; }
-        public DataTable UsersTable { get; set; }
+        public DynamicTable UsersTable { get; set; }
+
+        public string SelectedRole { get; set; }
         public List<Models.Operator> Operators { get; set; }
         public List<Models.Doctor> Doctors { get; set; }
         public List<Models.Nurse> Nurses { get; set; }
@@ -29,18 +31,26 @@ namespace Detyra___EPacient.Views.Manager {
         private Label selectRoleLabel;
 
         private int cardHeight = Dimensions.PANEL_HEIGHT - 100;
-        private int cardWidth = Dimensions.PANEL_WIDTH / 2 - 100;
+        private int bigCardWidth = (int) (Dimensions.PANEL_WIDTH * 0.5);
         private int formComponentWidthForKeys;
         private int formComponentWidthForValues;
         private int formComponentHeight;
         private int keyValueMargin = 50;
+        private Point tableLocation;
+        private Size tableSize;
 
         public Users(Panel previousPanel) {
             controller = new UsersController(this);
 
-            formComponentWidthForKeys = cardWidth / 2 - this.keyValueMargin;
-            formComponentWidthForValues = cardWidth / 2;
-            formComponentHeight = 50;
+            formComponentWidthForKeys = bigCardWidth / 2 - this.keyValueMargin;
+            formComponentWidthForValues = bigCardWidth / 2;
+            formComponentHeight = 40;
+
+            this.tableLocation = new Point(Dimensions.PANEL_CARD_PADDING_HORIZONTAL, 100);
+            this.tableSize = new Size(
+                this.bigCardWidth - (2 * Dimensions.PANEL_CARD_PADDING_HORIZONTAL),
+                this.cardHeight - 110
+            );
 
             // Init previous panel
             this.PreviousPanel = previousPanel;
@@ -69,7 +79,7 @@ namespace Detyra___EPacient.Views.Manager {
             left = new GroupBox();
             left.Text = "Lista e përdoruesve të regjistruar";
             left.Location = new Point(Dimensions.PANEL_PADDING_HORIZONTAL, Dimensions.NAV_BAR_HEIGHT + Dimensions.PANEL_PADDING_HORIZONTAL);
-            left.Size = new Size(this.cardWidth, this.cardHeight);
+            left.Size = new Size(this.bigCardWidth, this.cardHeight);
             left.FlatStyle = FlatStyle.Flat;
             left.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
 
@@ -102,6 +112,17 @@ namespace Detyra___EPacient.Views.Manager {
             this.CBox.comboBox.SelectedIndexChanged += new EventHandler(this.onRoleChanged);
 
             this.left.Controls.Add(CBox.comboBox);
+
+            // Init datagrid view for showing users
+            this.UsersTable = new DynamicTable(
+                this.tableSize, 
+                this.tableLocation,
+                this.Operators,
+                this.Doctors,
+                this.Nurses
+            );
+
+            this.left.Controls.Add(this.UsersTable.DataGrid);
         }
 
         /**
@@ -117,7 +138,7 @@ namespace Detyra___EPacient.Views.Manager {
          */
 
         private void onRoleChanged(object sender, EventArgs eventArgs) {
-            controller.handleRoleSelection(sender);
+            this.controller.handleRoleSelection(sender);
         }
     }
 }

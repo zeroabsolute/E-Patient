@@ -13,14 +13,14 @@ using Detyra___EPacient.Constants;
 namespace Detyra___EPacient.Models {
     class Operator {
         public User User { get; set; }
-        public int OperatorId { get; set; }
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
 
         public Operator() {
             this.User = null;
-            this.OperatorId = -1;
+            this.Id = -1;
             this.FirstName = "";
             this.LastName = "";
             this.DateOfBirth = new DateTime();
@@ -33,8 +33,8 @@ namespace Detyra___EPacient.Models {
             string lastName,
             DateTime dob
         ) {
-            this.User = User;
-            this.OperatorId = operatorId;
+            this.User = user;
+            this.Id = operatorId;
             this.FirstName = firstName;
             this.LastName = lastName;
             this.DateOfBirth = dob;
