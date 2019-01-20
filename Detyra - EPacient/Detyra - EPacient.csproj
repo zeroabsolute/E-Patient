@@ -59,6 +59,10 @@
     <Compile Include="Helpers\Panels.cs" />
     <Compile Include="Helpers\PasswordHash.cs" />
     <Compile Include="Helpers\Validators.cs" />
+    <Compile Include="Models\Nurse.cs" />
+    <Compile Include="Models\Doctor.cs" />
+    <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\Operator.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Styles\Colors.cs" />

@@ -55,7 +55,7 @@ namespace Detyra___EPacient.Models {
                             operator.id as operatorId,
                             operator.first_name as firstName,
                             operator.last_name as lastName,
-                            operator.date_of_birth as dateOfBirth,
+                            operator.date_of_birth as dateOfBirth
                         FROM 
                             {DBTables.OPERATOR} as operator
                             INNER JOIN

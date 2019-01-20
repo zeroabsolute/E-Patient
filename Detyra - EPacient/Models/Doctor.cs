@@ -51,7 +51,7 @@ namespace Detyra___EPacient.Models {
                             employee.address as employeeAddress,
                             employee.date_of_birth as employeeDateOfBirth,
                             doctor.id as doctorId,
-                            doctor.specialized_in as doctorSpecialization,
+                            doctor.specialized_in as doctorSpecialization
                         FROM 
                             {DBTables.DOCTOR} as doctor
                             INNER JOIN

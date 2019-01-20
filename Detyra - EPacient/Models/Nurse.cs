@@ -43,13 +43,13 @@ namespace Detyra___EPacient.Models {
                             employee.phone_number as employeePhoneNumber,
                             employee.address as employeeAddress,
                             employee.date_of_birth as employeeDateOfBirth,
-                            nurse.id as nurseId,
+                            nurse.id as nurseId
                         FROM 
                             {DBTables.NURSE} as nurse
                             INNER JOIN
                                 {DBTables.EMPLOYEE} as employee
                                 ON
-                                {DBTables.DOCTOR}.employee = {DBTables.EMPLOYEE}.id
+                                {DBTables.NURSE}.employee = {DBTables.EMPLOYEE}.id
                             INNER JOIN
                                 {DBTables.USER} as user
                                 ON

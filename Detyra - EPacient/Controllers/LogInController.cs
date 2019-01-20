@@ -28,7 +28,7 @@ namespace Detyra___EPacient.Controllers {
                 Console.WriteLine("--------------------------------------------------------------------");
 
                 // Based on user role, decide where to go next
-                switch (user.Role) {
+                switch (user.Role.Name) {
                     case Roles.MANAGER:
                         this.view.ManagerMainPanel.LoggedInUser = user;
                         Panels.switchPanels(this.view.Panel, this.view.ManagerMainPanel.Panel);

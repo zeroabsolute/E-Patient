@@ -18,6 +18,9 @@ namespace Detyra___EPacient.Views.Manager {
         public Panel Panel { get; set; }
         public DynamicComboBox CBox { get; set; }
         public DataTable UsersTable { get; set; }
+        public List<Models.Operator> Operators { get; set; }
+        public List<Models.Doctor> Doctors { get; set; }
+        public List<Models.Nurse> Nurses { get; set; }
 
         private NavigationBar header;
         private UsersController controller;
@@ -96,6 +99,8 @@ namespace Detyra___EPacient.Views.Manager {
                 cBoxSize,
                 cBoxLocation
             );
+            this.CBox.comboBox.SelectedIndexChanged += new EventHandler(this.onRoleChanged);
+
             this.left.Controls.Add(CBox.comboBox);
         }
 
@@ -105,6 +110,14 @@ namespace Detyra___EPacient.Views.Manager {
         
         public void readInitialData() {
             this.controller.init();
+        }
+
+        /**
+         * Event handlers
+         */
+
+        private void onRoleChanged(object sender, EventArgs eventArgs) {
+            controller.handleRoleSelection(sender);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Detyra___EPacient.Constants;
 using Detyra___EPacient.Views.Manager;
 
 namespace Detyra___EPacient.Controllers.Manager {
@@ -13,10 +14,15 @@ namespace Detyra___EPacient.Controllers.Manager {
 
         private Models.Role roleModel;
         private Models.Operator operatorModel;
+        private Models.Doctor doctorModel;
+        private Models.Nurse nurseModel;
 
         public UsersController(Users view) {
             this.view = view;
             this.roleModel = new Models.Role();
+            this.operatorModel = new Models.Operator();
+            this.doctorModel = new Models.Doctor();
+            this.nurseModel = new Models.Nurse();
         }
 
         /**
@@ -29,9 +35,17 @@ namespace Detyra___EPacient.Controllers.Manager {
 
                 // Read roles from DB and populate combobox
                 List<Models.Role> roles = await roleModel.readRoles();
+                List<Models.Role> filteredRoles = new List<Models.Role>();
+
+                roles.ForEach((role) => {
+                    if (role.Name != Roles.MANAGER) {
+                        filteredRoles.Add(role);
+                    }
+                });
+
                 this.view.CBox.comboBox.DisplayMember = "name";
                 this.view.CBox.comboBox.ValueMember = "id";
-                this.view.CBox.comboBox.DataSource = roles;
+                this.view.CBox.comboBox.DataSource = filteredRoles;
 
                 Cursor.Current = Cursors.Arrow;
             } catch (Exception e) {
@@ -40,6 +54,39 @@ namespace Detyra___EPacient.Controllers.Manager {
             }
         }
 
+        /**
+         * Controller to handle role selection via combobox
+         */
 
+        public async void handleRoleSelection(object sender) {
+            try {
+                Cursor.Current = Cursors.WaitCursor;
+
+                ComboBox comboBox = (ComboBox) sender;
+                Models.Role selectedItem = (Models.Role) comboBox.SelectedItem;
+
+                switch (selectedItem.Name) {
+                    case Roles.OPERATOR:
+                        List<Models.Operator> operators = await operatorModel.readOperators();
+                        this.view.Operators = operators;
+                        break;
+                    case Roles.DOCTOR:
+                        List<Models.Doctor> doctors = await doctorModel.readDoctors();
+                        this.view.Doctors = doctors;
+                        break;
+                    case Roles.NURSE:
+                        List<Models.Nurse> nurses = await nurseModel.readNurses();
+                        this.view.Nurses = nurses;
+                        break;
+                    default:
+                        break;
+                }
+
+                Cursor.Current = Cursors.Arrow;
+            } catch (Exception e) {
+                string caption = "Problem në lexim";
+                MessageBox.Show(e.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
