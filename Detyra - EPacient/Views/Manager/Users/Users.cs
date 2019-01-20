@@ -18,6 +18,17 @@ namespace Detyra___EPacient.Views.Manager {
         public Panel Panel { get; set; }
         public DynamicComboBox CBox { get; set; }
         public DynamicTable UsersTable { get; set; }
+        public Label FormRoleLabel { get; set; }
+        public TextBox FormEmailTxtBox { get; set; }
+        public TextBox FormPasswordTxtBox { get; set; }
+        public TextBox FormFirstNameTxtBox { get; set; }
+        public TextBox FormLastNameTxtBox { get; set; }
+        public DateTimePicker FormDOBPicker { get; set; }
+        public TextBox FormAddressTxtBox { get; set; }
+        public TextBox FormPhoneNumberTxtBox { get; set; }
+        public TextBox FormSpecializationTxtBox { get; set; }
+        public Button SubmitBtn { get; set; }
+        public Button ClearBtn { get; set; }
 
         public string SelectedRole { get; set; }
         public List<Models.Operator> Operators { get; set; }
@@ -29,22 +40,39 @@ namespace Detyra___EPacient.Views.Manager {
         private GroupBox left;
         private GroupBox right;
         private Label selectRoleLabel;
+        private Label formRoleLabel;
+        private Label formEmailLabel;
+        private Label formPasswordLabel;
+        private Label formFirstNameLabel;
+        private Label formLastNameLabel;
+        private Label formDateOfBirthLabel;
+        private Label formAddressLabel;
+        private Label formPhoneNumberLabel;
+        private Label formSpecializationLabel;
 
         private int cardHeight = Dimensions.PANEL_HEIGHT - 100;
         private int bigCardWidth = (int) (Dimensions.PANEL_WIDTH * 0.5);
-        private int formComponentWidthForKeys;
-        private int formComponentWidthForValues;
+        private int smallCardWidth = (int) (Dimensions.PANEL_WIDTH * 0.4);
+        private int bigCardKeyWidth;
+        private int bigCardValueWidth;
+        private int smallCardKeyWidth;
+        private int smallCardValueWidth;
         private int formComponentHeight;
         private int keyValueMargin = 50;
+        private int smallKeyValueMargin = 30;
+        private int formComponentVerticalMargin;
         private Point tableLocation;
         private Size tableSize;
 
         public Users(Panel previousPanel) {
             controller = new UsersController(this);
 
-            formComponentWidthForKeys = bigCardWidth / 2 - this.keyValueMargin;
-            formComponentWidthForValues = bigCardWidth / 2;
+            bigCardKeyWidth = (int) (bigCardWidth / 2) - this.keyValueMargin;
+            bigCardValueWidth = (int) (bigCardWidth / 2);
+            smallCardKeyWidth = (int) (smallCardWidth / 2) - this.keyValueMargin;
+            smallCardValueWidth = (int) (smallCardWidth / 2);
             formComponentHeight = 40;
+            formComponentVerticalMargin = formComponentHeight + 10;
 
             this.tableLocation = new Point(Dimensions.PANEL_CARD_PADDING_HORIZONTAL, 100);
             this.tableSize = new Size(
@@ -91,7 +119,7 @@ namespace Detyra___EPacient.Views.Manager {
                 Dimensions.PANEL_CARD_PADDING_HORIZONTAL, 
                 Dimensions.PANEL_CARD_PADDING_VERTICAL * 2
             );
-            this.selectRoleLabel.Width = this.formComponentWidthForKeys;
+            this.selectRoleLabel.Width = this.bigCardKeyWidth;
             this.selectRoleLabel.Height = this.formComponentHeight;
             this.selectRoleLabel.Text = "Roli";
             this.selectRoleLabel.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
@@ -101,10 +129,10 @@ namespace Detyra___EPacient.Views.Manager {
 
             // Init combo box
             Point cBoxLocation = new Point(
-                this.formComponentWidthForKeys + (this.keyValueMargin - Dimensions.PANEL_CARD_PADDING_HORIZONTAL), 
+                this.bigCardKeyWidth + (this.keyValueMargin - Dimensions.PANEL_CARD_PADDING_HORIZONTAL), 
                 Dimensions.PANEL_CARD_PADDING_VERTICAL * 2
             );
-            Size cBoxSize = new Size(this.formComponentWidthForValues, this.formComponentHeight);
+            Size cBoxSize = new Size(this.bigCardValueWidth, this.formComponentHeight);
             this.CBox = new DynamicComboBox(
                 cBoxSize,
                 cBoxLocation
@@ -123,6 +151,257 @@ namespace Detyra___EPacient.Views.Manager {
             );
 
             this.left.Controls.Add(this.UsersTable.DataGrid);
+
+            // Init right container
+            right = new GroupBox();
+            right.Text = "Shtimi i përdoruesve";
+            right.Location = new Point(
+                Dimensions.PANEL_WIDTH - (Dimensions.PANEL_PADDING_HORIZONTAL + this.smallCardWidth), 
+                Dimensions.NAV_BAR_HEIGHT + Dimensions.PANEL_PADDING_HORIZONTAL
+            );
+            right.Size = new Size(this.smallCardWidth, this.cardHeight);
+            right.FlatStyle = FlatStyle.Flat;
+            right.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
+
+            this.Panel.Controls.Add(right);
+
+            /* Init form components */
+
+            // Role
+            this.formRoleLabel = new Label();
+            this.formRoleLabel.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL,
+                Dimensions.PANEL_CARD_PADDING_VERTICAL * 2
+            );
+            this.formRoleLabel.Width = this.smallCardKeyWidth;
+            this.formRoleLabel.Height = this.formComponentHeight;
+            this.formRoleLabel.Text = "Roli";
+            this.formRoleLabel.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.formRoleLabel.ForeColor = Colors.BLACK;
+            this.right.Controls.Add(this.formRoleLabel);
+
+            this.FormRoleLabel = new Label();
+            this.FormRoleLabel.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL + this.smallCardKeyWidth + this.smallKeyValueMargin,
+                Dimensions.PANEL_CARD_PADDING_VERTICAL * 2
+            );
+            this.FormRoleLabel.Width = this.smallCardKeyWidth;
+            this.FormRoleLabel.Height = this.formComponentHeight;
+            this.FormRoleLabel.Text = this.SelectedRole != null ? this.SelectedRole : "-";
+            this.FormRoleLabel.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.FormRoleLabel.ForeColor = Colors.BLACK;
+            this.right.Controls.Add(this.FormRoleLabel);
+
+            // Email
+            this.formEmailLabel = new Label();
+            this.formEmailLabel.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL, 
+                this.formComponentVerticalMargin + (Dimensions.PANEL_CARD_PADDING_VERTICAL * 2)
+            );
+            this.formEmailLabel.Width = this.smallCardKeyWidth;
+            this.formEmailLabel.Height = this.formComponentHeight;
+            this.formEmailLabel.Text = "Email";
+            this.formEmailLabel.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.formEmailLabel.ForeColor = Colors.BLACK;
+            this.right.Controls.Add(this.formEmailLabel);
+
+            this.FormEmailTxtBox = new TextBox();
+            this.FormEmailTxtBox.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL + this.smallCardKeyWidth + this.smallKeyValueMargin,
+                this.formComponentVerticalMargin + (Dimensions.PANEL_CARD_PADDING_VERTICAL * 2)
+            );
+            this.FormEmailTxtBox.Width = this.smallCardValueWidth;
+            this.FormEmailTxtBox.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
+            this.right.Controls.Add(this.FormEmailTxtBox);
+
+            // Password
+            this.formPasswordLabel = new Label();
+            this.formPasswordLabel.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL,
+                (2 * this.formComponentVerticalMargin) + (Dimensions.PANEL_CARD_PADDING_VERTICAL * 2)
+            );
+            this.formPasswordLabel.Width = this.smallCardKeyWidth;
+            this.formPasswordLabel.Height = this.formComponentHeight;
+            this.formPasswordLabel.Text = "Fjalëkalimi";
+            this.formPasswordLabel.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.formPasswordLabel.ForeColor = Colors.BLACK;
+            this.right.Controls.Add(this.formPasswordLabel);
+
+            this.FormPasswordTxtBox = new TextBox();
+            this.FormPasswordTxtBox.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL + this.smallCardKeyWidth + this.smallKeyValueMargin,
+                (2 * this.formComponentVerticalMargin) + (Dimensions.PANEL_CARD_PADDING_VERTICAL * 2)
+            );
+            this.FormPasswordTxtBox.Width = this.smallCardValueWidth;
+            this.FormPasswordTxtBox.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
+            this.FormPasswordTxtBox.PasswordChar = '*';
+            this.right.Controls.Add(this.FormPasswordTxtBox);
+
+            // First name
+            this.formFirstNameLabel = new Label();
+            this.formFirstNameLabel.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL,
+                (3 * this.formComponentVerticalMargin) + (Dimensions.PANEL_CARD_PADDING_VERTICAL * 2)
+            );
+            this.formFirstNameLabel.Width = this.smallCardKeyWidth;
+            this.formFirstNameLabel.Height = this.formComponentHeight;
+            this.formFirstNameLabel.Text = "Emri";
+            this.formFirstNameLabel.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.formFirstNameLabel.ForeColor = Colors.BLACK;
+            this.right.Controls.Add(this.formFirstNameLabel);
+
+            this.FormFirstNameTxtBox = new TextBox();
+            this.FormFirstNameTxtBox.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL + this.smallCardKeyWidth + this.smallKeyValueMargin,
+                (3 * this.formComponentVerticalMargin) + (Dimensions.PANEL_CARD_PADDING_VERTICAL * 2)
+            );
+            this.FormFirstNameTxtBox.Width = this.smallCardValueWidth;
+            this.FormFirstNameTxtBox.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
+            this.right.Controls.Add(this.FormFirstNameTxtBox);
+
+            // Last name
+            this.formLastNameLabel = new Label();
+            this.formLastNameLabel.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL,
+                (4 * this.formComponentVerticalMargin) + (Dimensions.PANEL_CARD_PADDING_VERTICAL * 2)
+            );
+            this.formLastNameLabel.Width = this.smallCardKeyWidth;
+            this.formLastNameLabel.Height = this.formComponentHeight;
+            this.formLastNameLabel.Text = "Mbiemri";
+            this.formLastNameLabel.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.formLastNameLabel.ForeColor = Colors.BLACK;
+            this.right.Controls.Add(this.formLastNameLabel);
+
+            this.FormLastNameTxtBox = new TextBox();
+            this.FormLastNameTxtBox.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL + this.smallCardKeyWidth + this.smallKeyValueMargin,
+                (4 * this.formComponentVerticalMargin) + (Dimensions.PANEL_CARD_PADDING_VERTICAL * 2)
+            );
+            this.FormLastNameTxtBox.Width = this.smallCardValueWidth;
+            this.FormLastNameTxtBox.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
+            this.right.Controls.Add(this.FormLastNameTxtBox);
+
+            // Date of birth
+            this.formDateOfBirthLabel = new Label();
+            this.formDateOfBirthLabel.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL,
+                (5 * this.formComponentVerticalMargin) + (Dimensions.PANEL_CARD_PADDING_VERTICAL * 2)
+            );
+            this.formDateOfBirthLabel.Width = this.smallCardKeyWidth;
+            this.formDateOfBirthLabel.Height = this.formComponentHeight;
+            this.formDateOfBirthLabel.Text = "Datëlindja";
+            this.formDateOfBirthLabel.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.formDateOfBirthLabel.ForeColor = Colors.BLACK;
+            this.right.Controls.Add(this.formDateOfBirthLabel);
+
+            this.FormDOBPicker = new DateTimePicker();
+            this.FormDOBPicker.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL + this.smallCardKeyWidth + this.smallKeyValueMargin,
+                (5 * this.formComponentVerticalMargin) + (Dimensions.PANEL_CARD_PADDING_VERTICAL * 2)
+            );
+            this.FormDOBPicker.Width = this.smallCardValueWidth;
+            this.FormDOBPicker.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
+            this.right.Controls.Add(this.FormDOBPicker);
+
+            // Phone number
+            this.formPhoneNumberLabel = new Label();
+            this.formPhoneNumberLabel.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL,
+                (6 * this.formComponentVerticalMargin) + (Dimensions.PANEL_CARD_PADDING_VERTICAL * 2)
+            );
+            this.formPhoneNumberLabel.Width = this.smallCardKeyWidth;
+            this.formPhoneNumberLabel.Height = this.formComponentHeight;
+            this.formPhoneNumberLabel.Text = "Telefon";
+            this.formPhoneNumberLabel.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.formPhoneNumberLabel.ForeColor = Colors.BLACK;
+            this.right.Controls.Add(this.formPhoneNumberLabel);
+
+            this.FormPhoneNumberTxtBox = new TextBox();
+            this.FormPhoneNumberTxtBox.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL + this.smallCardKeyWidth + this.smallKeyValueMargin,
+                (6 * this.formComponentVerticalMargin) + (Dimensions.PANEL_CARD_PADDING_VERTICAL * 2)
+            );
+            this.FormPhoneNumberTxtBox.Width = this.smallCardValueWidth;
+            this.FormPhoneNumberTxtBox.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
+            this.right.Controls.Add(this.FormPhoneNumberTxtBox);
+
+            // Address
+            this.formAddressLabel = new Label();
+            this.formAddressLabel.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL,
+                (7 * this.formComponentVerticalMargin) + (Dimensions.PANEL_CARD_PADDING_VERTICAL * 2)
+            );
+            this.formAddressLabel.Width = this.smallCardKeyWidth;
+            this.formAddressLabel.Height = this.formComponentHeight;
+            this.formAddressLabel.Text = "Adresa";
+            this.formAddressLabel.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.formAddressLabel.ForeColor = Colors.BLACK;
+            this.right.Controls.Add(this.formAddressLabel);
+
+            this.FormAddressTxtBox = new TextBox();
+            this.FormAddressTxtBox.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL + this.smallCardKeyWidth + this.smallKeyValueMargin,
+                (7 * this.formComponentVerticalMargin) + (Dimensions.PANEL_CARD_PADDING_VERTICAL * 2)
+            );
+            this.FormAddressTxtBox.Width = this.smallCardValueWidth;
+            this.FormAddressTxtBox.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
+            this.right.Controls.Add(this.FormAddressTxtBox);
+
+            // Specialization
+            this.formSpecializationLabel = new Label();
+            this.formSpecializationLabel.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL,
+                (8 * this.formComponentVerticalMargin) + (Dimensions.PANEL_CARD_PADDING_VERTICAL * 2)
+            );
+            this.formSpecializationLabel.Width = this.smallCardKeyWidth;
+            this.formSpecializationLabel.Height = this.formComponentHeight;
+            this.formSpecializationLabel.Text = "Specializimi";
+            this.formSpecializationLabel.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.formSpecializationLabel.ForeColor = Colors.BLACK;
+            this.right.Controls.Add(this.formSpecializationLabel);
+
+            this.FormSpecializationTxtBox = new TextBox();
+            this.FormSpecializationTxtBox.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL + this.smallCardKeyWidth + this.smallKeyValueMargin,
+                (8 * this.formComponentVerticalMargin) + (Dimensions.PANEL_CARD_PADDING_VERTICAL * 2)
+            );
+            this.FormSpecializationTxtBox.Width = this.smallCardValueWidth;
+            this.FormSpecializationTxtBox.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
+            this.right.Controls.Add(this.FormSpecializationTxtBox);
+
+            /* Buttons */
+
+            this.ClearBtn = new Button();
+            this.ClearBtn.Name = "clearButton";
+            this.ClearBtn.Size = new Size(this.smallCardKeyWidth, this.formComponentHeight);
+            this.ClearBtn.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL,
+                this.cardHeight - (Dimensions.PANEL_CARD_PADDING_VERTICAL + this.formComponentHeight)
+            );
+            this.ClearBtn.Text = "PASTRO";
+            this.ClearBtn.UseVisualStyleBackColor = true;
+            this.ClearBtn.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.ClearBtn.ForeColor = Colors.WHITE;
+            this.ClearBtn.BackColor = Colors.IMPERIAL_RED;
+            this.ClearBtn.FlatStyle = FlatStyle.Flat;
+            this.ClearBtn.Click += new EventHandler(onClearButtonClicked);
+            this.right.Controls.Add(this.ClearBtn);
+
+            this.SubmitBtn = new Button();
+            this.SubmitBtn.Name = "submitButton";
+            this.SubmitBtn.Size = new Size(this.smallCardKeyWidth, this.formComponentHeight);
+            this.SubmitBtn.Location = new Point(
+                this.smallCardWidth - (this.smallCardKeyWidth + Dimensions.PANEL_CARD_PADDING_HORIZONTAL),
+                this.cardHeight - (Dimensions.PANEL_CARD_PADDING_VERTICAL + this.formComponentHeight)
+            );
+            this.SubmitBtn.Text = "RUAJ";
+            this.SubmitBtn.UseVisualStyleBackColor = true;
+            this.SubmitBtn.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.SubmitBtn.ForeColor = Colors.WHITE;
+            this.SubmitBtn.BackColor = Colors.MALACHITE;
+            this.SubmitBtn.FlatStyle = FlatStyle.Flat;
+            this.SubmitBtn.Click += new EventHandler(onSubmitButtonClicked);
+            this.right.Controls.Add(this.SubmitBtn);
         }
 
         /**
@@ -138,6 +417,14 @@ namespace Detyra___EPacient.Views.Manager {
          */
 
         private void onRoleChanged(object sender, EventArgs eventArgs) {
+            this.controller.handleRoleSelection(sender);
+        }
+
+        private void onClearButtonClicked(object sender, EventArgs eventArgs) {
+            this.controller.handleRoleSelection(sender);
+        }
+
+        private void onSubmitButtonClicked(object sender, EventArgs eventArgs) {
             this.controller.handleRoleSelection(sender);
         }
     }
