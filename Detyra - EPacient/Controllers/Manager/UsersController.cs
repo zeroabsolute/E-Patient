@@ -70,16 +70,37 @@ namespace Detyra___EPacient.Controllers.Manager {
                         List<Models.Operator> operators = await operatorModel.readOperators();
                         this.view.Operators = operators;
                         this.view.SelectedRole = Roles.OPERATOR;
+                        this.view.FormRoleLabel.Text = Roles.OPERATOR;
+                        this.view.FormAddressLabel.Visible = false;
+                        this.view.FormAddressTxtBox.Visible = false;
+                        this.view.FormPhoneNumberLabel.Visible = false;
+                        this.view.FormPhoneNumberTxtBox.Visible = false;
+                        this.view.FormSpecializationLabel.Visible = false;
+                        this.view.FormSpecializationTxtBox.Visible = false;
                         break;
                     case Roles.DOCTOR:
                         List<Models.Doctor> doctors = await doctorModel.readDoctors();
                         this.view.Doctors = doctors;
                         this.view.SelectedRole = Roles.DOCTOR;
+                        this.view.FormRoleLabel.Text = Roles.DOCTOR;
+                        this.view.FormAddressLabel.Visible = true;
+                        this.view.FormAddressTxtBox.Visible = true;
+                        this.view.FormPhoneNumberLabel.Visible = true;
+                        this.view.FormPhoneNumberTxtBox.Visible = true;
+                        this.view.FormSpecializationLabel.Visible = true;
+                        this.view.FormSpecializationTxtBox.Visible = true;
                         break;
                     case Roles.NURSE:
                         List<Models.Nurse> nurses = await nurseModel.readNurses();
                         this.view.Nurses = nurses;
                         this.view.SelectedRole = Roles.NURSE;
+                        this.view.FormRoleLabel.Text = Roles.NURSE;
+                        this.view.FormAddressLabel.Visible = true;
+                        this.view.FormAddressTxtBox.Visible = true;
+                        this.view.FormPhoneNumberLabel.Visible = true;
+                        this.view.FormPhoneNumberTxtBox.Visible = true;
+                        this.view.FormSpecializationLabel.Visible = false;
+                        this.view.FormSpecializationTxtBox.Visible = false;
                         break;
                     default:
                         break;
@@ -100,36 +121,79 @@ namespace Detyra___EPacient.Controllers.Manager {
          */
 
         private void populateUsersTable() {
-            this.view.UsersTable.DataGrid.Rows.Clear();
-            this.view.UsersTable.DataGrid.Refresh();
+            try {
+                this.view.UsersTable.DataGrid.Rows.Clear();
+                this.view.UsersTable.DataGrid.Refresh();
 
-            if (this.view.SelectedRole == Roles.OPERATOR) {
-                this.view.Operators.ForEach((item) => {
-                    this.view.UsersTable.DataGrid.Rows.Add(
-                        item.Id,
-                        item.User.Email,
-                        item.FirstName,
-                        item.LastName
-                    );
-                });
-            } else if (this.view.SelectedRole == Roles.DOCTOR) {
-                this.view.Doctors.ForEach((item) => {
-                    this.view.UsersTable.DataGrid.Rows.Add(
-                        item.Id,
-                        item.Employee.User.Email,
-                        item.Employee.FirstName,
-                        item.Employee.LastName
-                    );
-                });
-            } else if (this.view.SelectedRole == Roles.NURSE) {
-                this.view.Nurses.ForEach((item) => {
-                    this.view.UsersTable.DataGrid.Rows.Add(
-                        item.Id,
-                        item.Employee.User.Email,
-                        item.Employee.FirstName,
-                        item.Employee.LastName
-                    );
-                });
+                if (this.view.SelectedRole == Roles.OPERATOR) {
+                    this.view.Operators.ForEach((item) => {
+                        this.view.UsersTable.DataGrid.Rows.Add(
+                            item.Id,
+                            item.User.Email,
+                            item.FirstName,
+                            item.LastName
+                        );
+                    });
+                } else if (this.view.SelectedRole == Roles.DOCTOR) {
+                    this.view.Doctors.ForEach((item) => {
+                        this.view.UsersTable.DataGrid.Rows.Add(
+                            item.Id,
+                            item.Employee.User.Email,
+                            item.Employee.FirstName,
+                            item.Employee.LastName
+                        );
+                    });
+                } else if (this.view.SelectedRole == Roles.NURSE) {
+                    this.view.Nurses.ForEach((item) => {
+                        this.view.UsersTable.DataGrid.Rows.Add(
+                            item.Id,
+                            item.Employee.User.Email,
+                            item.Employee.FirstName,
+                            item.Employee.LastName
+                        );
+                    });
+                }
+            } catch (Exception e) {
+                string caption = "Problem në lexim";
+                MessageBox.Show(e.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /**
+         * Controller to clear form input
+         */
+
+        public void handleClear() {
+            try {
+                this.view.FormEmailTxtBox.Text = "";
+                this.view.FormPasswordTxtBox.Text = "";
+                this.view.FormFirstNameTxtBox.Text = "";
+                this.view.FormLastNameTxtBox.Text = "";
+                this.view.FormDOBPicker.Text = "";
+                this.view.FormPhoneNumberTxtBox.Text = "";
+                this.view.FormAddressTxtBox.Text = "";
+                this.view.FormAddressTxtBox.Text = "";
+                this.view.FormSpecializationTxtBox.Text = "";
+            } catch (Exception e) {
+                string caption = "Problem në fshirje";
+                MessageBox.Show(e.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /**
+         * Controller to submit user information
+         */
+
+        public async void handleSubmit() {
+            try {
+                Cursor.Current = Cursors.WaitCursor;
+
+
+
+                Cursor.Current = Cursors.Arrow;
+            } catch (Exception e) {
+                string caption = "Problem në shkrim";
+                MessageBox.Show(e.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

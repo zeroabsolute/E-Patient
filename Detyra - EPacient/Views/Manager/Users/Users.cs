@@ -27,6 +27,9 @@ namespace Detyra___EPacient.Views.Manager {
         public TextBox FormAddressTxtBox { get; set; }
         public TextBox FormPhoneNumberTxtBox { get; set; }
         public TextBox FormSpecializationTxtBox { get; set; }
+        public Label FormAddressLabel { get; set; }
+        public Label FormPhoneNumberLabel { get; set; }
+        public Label FormSpecializationLabel { get; set; }
         public Button SubmitBtn { get; set; }
         public Button ClearBtn { get; set; }
 
@@ -46,9 +49,6 @@ namespace Detyra___EPacient.Views.Manager {
         private Label formFirstNameLabel;
         private Label formLastNameLabel;
         private Label formDateOfBirthLabel;
-        private Label formAddressLabel;
-        private Label formPhoneNumberLabel;
-        private Label formSpecializationLabel;
 
         private int cardHeight = Dimensions.PANEL_HEIGHT - 100;
         private int bigCardWidth = (int) (Dimensions.PANEL_WIDTH * 0.5);
@@ -188,7 +188,7 @@ namespace Detyra___EPacient.Views.Manager {
             this.FormRoleLabel.Width = this.smallCardKeyWidth;
             this.FormRoleLabel.Height = this.formComponentHeight;
             this.FormRoleLabel.Text = this.SelectedRole != null ? this.SelectedRole : "-";
-            this.FormRoleLabel.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.FormRoleLabel.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
             this.FormRoleLabel.ForeColor = Colors.BLACK;
             this.right.Controls.Add(this.FormRoleLabel);
 
@@ -304,17 +304,18 @@ namespace Detyra___EPacient.Views.Manager {
             this.right.Controls.Add(this.FormDOBPicker);
 
             // Phone number
-            this.formPhoneNumberLabel = new Label();
-            this.formPhoneNumberLabel.Location = new Point(
+            this.FormPhoneNumberLabel = new Label();
+            this.FormPhoneNumberLabel.Location = new Point(
                 Dimensions.PANEL_CARD_PADDING_HORIZONTAL,
                 (6 * this.formComponentVerticalMargin) + (Dimensions.PANEL_CARD_PADDING_VERTICAL * 2)
             );
-            this.formPhoneNumberLabel.Width = this.smallCardKeyWidth;
-            this.formPhoneNumberLabel.Height = this.formComponentHeight;
-            this.formPhoneNumberLabel.Text = "Telefon";
-            this.formPhoneNumberLabel.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
-            this.formPhoneNumberLabel.ForeColor = Colors.BLACK;
-            this.right.Controls.Add(this.formPhoneNumberLabel);
+            this.FormPhoneNumberLabel.Width = this.smallCardKeyWidth;
+            this.FormPhoneNumberLabel.Height = this.formComponentHeight;
+            this.FormPhoneNumberLabel.Text = "Telefon";
+            this.FormPhoneNumberLabel.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.FormPhoneNumberLabel.ForeColor = Colors.BLACK;
+            this.FormPhoneNumberLabel.Visible = false;
+            this.right.Controls.Add(this.FormPhoneNumberLabel);
 
             this.FormPhoneNumberTxtBox = new TextBox();
             this.FormPhoneNumberTxtBox.Location = new Point(
@@ -323,20 +324,22 @@ namespace Detyra___EPacient.Views.Manager {
             );
             this.FormPhoneNumberTxtBox.Width = this.smallCardValueWidth;
             this.FormPhoneNumberTxtBox.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
+            this.FormPhoneNumberTxtBox.Visible = false;
             this.right.Controls.Add(this.FormPhoneNumberTxtBox);
 
             // Address
-            this.formAddressLabel = new Label();
-            this.formAddressLabel.Location = new Point(
+            this.FormAddressLabel = new Label();
+            this.FormAddressLabel.Location = new Point(
                 Dimensions.PANEL_CARD_PADDING_HORIZONTAL,
                 (7 * this.formComponentVerticalMargin) + (Dimensions.PANEL_CARD_PADDING_VERTICAL * 2)
             );
-            this.formAddressLabel.Width = this.smallCardKeyWidth;
-            this.formAddressLabel.Height = this.formComponentHeight;
-            this.formAddressLabel.Text = "Adresa";
-            this.formAddressLabel.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
-            this.formAddressLabel.ForeColor = Colors.BLACK;
-            this.right.Controls.Add(this.formAddressLabel);
+            this.FormAddressLabel.Width = this.smallCardKeyWidth;
+            this.FormAddressLabel.Height = this.formComponentHeight;
+            this.FormAddressLabel.Text = "Adresa";
+            this.FormAddressLabel.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.FormAddressLabel.ForeColor = Colors.BLACK;
+            this.FormAddressLabel.Visible = false;
+            this.right.Controls.Add(this.FormAddressLabel);
 
             this.FormAddressTxtBox = new TextBox();
             this.FormAddressTxtBox.Location = new Point(
@@ -345,20 +348,22 @@ namespace Detyra___EPacient.Views.Manager {
             );
             this.FormAddressTxtBox.Width = this.smallCardValueWidth;
             this.FormAddressTxtBox.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
+            this.FormAddressTxtBox.Visible = false;
             this.right.Controls.Add(this.FormAddressTxtBox);
 
             // Specialization
-            this.formSpecializationLabel = new Label();
-            this.formSpecializationLabel.Location = new Point(
+            this.FormSpecializationLabel = new Label();
+            this.FormSpecializationLabel.Location = new Point(
                 Dimensions.PANEL_CARD_PADDING_HORIZONTAL,
                 (8 * this.formComponentVerticalMargin) + (Dimensions.PANEL_CARD_PADDING_VERTICAL * 2)
             );
-            this.formSpecializationLabel.Width = this.smallCardKeyWidth;
-            this.formSpecializationLabel.Height = this.formComponentHeight;
-            this.formSpecializationLabel.Text = "Specializimi";
-            this.formSpecializationLabel.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
-            this.formSpecializationLabel.ForeColor = Colors.BLACK;
-            this.right.Controls.Add(this.formSpecializationLabel);
+            this.FormSpecializationLabel.Width = this.smallCardKeyWidth;
+            this.FormSpecializationLabel.Height = this.formComponentHeight;
+            this.FormSpecializationLabel.Text = "Specializimi";
+            this.FormSpecializationLabel.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.FormSpecializationLabel.ForeColor = Colors.BLACK;
+            this.FormSpecializationLabel.Visible = false;
+            this.right.Controls.Add(this.FormSpecializationLabel);
 
             this.FormSpecializationTxtBox = new TextBox();
             this.FormSpecializationTxtBox.Location = new Point(
@@ -367,6 +372,7 @@ namespace Detyra___EPacient.Views.Manager {
             );
             this.FormSpecializationTxtBox.Width = this.smallCardValueWidth;
             this.FormSpecializationTxtBox.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
+            this.FormSpecializationTxtBox.Visible = false;
             this.right.Controls.Add(this.FormSpecializationTxtBox);
 
             /* Buttons */
@@ -421,11 +427,11 @@ namespace Detyra___EPacient.Views.Manager {
         }
 
         private void onClearButtonClicked(object sender, EventArgs eventArgs) {
-            this.controller.handleRoleSelection(sender);
+            this.controller.handleClear();
         }
 
         private void onSubmitButtonClicked(object sender, EventArgs eventArgs) {
-            this.controller.handleRoleSelection(sender);
+            this.controller.handleSubmit();
         }
     }
 }
