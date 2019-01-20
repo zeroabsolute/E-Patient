@@ -13,22 +13,19 @@ using System.Data.Common;
 namespace Detyra___EPacient.Models {
     class User {
         public int Id { get; set; }
-        public int RoleId { get; set; }
-        public string Role { get; set; }
+        public Role Role { get; set; }
         public string Email { get; set; }
         private string password;
 
         public User() {
             this.Id = 0;
-            this.RoleId = 0;
             this.Role = null;
             this.Email = null;
             this.password = null;
         }
 
-        public User(int id, int roleId, string role, string email, string password) {
+        public User(int id, Role role, string email, string password) {
             this.Id = id;
-            this.RoleId = roleId;
             this.Role = role;
             this.Email = email;
             this.password = password;
@@ -43,8 +40,8 @@ namespace Detyra___EPacient.Models {
                 User Attributes:
                 
                 Id: {this.Id}
-                Role Id: {this.RoleId}
-                Role: {this.Role}
+                Role Id: {this.Role.Id}
+                Role: {this.Role.Name}
                 Email: {this.Email}";
         }
 
@@ -118,8 +115,7 @@ namespace Detyra___EPacient.Models {
 
                     // Password is correct => initialize user object
                     this.Id = userId;
-                    this.RoleId = roleId;
-                    this.Role = role;
+                    this.Role = new Role(roleId, role);
                     this.Email = email;
 
                     reader.Close();
