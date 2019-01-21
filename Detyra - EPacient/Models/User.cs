@@ -128,5 +128,48 @@ namespace Detyra___EPacient.Models {
                 throw e;
             }
         }
+
+        /* Create user */
+
+        public async Task<long> createUser(string email, string password, int role) {
+            try {
+                bool emailIsValid = Validators.validateEmail(email);
+                bool passwordIsValid = Validators.validatePassword(password);
+                bool roleIsValid = role != -1;
+
+                if (emailIsValid && passwordIsValid && roleIsValid) {
+                    PasswordHash passwordHash = new PasswordHash(password);
+                    string hashedPassword = passwordHash.toString();
+                    string query = $@"
+                        INSERT INTO
+                            {DBTables.USER}
+                        VALUES (
+                            null,
+                            @email,
+                            @hashedPassword,
+                            @role
+                        )";
+
+                    MySqlConnection connection = new MySqlConnection(DB.connectionString);
+                    connection.Open();
+
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@hashedPassword", hashedPassword);
+                    cmd.Parameters.AddWithValue("@role", role);
+                    cmd.Prepare();
+
+                    await cmd.ExecuteNonQueryAsync();
+
+                    connection.Close();
+                    return cmd.LastInsertedId;
+                } else {
+                    throw new Exception("Format i gabuar i email-it ose fjalëkalimit");
+                }
+            } catch (Exception e) {
+                Console.Write(e);
+                throw e;
+            }
+        }
     }
 }

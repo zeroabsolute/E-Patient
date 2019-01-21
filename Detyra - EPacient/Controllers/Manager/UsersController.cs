@@ -13,6 +13,8 @@ namespace Detyra___EPacient.Controllers.Manager {
         private Users view;
 
         private Models.Role roleModel;
+        private Models.User userModel;
+        private Models.Employee employeeModel;
         private Models.Operator operatorModel;
         private Models.Doctor doctorModel;
         private Models.Nurse nurseModel;
@@ -58,12 +60,11 @@ namespace Detyra___EPacient.Controllers.Manager {
          * Controller to handle role selection via combobox
          */
 
-        public async void handleRoleSelection(object sender) {
+        public async void handleRoleSelection() {
             try {
                 Cursor.Current = Cursors.WaitCursor;
 
-                ComboBox comboBox = (ComboBox) sender;
-                Models.Role selectedItem = (Models.Role) comboBox.SelectedItem;
+                Models.Role selectedItem = (Models.Role) this.view.CBox.comboBox.SelectedItem;
 
                 switch (selectedItem.Name) {
                     case Roles.OPERATOR:
@@ -188,9 +189,60 @@ namespace Detyra___EPacient.Controllers.Manager {
             try {
                 Cursor.Current = Cursors.WaitCursor;
 
+                int role = (int) this.view.CBox.comboBox.SelectedValue;
+                string email = this.view.FormEmailTxtBox.Text;
+                string password = this.view.FormPasswordTxtBox.Text;
+                string firstName = this.view.FormFirstNameTxtBox.Text;
+                string lastName = this.view.FormLastNameTxtBox.Text;
+                string dob = this.view.FormDOBPicker.Value.ToString("yyyy-MM-dd");
+                string phoneNumber = this.view.FormPhoneNumberTxtBox.Text;
+                string address = this.view.FormAddressTxtBox.Text;
+                string specialization = this.view.FormAddressTxtBox.Text;
 
+                // Create user
+                userModel = new Models.User();
+                long createdUserId = await userModel.createUser(email, password, role);
 
+                // Create objects based on selected role
+                if (this.view.SelectedRole == Roles.OPERATOR) {
+                    operatorModel = new Models.Operator();
+                    long createdOperatorId = await operatorModel.createOperator(
+                        firstName,
+                        lastName,
+                        dob,
+                        createdUserId
+                    );
+                } else if (this.view.SelectedRole == Roles.DOCTOR) {
+                    employeeModel = new Models.Employee();
+                    long createdEmployeeId = await employeeModel.createEmployee(
+                        firstName,
+                        lastName,
+                        phoneNumber,
+                        address,
+                        dob,
+                        createdUserId
+                    );
+
+                    doctorModel = new Models.Doctor();
+                    await doctorModel.createDoctor(specialization, createdEmployeeId);
+                } else if (this.view.SelectedRole == Roles.NURSE) {
+                    employeeModel = new Models.Employee();
+                    long createdEmployeeId = await employeeModel.createEmployee(
+                        firstName,
+                        lastName,
+                        phoneNumber,
+                        address,
+                        dob,
+                        createdUserId
+                    );
+
+                    nurseModel = new Models.Nurse();
+                    await nurseModel.createNurse(createdEmployeeId);
+                }
+
+                this.handleRoleSelection();
                 Cursor.Current = Cursors.Arrow;
+                MessageBox.Show("Përdoruesi u shtua me sukses!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } catch (Exception e) {
                 string caption = "Problem në shkrim";
                 MessageBox.Show(e.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);

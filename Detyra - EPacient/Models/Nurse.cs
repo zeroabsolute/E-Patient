@@ -102,5 +102,40 @@ namespace Detyra___EPacient.Models {
                 throw e;
             }
         }
+
+        /* Create nurse */
+
+        public async Task<long> createNurse(long employee) {
+            try {
+                bool employeeIsValid = employee != -1;
+
+                if (employeeIsValid) {
+                    string query = $@"
+                        INSERT INTO
+                            {DBTables.NURSE}
+                        VALUES (
+                            null,
+                            @employee
+                        )";
+
+                    MySqlConnection connection = new MySqlConnection(DB.connectionString);
+                    connection.Open();
+
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    cmd.Parameters.AddWithValue("@employee", employee);
+                    cmd.Prepare();
+
+                    await cmd.ExecuteNonQueryAsync();
+
+                    connection.Close();
+                    return cmd.LastInsertedId;
+                } else {
+                    throw new Exception("Input i gabuar ose i pamjaftueshëm");
+                }
+            } catch (Exception e) {
+                Console.Write(e);
+                throw e;
+            }
+        }
     }
 }

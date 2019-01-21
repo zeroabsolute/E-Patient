@@ -423,7 +423,7 @@ namespace Detyra___EPacient.Views.Manager {
          */
 
         private void onRoleChanged(object sender, EventArgs eventArgs) {
-            this.controller.handleRoleSelection(sender);
+            this.controller.handleRoleSelection();
         }
 
         private void onClearButtonClicked(object sender, EventArgs eventArgs) {

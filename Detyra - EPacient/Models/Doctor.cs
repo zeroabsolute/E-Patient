@@ -111,5 +111,43 @@ namespace Detyra___EPacient.Models {
                 throw e;
             }
         }
+
+        /* Create doctor */
+
+        public async Task<long> createDoctor(string specialization, long employee) {
+            try {
+                bool specializationIsValid = specialization != null && specialization.Length > 0;
+                bool employeeIsValid = employee != -1;
+
+                if (employeeIsValid && specializationIsValid) {
+                    string query = $@"
+                        INSERT INTO
+                            {DBTables.DOCTOR}
+                        VALUES (
+                            null,
+                            @specializedIn,
+                            @employee
+                        )";
+
+                    MySqlConnection connection = new MySqlConnection(DB.connectionString);
+                    connection.Open();
+
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    cmd.Parameters.AddWithValue("@specializedIn", specialization);
+                    cmd.Parameters.AddWithValue("@employee", employee);
+                    cmd.Prepare();
+
+                    await cmd.ExecuteNonQueryAsync();
+
+                    connection.Close();
+                    return cmd.LastInsertedId;
+                } else {
+                    throw new Exception("Input i gabuar ose i pamjaftueshëm");
+                }
+            } catch (Exception e) {
+                Console.Write(e);
+                throw e;
+            }
+        }
     }
 }

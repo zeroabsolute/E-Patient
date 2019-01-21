@@ -104,5 +104,54 @@ namespace Detyra___EPacient.Models {
                 throw e;
             }
         }
+
+        /* Create operator */
+
+        public async Task<long> createOperator(
+            string firstName,
+            string lastName,
+            string dateOfBirth,
+            long user
+        ) {
+            try {
+                bool firstNameIsValid = firstName != null && firstName.Length > 0;
+                bool lastNameIsValid = lastName != null && lastName.Length > 0;
+                bool dateOfBirthIsValid = dateOfBirth != null && dateOfBirth.Length > 0;
+                bool userIdValid = user != -1;
+
+                if (firstNameIsValid && lastNameIsValid && dateOfBirthIsValid && userIdValid) {
+                    string query = $@"
+                        INSERT INTO
+                            {DBTables.OPERATOR}
+                        VALUES (
+                            null,
+                            @firstName,
+                            @lastName,
+                            @dateOfBirth,
+                            @user
+                        )";
+
+                    MySqlConnection connection = new MySqlConnection(DB.connectionString);
+                    connection.Open();
+
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    cmd.Parameters.AddWithValue("@firstName", firstName);
+                    cmd.Parameters.AddWithValue("@lastName", lastName);
+                    cmd.Parameters.AddWithValue("@dateOfBirth", dateOfBirth);
+                    cmd.Parameters.AddWithValue("@user", user);
+                    cmd.Prepare();
+
+                    await cmd.ExecuteNonQueryAsync();
+
+                    connection.Close();
+                    return cmd.LastInsertedId;
+                } else {
+                    throw new Exception("Input i gabuar ose i pamjaftueshëm");
+                }
+            } catch (Exception e) {
+                Console.Write(e);
+                throw e;
+            }
+        }
     }
 }
