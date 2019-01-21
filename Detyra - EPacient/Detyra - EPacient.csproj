@@ -51,6 +51,7 @@
     <Compile Include="Constants\DBTables.cs" />
     <Compile Include="Constants\Roles.cs" />
     <Compile Include="Constants\Dimensions.cs" />
+    <Compile Include="Controllers\Doctor\DoctorMainController.cs" />
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\Manager\ManagerMainController.cs" />
     <Compile Include="Controllers\Manager\UsersController.cs" />
@@ -68,6 +69,9 @@
     <Compile Include="Styles\Colors.cs" />
     <Compile Include="Styles\Fonts.cs" />
     <Compile Include="Views\Common\DynamicComboBox.cs" />
+    <Compile Include="Views\Doctor\ReservationsDoc.cs" />
+    <Compile Include="Views\Doctor\Prescription.cs" />
+    <Compile Include="Views\Doctor\TimeTablesDoc.cs" />
     <Compile Include="Views\Manager\Users\DynamicUsersTable.cs" />
     <Compile Include="Views\Common\NavigationBar.cs" />
     <Compile Include="Views\Doctor\DoctorMainPanel.cs" />
