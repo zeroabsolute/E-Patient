@@ -51,8 +51,10 @@
     <Compile Include="Constants\DBTables.cs" />
     <Compile Include="Constants\Roles.cs" />
     <Compile Include="Constants\Dimensions.cs" />
+    <Compile Include="Constants\WeekDays.cs" />
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\Manager\ManagerMainController.cs" />
+    <Compile Include="Controllers\Manager\TimetablesController.cs" />
     <Compile Include="Controllers\Manager\UsersController.cs" />
     <Compile Include="Controllers\Nurse\NurseMainController.cs" />
     <Compile Include="Controllers\Operator\OperatorMainController.cs" />
@@ -68,13 +70,14 @@
     <Compile Include="Styles\Colors.cs" />
     <Compile Include="Styles\Fonts.cs" />
     <Compile Include="Views\Common\DynamicComboBox.cs" />
+    <Compile Include="Views\Manager\Timetables\DynamicEmployeesTable.cs" />
     <Compile Include="Views\Manager\Users\DynamicUsersTable.cs" />
     <Compile Include="Views\Common\NavigationBar.cs" />
     <Compile Include="Views\Doctor\DoctorMainPanel.cs" />
     <Compile Include="Views\Manager\ManagerMainPanel.cs" />
     <Compile Include="Views\Manager\Medicaments.cs" />
     <Compile Include="Views\Manager\Analytics.cs" />
-    <Compile Include="Views\Manager\Timetables.cs" />
+    <Compile Include="Views\Manager\Timetables\Timetables.cs" />
     <Compile Include="Views\Manager\DoctorInCharge.cs" />
     <Compile Include="Views\Manager\Services.cs" />
     <Compile Include="Views\Manager\Users\Users.cs" />

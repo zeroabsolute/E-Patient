@@ -1,0 +1,54 @@
+﻿using Detyra___EPacient.Styles;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Detyra___EPacient.Views.Common {
+    class DynamicEmployeesTable {
+        public DataTable Table { get; set; }
+        public DataGridView DataGrid { get; set; }
+
+        private Size tableSize;
+        private Point tableLocation;
+        private List<Models.Employee> employees;
+
+        public DynamicEmployeesTable(
+            Size tableSize, 
+            Point tableLocation, 
+            List<Models.Employee> employees
+        ) {
+            // Init size; location; data source
+            this.tableLocation = tableLocation;
+            this.tableSize = tableSize;
+            this.employees = employees;
+
+            // Init table
+            Table = new DataTable();
+
+            // Init datagrid
+            DataGrid = new DataGridView();
+            DataGrid.ReadOnly = true;
+            DataGrid.AllowUserToAddRows = false;
+            DataGrid.Size = this.tableSize;
+            DataGrid.Location = this.tableLocation;
+            DataGrid.RowTemplate.Height = 40;
+            DataGrid.ColumnHeadersHeight = 40;
+            DataGrid.BackgroundColor = Colors.ALTO;
+            DataGrid.ColumnCount = 4;
+            DataGrid.Columns[0].Name = "ID";
+            DataGrid.Columns[1].Name = "Email";
+            DataGrid.Columns[2].Name = "Emri";
+            DataGrid.Columns[3].Name = "Mbiemri";
+            DataGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            DataGrid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            DataGrid.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            DataGrid.ColumnHeadersDefaultCellStyle.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            DataGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
+        }
+    }
+}
