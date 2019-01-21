@@ -31,6 +31,7 @@ namespace Detyra___EPacient.Controllers.Manager {
                     break;
                 case ManagerMainPanel.TIMETABLES_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.TimetablesPanel.Panel);
+                    this.view.TimetablesPanel.readInitialData();
                     break;
                 case ManagerMainPanel.MEDICAMENTS_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.MedicamentsPanel.Panel);

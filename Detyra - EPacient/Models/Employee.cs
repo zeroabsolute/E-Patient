@@ -7,6 +7,7 @@ using MySql.Data.MySqlClient;
 
 using Detyra___EPacient.Constants;
 using Detyra___EPacient.Config;
+using System.Data.Common;
 
 namespace Detyra___EPacient.Models {
     class Employee {
@@ -44,6 +45,77 @@ namespace Detyra___EPacient.Models {
             this.Address = address;
             this.DateOfBirth = dob;
             this.User = user;
+        }
+
+        /**
+         * Method to read employees from the database
+         */
+
+        public async Task<List<Employee>> readEmployees() {
+            try {
+                string query = $@"
+                        SELECT
+                            role.id as roleId,
+                            role.name as roleName,
+                            user.id as userId,
+                            user.email as userEmail,
+                            employee.id as employeeId,
+                            employee.first_name as firstName,
+                            employee.last_name as lastName,
+                            employee.phone_number as phoneNumber,
+                            employee.address as address,
+                            employee.date_of_birth as dateOfBirth
+                        FROM 
+                            {DBTables.EMPLOYEE} as employee
+                            INNER JOIN
+                                {DBTables.USER} as user
+                                ON
+                                {DBTables.EMPLOYEE}.user = {DBTables.USER}.id
+                            INNER JOIN
+                                {DBTables.ROLE} as role
+                                ON
+                                {DBTables.USER}.role = {DBTables.ROLE}.id";
+
+                MySqlConnection connection = new MySqlConnection(DB.connectionString);
+                connection.Open();
+
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.Prepare();
+
+                DbDataReader reader = await cmd.ExecuteReaderAsync();
+                List<Employee> employees = new List<Employee>();
+
+                while (reader.Read()) {
+                    int roleId = reader.GetInt32(reader.GetOrdinal("roleId"));
+                    string roleName = reader.GetString(reader.GetOrdinal("roleName"));
+                    int userId = reader.GetInt32(reader.GetOrdinal("userId"));
+                    string userEmail = reader.GetString(reader.GetOrdinal("userEmail"));
+                    int employeeId = reader.GetInt32(reader.GetOrdinal("employeeId"));
+                    string firstName = reader.GetString(reader.GetOrdinal("firstName"));
+                    string lastName = reader.GetString(reader.GetOrdinal("lastName"));
+                    DateTime dob = reader.GetDateTime(reader.GetOrdinal("dateOfBirth"));
+                    string phoneNumber = reader.GetString(reader.GetOrdinal("phoneNumber"));
+                    string address = reader.GetString(reader.GetOrdinal("address"));
+
+                    Role currentRole = new Role(roleId, roleName);
+                    User currentUser = new User(userId, currentRole, userEmail, null);
+                    Employee currentEmployee = new Employee(
+                        employeeId,
+                        firstName,
+                        lastName,
+                        phoneNumber,
+                        address,
+                        dob,
+                        currentUser
+                    );
+
+                    employees.Add(currentEmployee);
+                }
+
+                return employees;
+            } catch (Exception e) {
+                throw e;
+            }
         }
 
         /* Create employee */

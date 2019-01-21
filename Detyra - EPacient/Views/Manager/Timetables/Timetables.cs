@@ -105,7 +105,8 @@ namespace Detyra___EPacient.Views.Manager {
             this.EmployeesTable = new DynamicEmployeesTable(
                 this.tableSize,
                 this.tableLocation,
-                this.Employees
+                this.Employees,
+                this.controller
             );
             this.Panel.Controls.Add(this.EmployeesTable.DataGrid);
 
@@ -438,6 +439,14 @@ namespace Detyra___EPacient.Views.Manager {
             this.submitBtn.FlatStyle = FlatStyle.Flat;
             this.submitBtn.Click += new EventHandler(onSubmitButtonClicked);
             this.right.Controls.Add(this.submitBtn);
+        }
+
+        /**
+         * Method to initialize components and fetch necessary data
+         */
+
+        public void readInitialData() {
+            this.controller.init();
         }
 
         /**

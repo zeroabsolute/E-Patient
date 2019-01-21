@@ -1,5 +1,4 @@
-﻿using Detyra___EPacient.Styles;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -7,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+using Detyra___EPacient.Controllers.Manager;
+using Detyra___EPacient.Styles;
 
 namespace Detyra___EPacient.Views.Common {
     class DynamicEmployeesTable {
@@ -16,16 +18,19 @@ namespace Detyra___EPacient.Views.Common {
         private Size tableSize;
         private Point tableLocation;
         private List<Models.Employee> employees;
+        private TimetablesController controller;
 
         public DynamicEmployeesTable(
             Size tableSize, 
             Point tableLocation, 
-            List<Models.Employee> employees
+            List<Models.Employee> employees,
+            TimetablesController controller
         ) {
             // Init size; location; data source
             this.tableLocation = tableLocation;
             this.tableSize = tableSize;
             this.employees = employees;
+            this.controller = controller;
 
             // Init table
             Table = new DataTable();
@@ -45,10 +50,19 @@ namespace Detyra___EPacient.Views.Common {
             DataGrid.Columns[2].Name = "Emri";
             DataGrid.Columns[3].Name = "Mbiemri";
             DataGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            DataGrid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            DataGrid.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             DataGrid.ColumnHeadersDefaultCellStyle.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            DataGrid.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
             DataGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
+            DataGrid.MultiSelect = false;
+            DataGrid.SelectionChanged += new EventHandler(onSelectionChanged);
+        }
+
+        /*
+         * Event handlers
+         */
+
+        private void onSelectionChanged(object sender, EventArgs e) {
+            this.controller.handleTableRowSelection();
         }
     }
 }
