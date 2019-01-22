@@ -11,6 +11,7 @@
             Port={DB_PORT};
             Database={DB_NAME};
             Uid={DB_USERNAME};
-            Password={DB_PASSWORD};";
+            Password={DB_PASSWORD};
+            convert zero datetime=True";
     }
 }

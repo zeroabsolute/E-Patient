@@ -13,6 +13,7 @@ using Detyra___EPacient.Views.Common;
 
 namespace Detyra___EPacient.Views.Manager {
     class Timetables {
+        public long SelectedWorkingHoursId { get; set; }
         public string SelectedEmployee { get; set; }
         public int SelectedEmployeeId { get; set; }
         public Panel PreviousPanel { get; set; }
@@ -453,16 +454,12 @@ namespace Detyra___EPacient.Views.Manager {
          * Event handlers
          */
 
-        private void onEmployeeSelected(object sender, EventArgs eventArgs) {
-
-        }
-
         private void onResetButtonClicked(object sender, EventArgs eventArgs) {
-
+            controller.handleResetButton();
         }
 
         private void onSubmitButtonClicked(object sender, EventArgs eventArgs) {
-
+            controller.handleSubmitButton();
         }
     }
 }

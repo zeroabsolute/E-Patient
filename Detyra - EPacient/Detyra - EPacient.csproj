@@ -66,6 +66,7 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Operator.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\WorkingHours.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Styles\Colors.cs" />
     <Compile Include="Styles\Fonts.cs" />

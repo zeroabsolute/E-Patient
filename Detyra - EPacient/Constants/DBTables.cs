@@ -6,5 +6,6 @@
         public static string OPERATOR = "operator";
         public static string DOCTOR = "doctor";
         public static string NURSE = "nurse";
+        public static string WORKING_HOURS = "working_hours";
     }
 }
