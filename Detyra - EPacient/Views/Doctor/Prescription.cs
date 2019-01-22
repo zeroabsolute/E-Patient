@@ -33,11 +33,11 @@ namespace Detyra___EPacient.Views.Doctor {
 
             // Init header
             this.header = new NavigationBar(
-                Colors.BAHAMA_BLUE,
-                "Oraret",
+                Colors.FOREST,
+                "Recetat",
                 this.Panel,
                 this.PreviousPanel,
-                "../../Resources/prescription.png"
+                "../../Resources/surgeon.png"
             );
             this.Panel.Controls.Add(this.header.Panel);
         }

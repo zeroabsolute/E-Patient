@@ -36,6 +36,8 @@ namespace Detyra___EPacient.Views.Doctor {
         /* Constructor */
 
         public DoctorMainPanel() {
+            controller = new DoctorMainController(this);
+
             // Init panel
             this.Panel = new Panel();
             this.Panel.AutoSize = true;
@@ -66,8 +68,8 @@ namespace Detyra___EPacient.Views.Doctor {
 
             /* Init menu buttons */
 
-            int buttonHeight = (int)Dimensions.MENU_CONTAINER_HEIGHT / 2;
-            int bigButtonWidth = (int)(Dimensions.MENU_CONTAINER_WIDTH * 0.5);
+            int buttonHeight = (int)Dimensions.MENU_CONTAINER_HEIGHT / 3;
+            int bigButtonWidth = (int)(Dimensions.MENU_CONTAINER_WIDTH);
             int smallButtonWidth = (int)(Dimensions.MENU_CONTAINER_WIDTH * 0.5);
 
             // Timetables
@@ -89,7 +91,7 @@ namespace Detyra___EPacient.Views.Doctor {
             this.menuContainer.Controls.Add(this.TimeTablesDoc);
             this.menuContainer.SetRow(this.TimeTablesDoc, 0);
             this.menuContainer.SetColumn(this.TimeTablesDoc, 0);
-            this.menuContainer.SetColumnSpan(this.TimeTablesDoc, 1);
+            this.menuContainer.SetColumnSpan(this.TimeTablesDoc, 2);
 
             // Reservations
             this.ReservationsDoc = new Button();
@@ -108,10 +110,10 @@ namespace Detyra___EPacient.Views.Doctor {
             this.ReservationsDoc.Click += new EventHandler(onMenuButtonClicked);
 
             this.menuContainer.Controls.Add(this.ReservationsDoc);
-            this.menuContainer.SetRow(this.ReservationsDoc, 0);
-            this.menuContainer.SetColumn(this.ReservationsDoc, 1);
+            this.menuContainer.SetRow(this.ReservationsDoc, 1);
+            this.menuContainer.SetColumn(this.ReservationsDoc, 0);
 
-            // Services
+            // Prescriptions
             this.Prescription = new Button();
             this.Prescription.Name = PRESCRIPTION_BTN;
             this.Prescription.Text = "Receta";
@@ -129,13 +131,13 @@ namespace Detyra___EPacient.Views.Doctor {
 
             this.menuContainer.Controls.Add(this.Prescription);
             this.menuContainer.SetRow(this.Prescription, 1);
-            this.menuContainer.SetColumn(this.Prescription, 0);
+            this.menuContainer.SetColumn(this.Prescription, 1);
 
             // Log out
             this.LogOut = new Button();
             this.LogOut.Name = LOG_OUT_BTN;
             this.LogOut.Text = "Dil";
-            this.LogOut.Size = new Size(smallButtonWidth, buttonHeight);
+            this.LogOut.Size = new Size(bigButtonWidth, buttonHeight);
             this.LogOut.Image = Image.FromFile("../../Resources/log-out.png");
             this.LogOut.ImageAlign = ContentAlignment.BottomCenter;
             this.LogOut.TextAlign = ContentAlignment.MiddleCenter;
@@ -148,8 +150,9 @@ namespace Detyra___EPacient.Views.Doctor {
             this.LogOut.Click += new EventHandler(onMenuButtonClicked);
 
             this.menuContainer.Controls.Add(this.LogOut);
-            this.menuContainer.SetRow(this.LogOut, 1);
-            this.menuContainer.SetColumn(this.LogOut, 1);
+            this.menuContainer.SetRow(this.LogOut, 2);
+            this.menuContainer.SetColumn(this.LogOut, 0);
+            this.menuContainer.SetColumnSpan(this.LogOut, 2);
         }
 
         /* Setters and getters */
@@ -169,7 +172,7 @@ namespace Detyra___EPacient.Views.Doctor {
         /* Event handlers */
 
         private void onMenuButtonClicked(object sender, EventArgs e) {
-            Button s = (Button)sender;
+            Button s = (Button) sender;
             controller.handleMenuButtonClick(s.Name);
         }
     }
