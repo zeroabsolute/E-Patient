@@ -34,5 +34,11 @@ namespace Detyra___EPacient.Styles {
         public static Color SALMON_RED = ColorTranslator.FromHtml("#FA8072");
         public static Color IMPERIAL_RED = ColorTranslator.FromHtml("#7C0A02");
 
+        public static Color MINT = ColorTranslator.FromHtml("#A6D785");
+        public static Color PEA = ColorTranslator.FromHtml("#78AB46");
+        public static Color PEPER_GREEN = ColorTranslator.FromHtml("#397D02");
+        public static Color FOREST = ColorTranslator.FromHtml("#3B5323");
+
+
     }
 }
