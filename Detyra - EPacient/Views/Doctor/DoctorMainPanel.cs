@@ -46,7 +46,7 @@ namespace Detyra___EPacient.Views.Doctor {
             this.Panel.Size = new Size(Dimensions.PANEL_WIDTH, Dimensions.PANEL_HEIGHT);
             this.Panel.TabIndex = 0;
             this.Panel.BackColor = Color.White;
-            this.Panel.Visible = true;
+            this.Panel.Visible = false;
 
             // Init picture box
             this.avatar = new PictureBox();
@@ -118,7 +118,7 @@ namespace Detyra___EPacient.Views.Doctor {
             this.Prescription.Name = PRESCRIPTION_BTN;
             this.Prescription.Text = "Receta";
             this.Prescription.Size = new Size(smallButtonWidth, buttonHeight);
-            this.Prescription.Image = Image.FromFile("../../Resources/prescription.png");
+            this.Prescription.Image = Image.FromFile("../../Resources/description.png");
             this.Prescription.ImageAlign = ContentAlignment.BottomCenter;
             this.Prescription.TextAlign = ContentAlignment.MiddleCenter;
             this.Prescription.TextImageRelation = TextImageRelation.ImageAboveText;
