@@ -156,6 +156,8 @@ namespace Detyra___EPacient.Controllers.Manager {
 
                 Cursor.Current = Cursors.Arrow;
                 MessageBox.Show("Oraret e punës u përditësuan me sukses!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                this.handleResetButton();
             } catch (Exception e) {
                 string caption = "Problem në shkrim";
                 MessageBox.Show(e.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);

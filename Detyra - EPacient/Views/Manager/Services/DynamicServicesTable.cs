@@ -17,19 +17,19 @@ namespace Detyra___EPacient.Views.Common {
 
         private Size tableSize;
         private Point tableLocation;
-        private List<Models.Employee> employees;
-        private TimetablesController controller;
+        private List<Models.Service> services;
+        private ServicesController controller;
 
         public DynamicServicesTable(
             Size tableSize, 
             Point tableLocation, 
-            List<Models.Employee> employees,
-            TimetablesController controller
+            List<Models.Service> services,
+            ServicesController controller
         ) {
             // Init size; location; data source
             this.tableLocation = tableLocation;
             this.tableSize = tableSize;
-            this.employees = employees;
+            this.services = services;
             this.controller = controller;
 
             // Init table
@@ -46,10 +46,11 @@ namespace Detyra___EPacient.Views.Common {
             DataGrid.BackgroundColor = Colors.ALTO;
             DataGrid.ColumnCount = 4;
             DataGrid.Columns[0].Name = "ID";
-            DataGrid.Columns[1].Name = "Email";
-            DataGrid.Columns[2].Name = "Emri";
-            DataGrid.Columns[3].Name = "Mbiemri";
+            DataGrid.Columns[1].Name = "Emri";
+            DataGrid.Columns[2].Name = "Tarifa";
+            DataGrid.Columns[3].Name = "Përshkrimi";
             DataGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            DataGrid.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             DataGrid.ColumnHeadersDefaultCellStyle.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
             DataGrid.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
             DataGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;

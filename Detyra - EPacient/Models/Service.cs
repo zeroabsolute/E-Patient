@@ -119,7 +119,7 @@ namespace Detyra___EPacient.Models {
         /* Update service */
 
         public async Task<long> updateService(
-            int id,
+            long id,
             string name,
             int fee,
             string description

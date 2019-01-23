@@ -204,7 +204,7 @@ namespace Detyra___EPacient.Models {
                 MySqlConnection connection = new MySqlConnection(DB.connectionString);
                 connection.Open();
 
-                if (employeeId == -1) {
+                if (employeeId < 1) {
                     throw new Exception("Asnjë punonjës nuk është zgjedhur");
                 }
 
