@@ -384,7 +384,7 @@ namespace Detyra___EPacient.Views.Manager {
                 Dimensions.PANEL_CARD_PADDING_HORIZONTAL,
                 this.cardHeight - (Dimensions.PANEL_CARD_PADDING_VERTICAL + this.formComponentHeight)
             );
-            this.ClearBtn.Text = "PASTRO";
+            this.ClearBtn.Text = "RESET";
             this.ClearBtn.UseVisualStyleBackColor = true;
             this.ClearBtn.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
             this.ClearBtn.ForeColor = Colors.WHITE;

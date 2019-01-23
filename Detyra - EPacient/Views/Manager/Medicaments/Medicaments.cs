@@ -18,7 +18,7 @@ namespace Detyra___EPacient.Views.Manager {
         public string SelectedMedicament { get; set; }
         public Panel PreviousPanel { get; set; }
         public Panel Panel { get; set; }
-        public List<Models.Medicaments> MedicamentsList { get; set; }
+        public List<Models.Medicament> MedicamentsList { get; set; }
         public DynamicMedicamentsTable MedicamentsTable { get; set; }
         public Label MedicamentLabelValue { get; set; }
         public TextBox NameTxtBox { get; set; }
@@ -37,8 +37,9 @@ namespace Detyra___EPacient.Views.Manager {
         private Label expirationDateLabel;
         private Label ingredientsLabel;
         private Button submitBtn;
-        private Button resetBtn; private int tableWidth;
+        private Button resetBtn;
 
+        private int tableWidth;
         private int tableHeight;
         private int rightPanelWidth;
         private int formComponentVerticalMargin = 50;
@@ -216,7 +217,7 @@ namespace Detyra___EPacient.Views.Manager {
             );
             this.ingredientsLabel.Width = this.formComponentKeyWidth;
             this.ingredientsLabel.Height = this.formComponentHeight;
-            this.ingredientsLabel.Text = "Perberesit";
+            this.ingredientsLabel.Text = "Përbërësit";
             this.ingredientsLabel.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
             this.ingredientsLabel.ForeColor = Colors.BLACK;
             this.right.Controls.Add(this.ingredientsLabel);

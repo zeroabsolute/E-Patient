@@ -10,7 +10,7 @@ using Detyra___EPacient.Config;
 using System.Data.Common;
 
 namespace Detyra___EPacient.Models {
-    class Medicaments {
+    class Medicament {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -18,7 +18,7 @@ namespace Detyra___EPacient.Models {
         public string Ingredients { get; set; }     
         
 
-        public Medicaments() {
+        public Medicament() {
             this.Id = -1;
             this.Name = "";
             this.Description = "";
@@ -26,7 +26,7 @@ namespace Detyra___EPacient.Models {
             this.Ingredients = "";
         }
 
-        public Medicaments(
+        public Medicament(
             int id,
             string name,
             string description,
@@ -44,7 +44,7 @@ namespace Detyra___EPacient.Models {
          * Method to read medicaments from the database
          */
 
-        public async Task<List<Medicaments>> readMedicaments() {
+        public async Task<List<Medicament>> readMedicaments() {
             try {
                 string query = $@"
                         SELECT *
@@ -57,14 +57,14 @@ namespace Detyra___EPacient.Models {
                 cmd.Prepare();
 
                 DbDataReader reader = await cmd.ExecuteReaderAsync();
-                List<Medicaments> medicaments = new List<Medicaments>();
+                List<Medicament> medicaments = new List<Medicament>();
 
                 while (reader.Read()) {
-                    Medicaments currentMedicament = new Medicaments(
+                    Medicament currentMedicament = new Medicament(
                         reader.GetInt32(reader.GetOrdinal("id")),
                         reader.GetString(reader.GetOrdinal("name")),
                         reader.GetString(reader.GetOrdinal("description")),
-                        reader.GetDateTime(reader.GetOrdinal("expirationDate")),
+                        reader.GetDateTime(reader.GetOrdinal("expiration_date")),
                         reader.GetString(reader.GetOrdinal("ingredients"))
                     );
 
@@ -98,11 +98,9 @@ namespace Detyra___EPacient.Models {
                         VALUES (
                             null,
                             @name,
-                            @description
-                            @expiratonDate,
                             @description,
+                            @expirationDate,
                             @ingredients
-
                         )";
 
                     MySqlConnection connection = new MySqlConnection(DB.connectionString);
@@ -151,7 +149,7 @@ namespace Detyra___EPacient.Models {
                         SET
                             name = @name,
                             description = @description,
-                            expirationDate = @expirationDate,
+                            expiration_date = @expirationDate,
                             ingredients = @ingredients
                         WHERE
                             {DBTables.MEDICAMENT}.id = @id";

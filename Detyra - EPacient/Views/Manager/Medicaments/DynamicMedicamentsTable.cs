@@ -17,13 +17,13 @@ namespace Detyra___EPacient.Views.Common {
 
         private Size tableSize;
         private Point tableLocation;
-        private List<Models.Medicaments> medicaments;
+        private List<Models.Medicament> medicaments;
         private MedicamentsController controller;
 
         public DynamicMedicamentsTable(
             Size tableSize, 
             Point tableLocation, 
-            List<Models.Medicaments> services,
+            List<Models.Medicament> medicaments,
             MedicamentsController controller
         ) {
             // Init size; location; data source
@@ -48,8 +48,8 @@ namespace Detyra___EPacient.Views.Common {
             DataGrid.Columns[0].Name = "ID";
             DataGrid.Columns[1].Name = "Emri";
             DataGrid.Columns[2].Name = "Përshkrimi";
-            DataGrid.Columns[3].Name = "Data e Skadimit";
-            DataGrid.Columns[4].Name = "Përberesit";
+            DataGrid.Columns[3].Name = "Data e skadencës";
+            DataGrid.Columns[4].Name = "Përbërësit";
 
             DataGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             DataGrid.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;

@@ -12,11 +12,11 @@ namespace Detyra___EPacient.Controllers.Manager {
     class MedicamentsController {
         private Medicaments view;
 
-        private Models.Medicaments medicamentModel;
+        private Models.Medicament medicamentModel;
 
         public MedicamentsController(Medicaments view) {
             this.view = view;
-            this.medicamentModel = new Models.Medicaments();
+            this.medicamentModel = new Models.Medicament();
         }
 
         /**
@@ -28,7 +28,7 @@ namespace Detyra___EPacient.Controllers.Manager {
                 Cursor.Current = Cursors.WaitCursor;
 
                 // Read services from DB and populate table
-                List<Models.Medicaments> medicaments = await this.medicamentModel.readMedicaments();
+                List<Models.Medicament> medicaments = await this.medicamentModel.readMedicaments();
 
                 this.view.MedicamentsTable.DataGrid.Rows.Clear();
                 this.view.MedicamentsTable.DataGrid.Refresh();
@@ -38,7 +38,7 @@ namespace Detyra___EPacient.Controllers.Manager {
                         item.Id,
                         item.Name,
                         item.Description,
-                        item.ExpirationDate,
+                        item.ExpirationDate.ToString("dd-MM-yyyy"),
                         item.Ingredients
                     );
                 });
@@ -66,14 +66,15 @@ namespace Detyra___EPacient.Controllers.Manager {
                     int id = (int) selectedRow.Cells[0].Value;
                     string name = selectedRow.Cells[1].Value.ToString();
                     string description = selectedRow.Cells[2].Value.ToString();
-                    string expirationDate = selectedRow.Cells[3].Value.ToString();
+                    DateTime expirationDate = DateTime.ParseExact(selectedRow.Cells[3].Value.ToString(), "dd-MM-yyyy", null);
                     string ingredients = selectedRow.Cells[4].Value.ToString();
 
                     this.view.SelectedMedicament = name;
                     this.view.SelectedMedicamentId = id;
                     this.view.MedicamentLabelValue.Text = name;
+                    this.view.NameTxtBox.Text = name;
                     this.view.DescriptionTxtBox.Text = description;
-                    this.view.ExpirationDatePicker.Text = expirationDate;
+                    this.view.ExpirationDatePicker.Value = expirationDate;
                     this.view.IngredientsTxtBox.Text = ingredients;
                 }
 
@@ -133,7 +134,12 @@ namespace Detyra___EPacient.Controllers.Manager {
             }
         }
 
-        private async Task<long> createMedicament(string name, string description, string expirationDate, string ingredients) {
+        private async Task<long> createMedicament(
+            string name, 
+            string description, 
+            string expirationDate, 
+            string ingredients
+        ) {
             try {
                 long id = await medicamentModel.createMedicament(
                     name, 
@@ -142,7 +148,7 @@ namespace Detyra___EPacient.Controllers.Manager {
                     ingredients
                 );
 
-                MessageBox.Show("Shërbimi u shtua me sukses!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Medikamenti u shtua me sukses!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 return id;
             } catch (Exception e) {
@@ -153,7 +159,13 @@ namespace Detyra___EPacient.Controllers.Manager {
             }
         }
 
-        private async Task<long> updateMedicament(long id, string name, string description, string expirationDate, string ingredients) {
+        private async Task<long> updateMedicament(
+            long id, 
+            string name, 
+            string description, 
+            string expirationDate, 
+            string ingredients
+        ) {
             try {
                 long updatedId = await medicamentModel.updateMedicament(
                     id,

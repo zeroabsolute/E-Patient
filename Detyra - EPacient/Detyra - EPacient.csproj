@@ -64,7 +64,7 @@
     <Compile Include="Helpers\Panels.cs" />
     <Compile Include="Helpers\PasswordHash.cs" />
     <Compile Include="Helpers\Validators.cs" />
-    <Compile Include="Models\Medicaments.cs" />
+    <Compile Include="Models\Medicament.cs" />
     <Compile Include="Models\Service.cs" />
     <Compile Include="Models\Nurse.cs" />
     <Compile Include="Models\Doctor.cs" />
