@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 22, 2019 at 02:05 AM
+-- Generation Time: Jan 23, 2019 at 09:22 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -128,6 +128,14 @@ CREATE TABLE `medicament` (
   `expiration_date` date NOT NULL,
   `ingredients` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `medicament`
+--
+
+INSERT INTO `medicament` (`id`, `name`, `description`, `expiration_date`, `ingredients`) VALUES
+(1, 'Paracetamol', 'Lehtësues dhimbjesh', '2021-01-23', 'Përbërës 1, Përbërës 2, Përbërës 3, Përbërës 4'),
+(2, 'Ibuprofen', 'Anti-Inflamator', '2024-01-23', 'Përbërës 1, Përbërës 2, Përbërës 3');
 
 -- --------------------------------------------------------
 
@@ -287,6 +295,14 @@ CREATE TABLE `service` (
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `service`
+--
+
+INSERT INTO `service` (`id`, `name`, `fee`, `description`) VALUES
+(1, 'Analizë e plotë e zemrës', 8500, 'EKG, ushtrime, matje pulsi ...'),
+(2, 'Analiza të mushkërive', 3500, 'Konsultë me specialistin, grafi');
+
 -- --------------------------------------------------------
 
 --
@@ -345,7 +361,8 @@ CREATE TABLE `working_hours` (
 
 INSERT INTO `working_hours` (`id`, `monday_start_time`, `monday_end_time`, `tuesday_start_time`, `tuesday_end_time`, `wednesday_start_time`, `wednesday_end_time`, `thursday_start_time`, `thursday_end_time`, `friday_start_time`, `friday_end_time`, `saturday_start_time`, `saturday_end_time`, `sunday_start_time`, `sunday_end_time`, `employee`) VALUES
 (3, '2019-01-22 05:00:00', '2019-01-22 13:00:00', '2019-01-22 06:00:00', '2019-01-22 14:00:00', '2019-01-22 07:00:00', '2019-01-22 15:00:00', '2019-01-22 08:00:00', '2019-01-22 16:00:00', '2019-01-22 09:00:00', '2019-01-22 17:00:00', '2019-01-22 10:00:00', '2019-01-22 18:00:00', '2019-01-22 11:00:00', '2019-01-22 19:00:00', 4),
-(4, '2019-01-22 01:00:00', '2019-01-22 09:00:00', '2019-01-22 14:00:00', '2019-01-22 10:00:00', '2019-01-22 03:00:00', '2019-01-22 11:00:00', '2019-01-22 04:00:00', '2019-01-22 00:00:00', '2019-01-22 05:00:00', '2019-01-22 13:00:00', '2019-01-22 06:00:00', '2019-01-22 14:00:00', '2019-01-22 07:00:00', '2019-01-22 15:00:00', 5);
+(4, '2019-01-22 01:00:00', '2019-01-22 09:00:00', '2019-01-22 14:00:00', '2019-01-22 10:00:00', '2019-01-22 03:00:00', '2019-01-22 11:00:00', '2019-01-22 04:00:00', '2019-01-22 00:00:00', '2019-01-22 05:00:00', '2019-01-22 13:00:00', '2019-01-22 06:00:00', '2019-01-22 14:00:00', '2019-01-22 07:00:00', '2019-01-22 15:00:00', 5),
+(5, '2019-01-23 02:00:00', '2019-01-23 10:00:00', '2019-01-23 20:00:00', '2019-01-23 04:00:00', '2019-01-23 00:00:00', '2019-01-23 00:00:00', '2019-01-23 00:00:00', '2019-01-23 00:00:00', '2019-01-23 00:00:00', '2019-01-23 00:00:00', '2019-01-23 00:00:00', '2019-01-23 00:00:00', '2019-01-23 00:00:00', '2019-01-23 00:00:00', 3);
 
 --
 -- Indexes for dumped tables
@@ -520,7 +537,7 @@ ALTER TABLE `manager`
 -- AUTO_INCREMENT for table `medicament`
 --
 ALTER TABLE `medicament`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `nurse`
@@ -580,7 +597,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `service`
 --
 ALTER TABLE `service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user`
