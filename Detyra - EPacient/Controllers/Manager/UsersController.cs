@@ -197,7 +197,7 @@ namespace Detyra___EPacient.Controllers.Manager {
                 string dob = this.view.FormDOBPicker.Value.ToString("yyyy-MM-dd");
                 string phoneNumber = this.view.FormPhoneNumberTxtBox.Text;
                 string address = this.view.FormAddressTxtBox.Text;
-                string specialization = this.view.FormAddressTxtBox.Text;
+                string specialization = this.view.FormSpecializationTxtBox.Text;
 
                 // Create user
                 userModel = new Models.User();
