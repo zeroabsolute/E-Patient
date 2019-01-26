@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 23, 2019 at 09:22 PM
+-- Generation Time: Jan 26, 2019 at 04:38 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -192,9 +192,16 @@ CREATE TABLE `patient` (
   `date_of_birth` date NOT NULL,
   `gender` text NOT NULL,
   `phone_number` text NOT NULL,
-  `address` text NOT NULL,
-  `user` int(11) NOT NULL
+  `address` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `patient`
+--
+
+INSERT INTO `patient` (`id`, `first_name`, `last_name`, `date_of_birth`, `gender`, `phone_number`, `address`) VALUES
+(1, 'Pacient', '1', '1986-01-26', 'Mashkull', '0192837465', 'Rruga e Elbasanit, Tirana, Albania'),
+(2, 'Pacient', '2', '2000-01-26', 'Femër', '0982746351', 'Komuna e Parisit, Tirana, Albania');
 
 -- --------------------------------------------------------
 
@@ -428,8 +435,7 @@ ALTER TABLE `operator`
 -- Indexes for table `patient`
 --
 ALTER TABLE `patient`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user` (`user`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `patient_chart`
@@ -555,7 +561,7 @@ ALTER TABLE `operator`
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `patient_chart`
@@ -657,12 +663,6 @@ ALTER TABLE `nurse`
 --
 ALTER TABLE `operator`
   ADD CONSTRAINT `operator_ibfk_1` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `patient`
---
-ALTER TABLE `patient`
-  ADD CONSTRAINT `patient_ibfk_1` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `patient_chart`
