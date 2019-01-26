@@ -34,8 +34,9 @@ namespace Detyra___EPacient.Views.Manager {
         private Label feeLabel;
         private Label descriptionLabel;
         private Button submitBtn;
-        private Button resetBtn; private int tableWidth;
+        private Button resetBtn;
 
+        private int tableWidth;
         private int tableHeight;
         private int rightPanelWidth;
         private int formComponentVerticalMargin = 50;

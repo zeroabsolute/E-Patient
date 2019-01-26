@@ -24,6 +24,7 @@ namespace Detyra___EPacient.Controllers.Operator{
             switch (eventOrigin) {
                 case OperatorMainPanel.PATIENTS_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.PatientsPanel.Panel);
+                    this.view.PatientsPanel.readInitialData();
                     break;
                 case OperatorMainPanel.RESERVATIONS_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.ReservationsPanel.Panel);

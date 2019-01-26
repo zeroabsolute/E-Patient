@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Config\DB.cs" />
     <Compile Include="Constants\DBTables.cs" />
+    <Compile Include="Constants\Genders.cs" />
     <Compile Include="Constants\Roles.cs" />
     <Compile Include="Constants\Dimensions.cs" />
     <Compile Include="Constants\WeekDays.cs" />
@@ -61,10 +62,12 @@
     <Compile Include="Controllers\Manager\UsersController.cs" />
     <Compile Include="Controllers\Nurse\NurseMainController.cs" />
     <Compile Include="Controllers\Operator\OperatorMainController.cs" />
+    <Compile Include="Controllers\Operator\PatientsController.cs" />
     <Compile Include="Helpers\Panels.cs" />
     <Compile Include="Helpers\PasswordHash.cs" />
     <Compile Include="Helpers\Validators.cs" />
     <Compile Include="Models\Medicament.cs" />
+    <Compile Include="Models\Patient.cs" />
     <Compile Include="Models\Service.cs" />
     <Compile Include="Models\Nurse.cs" />
     <Compile Include="Models\Doctor.cs" />
@@ -94,9 +97,10 @@
     <Compile Include="Views\Manager\Users\Users.cs" />
     <Compile Include="Views\Nurse\NurseMainPanel.cs" />
     <Compile Include="Views\Nurse\Schedule.cs" />
+    <Compile Include="Views\Operator\Patients\DynamicPatientsTable.cs" />
+    <Compile Include="Views\Operator\Patients\Patients.cs" />
     <Compile Include="Views\Operator\TimeTables.cs" />
     <Compile Include="Views\Operator\Reservations.cs" />
-    <Compile Include="Views\Operator\Patients.cs" />
     <Compile Include="Views\Operator\OperatorMainPanel.cs" />
     <Compile Include="Views\LogInPanel.cs" />
     <Compile Include="Views\MainForm.cs">
@@ -137,6 +141,7 @@
     <Content Include="Resources\back.png" />
     <Content Include="Resources\calendar.png" />
     <Content Include="Resources\clock.png" />
+    <Content Include="Resources\description.png" />
     <Content Include="Resources\hospital.png" />
     <Content Include="Resources\log-out.png" />
     <Content Include="Resources\manager.png" />
@@ -145,7 +150,6 @@
     <Content Include="Resources\patient-favicon.ico" />
     <Content Include="Resources\patient-favicon.png" />
     <Content Include="Resources\pie-chart.png" />
-    <Content Include="Resources\prescription.png" />
     <Content Include="Resources\surgeon.png" />
     <Content Include="Resources\user.png" />
     <Content Include="Resources\users.png" />

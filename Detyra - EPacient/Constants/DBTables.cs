@@ -9,5 +9,6 @@
         public static string WORKING_HOURS = "working_hours";
         public static string SERVICE = "service";
         public static string MEDICAMENT = "medicament";
+        public static string PATIENT = "patient";
     }
 }
