@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 26, 2019 at 04:38 PM
+-- Generation Time: Jan 28, 2019 at 11:52 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -223,7 +223,8 @@ CREATE TABLE `patient_chart` (
 
 CREATE TABLE `receipt` (
   `id` int(11) NOT NULL,
-  `description` text NOT NULL
+  `description` text NOT NULL,
+  `reservation` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -252,19 +253,6 @@ CREATE TABLE `reservation` (
   `created_by` int(11) NOT NULL,
   `patient` int(11) NOT NULL,
   `nurse` int(11) NOT NULL,
-  `receipt` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `reservation_service`
---
-
-CREATE TABLE `reservation_service` (
-  `id` int(11) NOT NULL,
-  `reservation` int(11) NOT NULL,
-  `service` int(11) NOT NULL,
   `doctor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -448,7 +436,8 @@ ALTER TABLE `patient_chart`
 -- Indexes for table `receipt`
 --
 ALTER TABLE `receipt`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `reservation` (`reservation`);
 
 --
 -- Indexes for table `receipt_medicament`
@@ -466,17 +455,8 @@ ALTER TABLE `reservation`
   ADD KEY `created_by` (`created_by`),
   ADD KEY `patient` (`patient`),
   ADD KEY `nurse` (`nurse`),
-  ADD KEY `receipt` (`receipt`),
-  ADD KEY `service` (`service`);
-
---
--- Indexes for table `reservation_service`
---
-ALTER TABLE `reservation_service`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `doctor` (`doctor`),
-  ADD KEY `reservation` (`reservation`),
-  ADD KEY `service` (`service`);
+  ADD KEY `service` (`service`),
+  ADD KEY `reservation_ibfk_5` (`doctor`);
 
 --
 -- Indexes for table `role`
@@ -588,12 +568,6 @@ ALTER TABLE `reservation`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `reservation_service`
---
-ALTER TABLE `reservation_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
@@ -671,6 +645,12 @@ ALTER TABLE `patient_chart`
   ADD CONSTRAINT `patient_chart_ibfk_1` FOREIGN KEY (`patient`) REFERENCES `patient` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `receipt`
+--
+ALTER TABLE `receipt`
+  ADD CONSTRAINT `receipt_ibfk_1` FOREIGN KEY (`reservation`) REFERENCES `reservation` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `receipt_medicament`
 --
 ALTER TABLE `receipt_medicament`
@@ -684,16 +664,8 @@ ALTER TABLE `reservation`
   ADD CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `operator` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reservation_ibfk_3` FOREIGN KEY (`patient`) REFERENCES `patient` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reservation_ibfk_4` FOREIGN KEY (`nurse`) REFERENCES `nurse` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `reservation_ibfk_5` FOREIGN KEY (`receipt`) REFERENCES `receipt` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reservation_ibfk_5` FOREIGN KEY (`doctor`) REFERENCES `doctor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reservation_ibfk_6` FOREIGN KEY (`service`) REFERENCES `service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `reservation_service`
---
-ALTER TABLE `reservation_service`
-  ADD CONSTRAINT `reservation_service_ibfk_1` FOREIGN KEY (`doctor`) REFERENCES `doctor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `reservation_service_ibfk_2` FOREIGN KEY (`reservation`) REFERENCES `reservation` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `reservation_service_ibfk_3` FOREIGN KEY (`service`) REFERENCES `service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `user`
