@@ -69,6 +69,7 @@
     <Compile Include="Helpers\Validators.cs" />
     <Compile Include="Models\Medicament.cs" />
     <Compile Include="Models\Patient.cs" />
+    <Compile Include="Models\Reservation.cs" />
     <Compile Include="Models\Service.cs" />
     <Compile Include="Models\Nurse.cs" />
     <Compile Include="Models\Doctor.cs" />
