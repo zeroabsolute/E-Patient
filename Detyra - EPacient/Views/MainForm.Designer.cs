@@ -51,7 +51,7 @@ namespace Detyra___EPacient {
             OperatorMainPanel operatorMainPanel = new OperatorMainPanel();
             Patients operatorPatientsPanel = new Patients(operatorMainPanel.Panel);
             Reservations operatorReservationsPanel = new Reservations(operatorMainPanel.Panel);
-            TimeTables operatorTimeTablesPanel = new TimeTables(operatorMainPanel.Panel);
+            OperatorTimetables operatorTimeTablesPanel = new OperatorTimetables(operatorMainPanel.Panel);
           
             DoctorMainPanel doctorMainPanel = new DoctorMainPanel();
             TimeTablesDoc doctorTimeTablesDocPanel = new TimeTablesDoc(doctorMainPanel.Panel);

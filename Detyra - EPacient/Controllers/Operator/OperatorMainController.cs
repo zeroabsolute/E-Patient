@@ -31,6 +31,7 @@ namespace Detyra___EPacient.Controllers.Operator{
                     break;
                 case OperatorMainPanel.TIME_TABLES_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.TimeTablesPanel.Panel);
+                    this.view.TimeTablesPanel.readInitialData();
                     break;
                 case OperatorMainPanel.LOG_OUT_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.LogInPanel.Panel);

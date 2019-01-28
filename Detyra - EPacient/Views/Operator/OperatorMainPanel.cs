@@ -19,7 +19,7 @@ namespace Detyra___EPacient.Views.Operator {
 
         public Patients PatientsPanel { get; set; }
         public Reservations ReservationsPanel { get; set; }
-        public TimeTables TimeTablesPanel { get; set; }
+        public OperatorTimetables TimeTablesPanel { get; set; }
         public LogInPanel LogInPanel { get; set; }
 
         public const string PATIENTS_BTN = "operatorPatientsBtn";
@@ -154,7 +154,7 @@ namespace Detyra___EPacient.Views.Operator {
         public void initNextPanels(
             Patients p,
             Reservations r,
-            TimeTables t,
+            OperatorTimetables t,
             LogInPanel l
         ) {
             this.PatientsPanel = p;

@@ -63,6 +63,7 @@
     <Compile Include="Controllers\Nurse\NurseMainController.cs" />
     <Compile Include="Controllers\Operator\OperatorMainController.cs" />
     <Compile Include="Controllers\Operator\PatientsController.cs" />
+    <Compile Include="Controllers\Operator\OperatorTimetablesController.cs" />
     <Compile Include="Helpers\Panels.cs" />
     <Compile Include="Helpers\PasswordHash.cs" />
     <Compile Include="Helpers\Validators.cs" />
@@ -99,7 +100,8 @@
     <Compile Include="Views\Nurse\Schedule.cs" />
     <Compile Include="Views\Operator\Patients\DynamicPatientsTable.cs" />
     <Compile Include="Views\Operator\Patients\Patients.cs" />
-    <Compile Include="Views\Operator\TimeTables.cs" />
+    <Compile Include="Views\Operator\Timetables\OperatorEmployeesTable.cs" />
+    <Compile Include="Views\Operator\Timetables\TimeTables.cs" />
     <Compile Include="Views\Operator\Reservations.cs" />
     <Compile Include="Views\Operator\OperatorMainPanel.cs" />
     <Compile Include="Views\LogInPanel.cs" />
