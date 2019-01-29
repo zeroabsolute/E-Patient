@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Detyra___EPacient.Constants;
-using Detyra___EPacient.Views.Manager;
+using Detyra___EPacient.Views.Operator;
 
-namespace Detyra___EPacient.Controllers.Manager {
+namespace Detyra___EPacient.Controllers.Operator {
     class PatientsController {
         private Patients view;
 

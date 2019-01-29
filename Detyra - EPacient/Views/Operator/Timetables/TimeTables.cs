@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Detyra___EPacient.Constants;
-using Detyra___EPacient.Controllers.Manager;
+using Detyra___EPacient.Controllers.Operator;
 using Detyra___EPacient.Styles;
 using Detyra___EPacient.Views.Common;
 
-namespace Detyra___EPacient.Views.Manager {
+namespace Detyra___EPacient.Views.Operator {
     class OperatorTimetables {
         public long SelectedWorkingHoursId { get; set; }
         public string SelectedEmployee { get; set; }

@@ -13,16 +13,19 @@ using Detyra___EPacient.Constants;
 namespace Detyra___EPacient.Models {
     class Nurse {
         public int Id { get; set; }
+        public string FullName { get; set; }
         public Employee Employee { get; set; }
 
         public Nurse() {
             this.Id = -1;
             this.Employee = null;
+            this.FullName = "";
         }
 
         public Nurse(int id, Employee employee) {
             this.Id = id;
             this.Employee = employee;
+            this.FullName = employee.FullName;
         }
 
         /**

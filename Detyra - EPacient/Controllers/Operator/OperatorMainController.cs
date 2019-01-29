@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Detyra___EPacient.Helpers;
 using Detyra___EPacient.Views.Operator;
 
-namespace Detyra___EPacient.Controllers.Operator{
+namespace Detyra___EPacient.Controllers.Operator {
     class OperatorMainController {
         private OperatorMainPanel view;
 
@@ -28,6 +28,7 @@ namespace Detyra___EPacient.Controllers.Operator{
                     break;
                 case OperatorMainPanel.RESERVATIONS_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.ReservationsPanel.Panel);
+                    this.view.ReservationsPanel.readInitialData();
                     break;
                 case OperatorMainPanel.TIME_TABLES_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.TimeTablesPanel.Panel);

@@ -7,10 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using Detyra___EPacient.Controllers.Manager;
+using Detyra___EPacient.Controllers.Operator;
 using Detyra___EPacient.Styles;
 
-namespace Detyra___EPacient.Views.Common {
+namespace Detyra___EPacient.Views.Operator {
     class DynamicPatientsTable {
         public DataTable Table { get; set; }
         public DataGridView DataGrid { get; set; }

@@ -97,16 +97,16 @@ namespace Detyra___EPacient.Models {
                                 INNER JOIN
                                 {DBTables.EMPLOYEE} as nurseEmployee
                                 ON
-                                {DBTables.NURSE}.employee = {DBTables.EMPLOYEE}.id
+                                {DBTables.NURSE}.employee = nurseEmployee.id
                             )
                             ON
                             {DBTables.RESERVATION}.nurse = {DBTables.NURSE}.id
                             INNER JOIN (
                                 {DBTables.DOCTOR} as doctor
                                 INNER JOIN
-                                {DBTables.DOCTOR} as doctorEmployee
+                                {DBTables.EMPLOYEE} as doctorEmployee
                                 ON
-                                {DBTables.DOCTOR}.employee = {DBTables.EMPLOYEE}.id
+                                {DBTables.DOCTOR}.employee = doctorEmployee.id
                             )
                             ON
                             {DBTables.RESERVATION}.doctor = {DBTables.DOCTOR}.id";

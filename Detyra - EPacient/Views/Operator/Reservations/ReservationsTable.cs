@@ -11,25 +11,25 @@ using Detyra___EPacient.Controllers.Operator;
 using Detyra___EPacient.Styles;
 
 namespace Detyra___EPacient.Views.Operator {
-    class OperatorEmployeesTable {
+    class ReservationsTable {
         public DataTable Table { get; set; }
         public DataGridView DataGrid { get; set; }
 
         private Size tableSize;
         private Point tableLocation;
-        private List<Models.Employee> employees;
-        private OperatorTimetablesController controller;
+        private List<Models.Reservation> reservations;
+        private ReservationsController controller;
 
-        public OperatorEmployeesTable(
+        public ReservationsTable(
             Size tableSize, 
             Point tableLocation, 
-            List<Models.Employee> employees,
-            OperatorTimetablesController controller
+            List<Models.Reservation> reservations,
+            ReservationsController controller
         ) {
             // Init size; location; data source
             this.tableLocation = tableLocation;
             this.tableSize = tableSize;
-            this.employees = employees;
+            this.reservations = reservations;
             this.controller = controller;
 
             // Init table
@@ -44,12 +44,19 @@ namespace Detyra___EPacient.Views.Operator {
             DataGrid.RowTemplate.Height = 40;
             DataGrid.ColumnHeadersHeight = 40;
             DataGrid.BackgroundColor = Colors.ALTO;
-            DataGrid.ColumnCount = 4;
+            DataGrid.ColumnCount = 7;
             DataGrid.Columns[0].Name = "ID";
-            DataGrid.Columns[1].Name = "Email";
-            DataGrid.Columns[2].Name = "Emri";
-            DataGrid.Columns[3].Name = "Mbiemri";
+            DataGrid.Columns[1].Name = "Fillimi";
+            DataGrid.Columns[2].Name = "Fundi";
+            DataGrid.Columns[3].Name = "Pacienti";
+            DataGrid.Columns[4].Name = "Doktori";
+            DataGrid.Columns[5].Name = "Infermieri";
+            DataGrid.Columns[6].Name = "Shërbimi";
+            DataGrid.Columns[0].Width = 40;
             DataGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            DataGrid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            DataGrid.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            DataGrid.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             DataGrid.ColumnHeadersDefaultCellStyle.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
             DataGrid.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
             DataGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;

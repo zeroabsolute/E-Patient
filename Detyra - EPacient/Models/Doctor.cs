@@ -13,6 +13,7 @@ using Detyra___EPacient.Constants;
 namespace Detyra___EPacient.Models {
     class Doctor {
         public int Id { get; set; }
+        public string FullName { get; set; }
         public Employee Employee { get; set; }
         public string SpecializedIn { get; set; }
 
@@ -20,6 +21,7 @@ namespace Detyra___EPacient.Models {
             this.Id = -1;
             this.Employee = null;
             this.SpecializedIn = "";
+            this.FullName = "";
         }
 
         public Doctor(
@@ -30,6 +32,7 @@ namespace Detyra___EPacient.Models {
             this.Id = id;
             this.Employee = employee;
             this.SpecializedIn = specializedIn;
+            this.FullName = employee.FullName;
         }
 
         /**

@@ -14,6 +14,7 @@ namespace Detyra___EPacient.Models {
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string FullName { get; set; }
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public DateTime DateOfBirth { get; set; }
@@ -23,6 +24,7 @@ namespace Detyra___EPacient.Models {
             this.Id = -1;
             this.FirstName = "";
             this.LastName = "";
+            this.FullName = "";
             this.PhoneNumber = "";
             this.Address = "";
             this.DateOfBirth = new DateTime();
@@ -41,6 +43,7 @@ namespace Detyra___EPacient.Models {
             this.Id = id;
             this.FirstName = firstName;
             this.LastName = lastName;
+            this.FullName = $"{firstName} {lastName}";
             this.PhoneNumber = phoneNumber;
             this.Address = address;
             this.DateOfBirth = dob;
