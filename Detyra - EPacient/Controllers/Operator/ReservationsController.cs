@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Detyra___EPacient.Constants;
 using Detyra___EPacient.Views.Operator;
 
 namespace Detyra___EPacient.Controllers.Operator {
@@ -17,6 +17,8 @@ namespace Detyra___EPacient.Controllers.Operator {
         private Models.Doctor doctorModel;
         private Models.Nurse nurseModel;
         private List<Models.Reservation> reservations;
+        private List<Models.Doctor> doctors;
+        private List<Models.Nurse> nurses;
 
         public ReservationsController(Reservations view) {
             this.view = view;
@@ -45,8 +47,8 @@ namespace Detyra___EPacient.Controllers.Operator {
                 reservations.ForEach((item) => {
                     this.view.ReservationsTable.DataGrid.Rows.Add(
                         item.Id,
-                        item.StartDateTime.ToString("dd-MM-yyyy HH:mm"),
-                        item.EndDateTime.ToString("dd-MM-yyyy HH:mm"),
+                        item.StartDateTime.ToString(DateTimeFormats.SQ_DATE_TIME),
+                        item.EndDateTime.ToString(DateTimeFormats.SQ_DATE_TIME),
                         $"{item.Patient.FirstName} {item.Patient.LastName}",
                         $"{item.Doctor.Employee.FirstName} {item.Doctor.Employee.LastName}",
                         $"{item.Nurse.Employee.FirstName} {item.Nurse.Employee.LastName}",
@@ -69,14 +71,14 @@ namespace Detyra___EPacient.Controllers.Operator {
                 this.view.PatientCBox.comboBox.DataSource = patients;
 
                 // Read doctors and populate combo box
-                List<Models.Doctor> doctors = await doctorModel.readDoctors();
+                this.doctors = await doctorModel.readDoctors();
 
                 this.view.DoctorCBox.comboBox.DisplayMember = "fullname";
                 this.view.DoctorCBox.comboBox.ValueMember = "id";
                 this.view.DoctorCBox.comboBox.DataSource = doctors;
 
                 // Read nurses and populate combo box
-                List<Models.Nurse> nurses = await nurseModel.readNurses();
+                this.nurses = await nurseModel.readNurses();
 
                 this.view.NurseCBox.comboBox.DisplayMember = "fullname";
                 this.view.NurseCBox.comboBox.ValueMember = "id";
@@ -158,9 +160,47 @@ namespace Detyra___EPacient.Controllers.Operator {
          * Controller to handle submit button
          */
 
+        private int getNurseEmployeeId() {
+            int selectedNurse = (int) this.view.NurseCBox.comboBox.SelectedValue;
+            int idToReturn = -1;
+
+            this.nurses.ForEach((item) => {
+                if (item.Id == selectedNurse) {
+                    idToReturn = item.Employee.Id;
+                }
+            });
+
+            return idToReturn;
+        }
+
+        private int getDoctorEmployeeId() {
+            int selectedDoctor = (int) this.view.DoctorCBox.comboBox.SelectedValue;
+            int idToReturn = -1;
+
+            this.doctors.ForEach((item) => {
+                if (item.Id == selectedDoctor) {
+                    idToReturn = item.Employee.Id;
+                }
+            });
+
+            return idToReturn;
+        }
+
         public async void handleSubmitButton() {
             try {
                 Cursor.Current = Cursors.WaitCursor;
+
+                await reservationModel.createReservation(
+                    this.view.StartDateTime.Value.ToString(DateTimeFormats.SQ_DATE_TIME),
+                    this.view.EndDateTime.Value.ToString(DateTimeFormats.SQ_DATE_TIME),
+                    (int) this.view.ServiceCBox.comboBox.SelectedValue,
+                    this.view.LoggedInUser.Id,
+                    (int) this.view.PatientCBox.comboBox.SelectedValue,
+                    (int) this.view.DoctorCBox.comboBox.SelectedValue,
+                    this.getDoctorEmployeeId(),
+                    (int) this.view.NurseCBox.comboBox.SelectedValue,
+                    this.getNurseEmployeeId()
+                );
 
                 this.handleResetButton();
                 this.init();

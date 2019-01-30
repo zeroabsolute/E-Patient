@@ -194,5 +194,181 @@ namespace Detyra___EPacient.Models {
                 throw e;
             }
         }
+
+        /* Create reservation */
+
+        private async Task<bool> checkIfEmployeeIsWorking(
+            int employeeId, 
+            string start, 
+            string end
+        ) {
+            try {
+                WorkingHours employeeWorkingHours = await new WorkingHours().readWorkingHours(employeeId);
+                DateTime startDateTime = DateTime.ParseExact(start, DateTimeFormats.SQ_DATE_TIME, null);
+                DateTime endDateTime = DateTime.ParseExact(end, DateTimeFormats.SQ_DATE_TIME, null);
+                string dayOfTheWeek = startDateTime.DayOfWeek.ToString();
+                string startKey = $"{dayOfTheWeek}StartTime";
+                string endKey = $"{dayOfTheWeek}EndTime";
+                DateTime workingHoursStart = (DateTime) employeeWorkingHours.GetType()
+                                                                            .GetProperty(startKey)
+                                                                            .GetValue(employeeWorkingHours, null);
+                DateTime workingHoursEnd = (DateTime) employeeWorkingHours.GetType()
+                                                                            .GetProperty(endKey)
+                                                                            .GetValue(employeeWorkingHours, null);
+
+                if (
+                    (startDateTime.TimeOfDay >= workingHoursStart.TimeOfDay)
+                        && (endDateTime.TimeOfDay <= workingHoursEnd.TimeOfDay)
+                ) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        private async Task<bool> checkIfBusy(
+            string employeeType,
+            string startDateTime,
+            string endDateTime,
+            int id
+        ) {
+            try {
+                string queryForDoctors = $@"
+                        SELECT
+                            COUNT(*)
+                        FROM 
+                            {DBTables.RESERVATION} 
+                        WHERE
+                            {DBTables.RESERVATION}.doctor = @id
+                            AND (
+                                {DBTables.RESERVATION}.start_datetime BETWEEN @start AND @end
+                                OR
+                                {DBTables.RESERVATION}.end_datetime BETWEEN @start AND @end
+                            )";
+                string queryForNurses = $@"
+                        SELECT 
+                            COUNT(*)
+                        FROM 
+                            {DBTables.RESERVATION} 
+                        WHERE
+                            {DBTables.RESERVATION}.nurse = @id
+                            AND (
+                                ({DBTables.RESERVATION}.start_datetime BETWEEN @start AND @end)
+                                OR
+                                ({DBTables.RESERVATION}.end_datetime BETWEEN @start AND @end)
+                            )";
+                string query = employeeType == "doctor" ? queryForDoctors : queryForNurses;
+
+                MySqlConnection connection = new MySqlConnection(DB.connectionString);
+                connection.Open();
+
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@start", startDateTime);
+                cmd.Parameters.AddWithValue("@end", endDateTime);
+                cmd.Prepare();
+
+                int resultCount = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+
+                return resultCount == 0;
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+
+        public async Task<long> createReservation(
+            string startDateTime,
+            string endDateTime,
+            int service,
+            int createdBy,
+            int patient,
+            int doctor,
+            int doctorEmployeeId,
+            int nurse,
+            int nurseEmployeeId
+        ) {
+            try {
+                bool startDateTimeIsValid = startDateTime != null && startDateTime.Length > 0;
+                bool endDateTimeIsValid = endDateTime != null && endDateTime.Length > 0;
+                bool serviceIsValid = service > 0;
+                bool createdByIsValid = createdBy > 0;
+                bool patientIsValid = patient > 0;
+                bool doctorIsValid = doctor > 0;
+                bool nurseIsValid = nurse > 0;
+
+                if (
+                    startDateTimeIsValid
+                        && endDateTimeIsValid
+                        && serviceIsValid
+                        && createdByIsValid
+                        && patientIsValid
+                        && doctorIsValid
+                        && nurseIsValid
+                ) {
+                    DateTime start = DateTime.ParseExact(startDateTime, DateTimeFormats.SQ_DATE_TIME, null);
+                    DateTime end = DateTime.ParseExact(endDateTime, DateTimeFormats.SQ_DATE_TIME, null);
+                    string startSQLFormat = start.ToString(DateTimeFormats.MYSQL_DATE_TIME);
+                    string endSQLFormat = end.ToString(DateTimeFormats.MYSQL_DATE_TIME);
+
+                    // Check if the reservation is withing doctor's and nurse's working hours
+                    bool doctorIsWorking = await checkIfEmployeeIsWorking(doctorEmployeeId, startDateTime, endDateTime);
+                    bool nurseIsWorking = await checkIfEmployeeIsWorking(nurseEmployeeId, startDateTime, endDateTime);
+
+                    if (!doctorIsWorking) {
+                        throw new Exception("Rezervimi është jashtë orarit të punës së mjekut");
+                    }
+                    if (!nurseIsWorking) {
+                        throw new Exception("Rezervimi është jashtë orarit të punës së infermierit");
+                    }
+
+                    // Check if doctor or nurse are busy on other appointments
+                    bool doctorIsBusy = await checkIfBusy("doctor", startSQLFormat, endSQLFormat, doctor);
+                    bool nurseIsBusy = await checkIfBusy("nurse", startSQLFormat, startSQLFormat, nurse);
+
+                    // Create reservation
+                    string query = $@"
+                        INSERT INTO
+                            {DBTables.RESERVATION}
+                        VALUES (
+                            null,
+                            @startDateTime,
+                            @endDateTime,
+                            @service,
+                            @createdBy,
+                            @patient,
+                            @nurse,
+                            @doctor
+                        )";
+
+                    MySqlConnection connection = new MySqlConnection(DB.connectionString);
+                    connection.Open();
+
+                    int operatorId = await new Operator().getOperatorByUserId(createdBy);
+
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    cmd.Parameters.AddWithValue("@startDateTime", startSQLFormat);
+                    cmd.Parameters.AddWithValue("@endDateTime", endSQLFormat);
+                    cmd.Parameters.AddWithValue("@service", service);
+                    cmd.Parameters.AddWithValue("@createdBy", operatorId);
+                    cmd.Parameters.AddWithValue("@patient", patient);
+                    cmd.Parameters.AddWithValue("@nurse", nurse);
+                    cmd.Parameters.AddWithValue("@doctor", doctor);
+                    cmd.Prepare();
+
+                    await cmd.ExecuteNonQueryAsync();
+
+                    connection.Close();
+                    return cmd.LastInsertedId;
+                } else {
+                    throw new Exception("Input i gabuar ose i pamjaftueshëm");
+                }
+            } catch (Exception e) {
+                throw e;
+            }
+        }
     }
 }

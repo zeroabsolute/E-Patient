@@ -38,7 +38,7 @@ namespace Detyra___EPacient.Controllers.Manager {
                         item.Id,
                         item.Name,
                         item.Description,
-                        item.ExpirationDate.ToString("dd-MM-yyyy"),
+                        item.ExpirationDate.ToString(DateTimeFormats.SQ_DATE),
                         item.Ingredients
                     );
                 });
@@ -111,7 +111,7 @@ namespace Detyra___EPacient.Controllers.Manager {
                     await this.createMedicament(
                         this.view.NameTxtBox.Text,
                         this.view.DescriptionTxtBox.Text,
-                        this.view.ExpirationDatePicker.Value.ToString("yyyy-MM-dd"),
+                        this.view.ExpirationDatePicker.Value.ToString(DateTimeFormats.MYSQL_DATE),
                         this.view.IngredientsTxtBox.Text
                     );
                 } else {
@@ -119,7 +119,7 @@ namespace Detyra___EPacient.Controllers.Manager {
                         this.view.SelectedMedicamentId,
                         this.view.NameTxtBox.Text,
                         this.view.DescriptionTxtBox.Text,
-                        this.view.ExpirationDatePicker.Value.ToString("yyyy-MM-dd"),
+                        this.view.ExpirationDatePicker.Value.ToString(DateTimeFormats.MYSQL_DATE),
                         this.view.IngredientsTxtBox.Text
                     );
                 }

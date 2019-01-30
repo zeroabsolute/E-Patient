@@ -194,7 +194,7 @@ namespace Detyra___EPacient.Controllers.Manager {
                 string password = this.view.FormPasswordTxtBox.Text;
                 string firstName = this.view.FormFirstNameTxtBox.Text;
                 string lastName = this.view.FormLastNameTxtBox.Text;
-                string dob = this.view.FormDOBPicker.Value.ToString("yyyy-MM-dd");
+                string dob = this.view.FormDOBPicker.Value.ToString(DateTimeFormats.MYSQL_DATE);
                 string phoneNumber = this.view.FormPhoneNumberTxtBox.Text;
                 string address = this.view.FormAddressTxtBox.Text;
                 string specialization = this.view.FormSpecializationTxtBox.Text;

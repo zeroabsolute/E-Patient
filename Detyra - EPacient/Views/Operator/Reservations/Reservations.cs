@@ -8,11 +8,13 @@ using System.Windows.Forms;
 
 using Detyra___EPacient.Constants;
 using Detyra___EPacient.Controllers.Operator;
+using Detyra___EPacient.Models;
 using Detyra___EPacient.Styles;
 using Detyra___EPacient.Views.Common;
 
 namespace Detyra___EPacient.Views.Operator {
     class Reservations {
+        public User LoggedInUser { get; set; }
         public Panel PreviousPanel { get; set; }
         public Panel Panel { get; set; }
         public TextBox SearchTermTxtBox { get; set; }

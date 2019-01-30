@@ -46,7 +46,7 @@ namespace Detyra___EPacient.Controllers.Operator {
                         item.Id,
                         item.FirstName,
                         item.LastName,
-                        item.DateOfBirth.ToString("dd-MM-yyyy"),
+                        item.DateOfBirth.ToString(DateTimeFormats.SQ_DATE),
                         item.Gender
                     );
                 });
@@ -125,7 +125,7 @@ namespace Detyra___EPacient.Controllers.Operator {
                         this.view.LastNameTxtBox.Text,
                         this.view.PhoneNumberTxtBox.Text,
                         this.view.AddressTxtBox.Text,
-                        this.view.DateOfBirth.Value.ToString("yyyy-MM-dd"),
+                        this.view.DateOfBirth.Value.ToString(DateTimeFormats.MYSQL_DATE),
                         this.view.CBox.comboBox.SelectedValue.ToString()
                     );
                 } else {
@@ -135,7 +135,7 @@ namespace Detyra___EPacient.Controllers.Operator {
                         this.view.LastNameTxtBox.Text,
                         this.view.PhoneNumberTxtBox.Text,
                         this.view.AddressTxtBox.Text,
-                        this.view.DateOfBirth.Value.ToString("yyyy-MM-dd"),
+                        this.view.DateOfBirth.Value.ToString(DateTimeFormats.MYSQL_DATE),
                         this.view.CBox.comboBox.SelectedValue.ToString()
                     );
                 }

@@ -28,7 +28,9 @@ namespace Detyra___EPacient.Controllers.Operator {
                     break;
                 case OperatorMainPanel.RESERVATIONS_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.ReservationsPanel.Panel);
+                    this.view.ReservationsPanel.LoggedInUser = this.view.LoggedInUser;
                     this.view.ReservationsPanel.readInitialData();
+
                     break;
                 case OperatorMainPanel.TIME_TABLES_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.TimeTablesPanel.Panel);

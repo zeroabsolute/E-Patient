@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\DB.cs" />
+    <Compile Include="Constants\DateTimeFormats.cs" />
     <Compile Include="Constants\DBTables.cs" />
     <Compile Include="Constants\Genders.cs" />
     <Compile Include="Constants\Roles.cs" />
