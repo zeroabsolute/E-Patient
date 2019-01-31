@@ -162,16 +162,16 @@ namespace Detyra___EPacient.Models {
 
                     Employee doctorEmployee = new Employee(
                         -1,
-                        reader.GetString(reader.GetOrdinal("nurseFirstName")),
-                        reader.GetString(reader.GetOrdinal("nurseLastName")),
+                        reader.GetString(reader.GetOrdinal("doctorFirstName")),
+                        reader.GetString(reader.GetOrdinal("doctorLastName")),
                         "",
                         "",
                         DateTime.Now,
                         null
                     );
                     Doctor currentDoctor = new Doctor(
-                        reader.GetInt32(reader.GetOrdinal("nurseId")),
-                        nurseEmployee,
+                        reader.GetInt32(reader.GetOrdinal("doctorId")),
+                        doctorEmployee,
                         ""
                     );
 
@@ -192,6 +192,53 @@ namespace Detyra___EPacient.Models {
                 return reservations;
             } catch (Exception e) {
                 throw e;
+            }
+        }
+
+        /* Validates start and end times */
+
+        private void validateTimes(DateTime start, DateTime end) {
+            bool timesAreValid = start < end;
+
+            if (!timesAreValid) {
+                throw new Exception("Koha e përfundimit duhet të jetë pas asaj të fillimit");
+            }
+        }
+
+        /* Validates personel availability */
+
+        private async Task validatePersonelAvailability(
+            int doctorEmployeeId,
+            string startDateTime,
+            string endDateTime,
+            int nurseEmployeeId,
+            string startSQLFormat,
+            string endSQLFormat,
+            int doctor,
+            int nurse,
+            long id,
+            bool update
+        ) {
+            // Check if the reservation is within doctor's and nurse's working hours
+            bool doctorIsWorking = await checkIfEmployeeIsWorking(doctorEmployeeId, startDateTime, endDateTime);
+            bool nurseIsWorking = await checkIfEmployeeIsWorking(nurseEmployeeId, startDateTime, endDateTime);
+
+            if (!doctorIsWorking) {
+                throw new Exception("Rezervimi është jashtë orarit të punës së mjekut");
+            }
+            if (!nurseIsWorking) {
+                throw new Exception("Rezervimi është jashtë orarit të punës së infermierit");
+            }
+
+            // Check if doctor or nurse are busy on other appointments
+            bool doctorIsBusy = await checkIfBusy("doctor", startSQLFormat, endSQLFormat, doctor, id, update);
+            bool nurseIsBusy = await checkIfBusy("nurse", startSQLFormat, startSQLFormat, nurse, id, update);
+
+            if (doctorIsBusy) {
+                throw new Exception("Mjeku është i zënë me një rezervim tjetër");
+            }
+            if (nurseIsBusy) {
+                throw new Exception("Infermieri është i zënë me një rezervim tjetër");
             }
         }
 
@@ -233,7 +280,9 @@ namespace Detyra___EPacient.Models {
             string employeeType,
             string startDateTime,
             string endDateTime,
-            int id
+            int employeeId,
+            long id,
+            bool update
         ) {
             try {
                 string queryForDoctors = $@"
@@ -242,7 +291,7 @@ namespace Detyra___EPacient.Models {
                         FROM 
                             {DBTables.RESERVATION} 
                         WHERE
-                            {DBTables.RESERVATION}.doctor = @id
+                            {DBTables.RESERVATION}.doctor = @employeeId
                             AND (
                                 {DBTables.RESERVATION}.start_datetime BETWEEN @start AND @end
                                 OR
@@ -254,7 +303,7 @@ namespace Detyra___EPacient.Models {
                         FROM 
                             {DBTables.RESERVATION} 
                         WHERE
-                            {DBTables.RESERVATION}.nurse = @id
+                            {DBTables.RESERVATION}.nurse = @employeeId
                             AND (
                                 ({DBTables.RESERVATION}.start_datetime BETWEEN @start AND @end)
                                 OR
@@ -262,19 +311,28 @@ namespace Detyra___EPacient.Models {
                             )";
                 string query = employeeType == "doctor" ? queryForDoctors : queryForNurses;
 
+                if (update) {
+                    query += $"AND {DBTables.RESERVATION}.id != @id";
+                }
+
                 MySqlConnection connection = new MySqlConnection(DB.connectionString);
                 connection.Open();
 
                 MySqlCommand cmd = new MySqlCommand(query, connection);
 
-                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@employeeId", employeeId);
                 cmd.Parameters.AddWithValue("@start", startDateTime);
                 cmd.Parameters.AddWithValue("@end", endDateTime);
+
+                if (update) {
+                    cmd.Parameters.AddWithValue("@id", id);
+                }
+
                 cmd.Prepare();
 
                 int resultCount = Convert.ToInt32(await cmd.ExecuteScalarAsync());
 
-                return resultCount == 0;
+                return resultCount != 0;
             } catch (Exception e) {
                 throw e;
             }
@@ -314,20 +372,22 @@ namespace Detyra___EPacient.Models {
                     string startSQLFormat = start.ToString(DateTimeFormats.MYSQL_DATE_TIME);
                     string endSQLFormat = end.ToString(DateTimeFormats.MYSQL_DATE_TIME);
 
-                    // Check if the reservation is withing doctor's and nurse's working hours
-                    bool doctorIsWorking = await checkIfEmployeeIsWorking(doctorEmployeeId, startDateTime, endDateTime);
-                    bool nurseIsWorking = await checkIfEmployeeIsWorking(nurseEmployeeId, startDateTime, endDateTime);
+                    // Validate times
+                    this.validateTimes(start, end);
 
-                    if (!doctorIsWorking) {
-                        throw new Exception("Rezervimi është jashtë orarit të punës së mjekut");
-                    }
-                    if (!nurseIsWorking) {
-                        throw new Exception("Rezervimi është jashtë orarit të punës së infermierit");
-                    }
-
-                    // Check if doctor or nurse are busy on other appointments
-                    bool doctorIsBusy = await checkIfBusy("doctor", startSQLFormat, endSQLFormat, doctor);
-                    bool nurseIsBusy = await checkIfBusy("nurse", startSQLFormat, startSQLFormat, nurse);
+                    // Validate personel availability
+                    await this.validatePersonelAvailability(
+                        doctorEmployeeId,
+                        startDateTime,
+                        endDateTime,
+                        nurseEmployeeId,
+                        startSQLFormat,
+                        endSQLFormat,
+                        doctor,
+                        nurse,
+                        -1,
+                        false
+                    );
 
                     // Create reservation
                     string query = $@"
@@ -357,6 +417,99 @@ namespace Detyra___EPacient.Models {
                     cmd.Parameters.AddWithValue("@patient", patient);
                     cmd.Parameters.AddWithValue("@nurse", nurse);
                     cmd.Parameters.AddWithValue("@doctor", doctor);
+                    cmd.Prepare();
+
+                    await cmd.ExecuteNonQueryAsync();
+
+                    connection.Close();
+                    return cmd.LastInsertedId;
+                } else {
+                    throw new Exception("Input i gabuar ose i pamjaftueshëm");
+                }
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+
+        /* Update reservation */
+
+        public async Task<long> updateReservation(
+            long id,
+            string startDateTime,
+            string endDateTime,
+            int service,
+            int patient,
+            int doctor,
+            int doctorEmployeeId,
+            int nurse,
+            int nurseEmployeeId
+        ) {
+            try {
+                bool idIsValid = id > 0;
+                bool startDateTimeIsValid = startDateTime != null && startDateTime.Length > 0;
+                bool endDateTimeIsValid = endDateTime != null && endDateTime.Length > 0;
+                bool serviceIsValid = service > 0;
+                bool patientIsValid = patient > 0;
+                bool doctorIsValid = doctor > 0;
+                bool nurseIsValid = nurse > 0;
+
+                if (
+                    idIsValid
+                        && startDateTimeIsValid
+                        && endDateTimeIsValid
+                        && serviceIsValid
+                        && patientIsValid
+                        && doctorIsValid
+                        && nurseIsValid
+                ) {
+                    DateTime start = DateTime.ParseExact(startDateTime, DateTimeFormats.SQ_DATE_TIME, null);
+                    DateTime end = DateTime.ParseExact(endDateTime, DateTimeFormats.SQ_DATE_TIME, null);
+                    string startSQLFormat = start.ToString(DateTimeFormats.MYSQL_DATE_TIME);
+                    string endSQLFormat = end.ToString(DateTimeFormats.MYSQL_DATE_TIME);
+
+                    // Validate times
+                    this.validateTimes(start, end);
+
+                    // Validate personel availability
+                    await this.validatePersonelAvailability(
+                        doctorEmployeeId,
+                        startDateTime,
+                        endDateTime,
+                        nurseEmployeeId,
+                        startSQLFormat,
+                        endSQLFormat,
+                        doctor,
+                        nurse,
+                        id,
+                        true
+                    );
+
+                    // Update reservation
+                    string query = $@"
+                        UPDATE
+                            {DBTables.RESERVATION}
+                        SET
+                            start_datetime = @startDateTime,
+                            end_datetime = @endDateTime,
+                            service = @service,
+                            patient = @patient,
+                            nurse = @nurse,
+                            doctor = @doctor
+                        WHERE
+                            id = @id
+                        ";
+
+                    MySqlConnection connection = new MySqlConnection(DB.connectionString);
+                    connection.Open();
+
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    cmd.Parameters.AddWithValue("@startDateTime", startSQLFormat);
+                    cmd.Parameters.AddWithValue("@endDateTime", endSQLFormat);
+                    cmd.Parameters.AddWithValue("@service", service);
+                    cmd.Parameters.AddWithValue("@patient", patient);
+                    cmd.Parameters.AddWithValue("@nurse", nurse);
+                    cmd.Parameters.AddWithValue("@doctor", doctor);
+                    cmd.Parameters.AddWithValue("@id", id);
                     cmd.Prepare();
 
                     await cmd.ExecuteNonQueryAsync();

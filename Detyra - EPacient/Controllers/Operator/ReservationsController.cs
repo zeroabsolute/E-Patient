@@ -109,6 +109,13 @@ namespace Detyra___EPacient.Controllers.Operator {
                     this.reservations.ForEach((item) => {
                         if (item.Id == id) {
                             this.view.SelectedReservation = item;
+                            this.view.SelectedReservationLabel.Text = item.Id.ToString();
+                            this.view.StartDateTime.Value = item.StartDateTime;
+                            this.view.EndDateTime.Value = item.EndDateTime;
+                            this.view.ServiceCBox.comboBox.SelectedValue = item.Service.Id;
+                            this.view.PatientCBox.comboBox.SelectedValue = item.Patient.Id;
+                            this.view.DoctorCBox.comboBox.SelectedValue = item.Doctor.Id;
+                            this.view.NurseCBox.comboBox.SelectedValue = item.Nurse.Id;
                         }
                     });
                 }
@@ -154,6 +161,7 @@ namespace Detyra___EPacient.Controllers.Operator {
 
         public void handleResetButton() {
             this.view.SelectedReservation = null;
+            this.view.SelectedReservationLabel.Text = "-";
         }
 
         /**
@@ -190,17 +198,35 @@ namespace Detyra___EPacient.Controllers.Operator {
             try {
                 Cursor.Current = Cursors.WaitCursor;
 
-                await reservationModel.createReservation(
-                    this.view.StartDateTime.Value.ToString(DateTimeFormats.SQ_DATE_TIME),
-                    this.view.EndDateTime.Value.ToString(DateTimeFormats.SQ_DATE_TIME),
-                    (int) this.view.ServiceCBox.comboBox.SelectedValue,
-                    this.view.LoggedInUser.Id,
-                    (int) this.view.PatientCBox.comboBox.SelectedValue,
-                    (int) this.view.DoctorCBox.comboBox.SelectedValue,
-                    this.getDoctorEmployeeId(),
-                    (int) this.view.NurseCBox.comboBox.SelectedValue,
-                    this.getNurseEmployeeId()
-                );
+                if (this.view.SelectedReservation == null) {
+                    await reservationModel.createReservation(
+                        this.view.StartDateTime.Value.ToString(DateTimeFormats.SQ_DATE_TIME),
+                        this.view.EndDateTime.Value.ToString(DateTimeFormats.SQ_DATE_TIME),
+                        (int) this.view.ServiceCBox.comboBox.SelectedValue,
+                        this.view.LoggedInUser.Id,
+                        (int) this.view.PatientCBox.comboBox.SelectedValue,
+                        (int) this.view.DoctorCBox.comboBox.SelectedValue,
+                        this.getDoctorEmployeeId(),
+                        (int) this.view.NurseCBox.comboBox.SelectedValue,
+                        this.getNurseEmployeeId()
+                    );
+
+                    MessageBox.Show("Rezervimi u krye me sukses!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                } else {
+                    await reservationModel.updateReservation(
+                        this.view.SelectedReservation.Id,
+                        this.view.StartDateTime.Value.ToString(DateTimeFormats.SQ_DATE_TIME),
+                        this.view.EndDateTime.Value.ToString(DateTimeFormats.SQ_DATE_TIME),
+                        (int) this.view.ServiceCBox.comboBox.SelectedValue,
+                        (int) this.view.PatientCBox.comboBox.SelectedValue,
+                        (int) this.view.DoctorCBox.comboBox.SelectedValue,
+                        this.getDoctorEmployeeId(),
+                        (int) this.view.NurseCBox.comboBox.SelectedValue,
+                        this.getNurseEmployeeId()
+                    );
+
+                    MessageBox.Show("Rezervimi u përditësua me sukses!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
 
                 this.handleResetButton();
                 this.init();
