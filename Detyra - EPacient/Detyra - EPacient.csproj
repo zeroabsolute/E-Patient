@@ -72,6 +72,7 @@
     <Compile Include="Helpers\Validators.cs" />
     <Compile Include="Models\Medicament.cs" />
     <Compile Include="Models\Patient.cs" />
+    <Compile Include="Models\ChartDocument.cs" />
     <Compile Include="Models\Reservation.cs" />
     <Compile Include="Models\Service.cs" />
     <Compile Include="Models\Nurse.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Operator.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\PatientChart.cs" />
     <Compile Include="Models\WorkingHours.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Styles\Colors.cs" />

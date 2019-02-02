@@ -12,5 +12,6 @@
         public static string PATIENT = "patient";
         public static string RESERVATION = "reservation";
         public static string PATIENT_CHART = "patient_chart";
+        public static string CHART_DOCUMENT = "chart_document";
     }
 }

@@ -135,7 +135,14 @@ namespace Detyra___EPacient.Models {
                     await cmd.ExecuteNonQueryAsync();
 
                     connection.Close();
-                    return cmd.LastInsertedId;
+                    long patientId = cmd.LastInsertedId;
+
+                    await new PatientChart().createPatientChart(
+                        DateTime.Now.ToString(DateTimeFormats.MYSQL_DATE), 
+                        patientId
+                    );
+
+                    return patientId;
                 } else {
                     throw new Exception("Input i gabuar ose i pamjaftueshëm");
                 }
