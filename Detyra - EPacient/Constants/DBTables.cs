@@ -11,5 +11,6 @@
         public static string MEDICAMENT = "medicament";
         public static string PATIENT = "patient";
         public static string RESERVATION = "reservation";
+        public static string PATIENT_CHART = "patient_chart";
     }
 }

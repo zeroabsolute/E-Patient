@@ -63,6 +63,7 @@
     <Compile Include="Controllers\Manager\UsersController.cs" />
     <Compile Include="Controllers\Nurse\NurseMainController.cs" />
     <Compile Include="Controllers\Operator\OperatorMainController.cs" />
+    <Compile Include="Controllers\Operator\PatientChartsController.cs" />
     <Compile Include="Controllers\Operator\ReservationsController.cs" />
     <Compile Include="Controllers\Operator\PatientsController.cs" />
     <Compile Include="Controllers\Operator\OperatorTimetablesController.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Views\Manager\Users\Users.cs" />
     <Compile Include="Views\Nurse\NurseMainPanel.cs" />
     <Compile Include="Views\Nurse\Schedule.cs" />
+    <Compile Include="Views\Operator\PatientCharts\PatientsTable.cs" />
     <Compile Include="Views\Operator\PatientCharts\PatientCharts.cs" />
     <Compile Include="Views\Operator\Patients\DynamicPatientsTable.cs" />
     <Compile Include="Views\Operator\Patients\Patients.cs" />

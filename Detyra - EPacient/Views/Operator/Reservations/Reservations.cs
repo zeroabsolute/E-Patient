@@ -66,7 +66,7 @@ namespace Detyra___EPacient.Views.Operator {
             rightPanelWidth = (int) (Dimensions.PANEL_WIDTH * 0.4);
             formComponentKeyWidth = (int) (0.3 * this.rightPanelWidth);
             formComponentValueWidth = (int) (0.6 * this.rightPanelWidth);
-            formComponentHorizontalMargin = 20;
+            formComponentHorizontalMargin = (int) (0.1 * this.rightPanelWidth - 2 * Dimensions.PANEL_CARD_PADDING_HORIZONTAL);
             Size cBoxSize = new Size(this.formComponentValueWidth, this.formComponentHeight);
 
             // Init previous panel

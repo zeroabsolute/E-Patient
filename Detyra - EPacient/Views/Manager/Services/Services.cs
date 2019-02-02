@@ -52,7 +52,7 @@ namespace Detyra___EPacient.Views.Manager {
             rightPanelWidth = (int) (Dimensions.PANEL_WIDTH * 0.4);
             formComponentKeyWidth = (int) (0.4 * this.rightPanelWidth);
             formComponentValueWidth = (int) (0.5 * this.rightPanelWidth);
-            formComponentHorizontalMargin = 35;
+            formComponentHorizontalMargin = (int) (0.1 * this.rightPanelWidth - 2 * Dimensions.PANEL_CARD_PADDING_HORIZONTAL);
 
             // Init previous panel
             this.PreviousPanel = previousPanel;
@@ -125,7 +125,7 @@ namespace Detyra___EPacient.Views.Manager {
                 Dimensions.PANEL_CARD_PADDING_HORIZONTAL + this.formComponentKeyWidth + this.formComponentHorizontalMargin,
                 Dimensions.PANEL_CARD_PADDING_VERTICAL * 2
             );
-            this.ServiceLabelValue.Width = 2 * this.formComponentValueWidth;
+            this.ServiceLabelValue.Width = this.formComponentValueWidth;
             this.ServiceLabelValue.Height = this.formComponentHeight;
             this.ServiceLabelValue.Text = this.SelectedService != null ? this.SelectedService : "-";
             this.ServiceLabelValue.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
