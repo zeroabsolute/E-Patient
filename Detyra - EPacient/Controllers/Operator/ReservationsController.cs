@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Detyra___EPacient.Constants;
+using Detyra___EPacient.Styles;
 using Detyra___EPacient.Views.Operator;
 
 namespace Detyra___EPacient.Controllers.Operator {
@@ -107,8 +110,8 @@ namespace Detyra___EPacient.Controllers.Operator {
                 Cursor.Current = Cursors.WaitCursor;
 
                 var selectedRow = this.view.ReservationsTable.DataGrid.SelectedRows.Count > 0
-                ? this.view.ReservationsTable.DataGrid.SelectedRows[0]
-                : null;
+                    ? this.view.ReservationsTable.DataGrid.SelectedRows[0]
+                    : null;
 
                 if (selectedRow != null) {
                     int id = (int) selectedRow.Cells[0].Value;
@@ -116,13 +119,6 @@ namespace Detyra___EPacient.Controllers.Operator {
                     this.reservations.ForEach((item) => {
                         if (item.Id == id) {
                             this.view.SelectedReservation = item;
-                            this.view.SelectedReservationLabel.Text = item.Id.ToString();
-                            this.view.StartDateTime.Value = item.StartDateTime;
-                            this.view.EndDateTime.Value = item.EndDateTime;
-                            this.view.ServiceCBox.comboBox.SelectedValue = item.Service.Id;
-                            this.view.PatientCBox.comboBox.SelectedValue = item.Patient.Id;
-                            this.view.DoctorCBox.comboBox.SelectedValue = item.Doctor.Id;
-                            this.view.NurseCBox.comboBox.SelectedValue = item.Nurse.Id;
                         }
                     });
                 }
@@ -164,21 +160,152 @@ namespace Detyra___EPacient.Controllers.Operator {
         /**
          * Controller to handle printing a reservation.
          */
-        
+
+        private void openPrintDialog() {
+            using (PrintDialog printDialog = new PrintDialog()) {
+                if (printDialog.ShowDialog() == DialogResult.OK) {
+                    PrintDocument printDocument = new PrintDocument();
+                    printDocument.PrintPage += this.printReservation;
+                    printDocument.Print();
+                }
+            }
+        }
+
+        private void printReservation(object sender, System.Drawing.Printing.PrintPageEventArgs e) {
+            var reservation = this.view.SelectedReservation;
+
+            e.Graphics.DrawString(
+                "EPacient - Rezervimi",
+                new Font(Fonts.primary, 20, FontStyle.Bold), 
+                Brushes.SaddleBrown, 
+                new Point(300, 100)
+            );
+            e.Graphics.DrawString(
+                "ID e rezervimit",
+                new Font(Fonts.primary, 12, FontStyle.Regular),
+                Brushes.Gray, 
+                new Point(80, 200)
+            );
+            e.Graphics.DrawString(
+                $"{this.view.SelectedReservation.Id}",
+                new Font(Fonts.primary, 12, FontStyle.Bold),
+                Brushes.Black,
+                new Point(500, 200)
+            );
+            e.Graphics.DrawString(
+                "Pacienti",
+                new Font(Fonts.primary, 12, FontStyle.Regular),
+                Brushes.Gray,
+                new Point(80, 250)
+            );
+            e.Graphics.DrawString(
+                this.view.SelectedReservation.Patient.FullName,
+                new Font(Fonts.primary, 12, FontStyle.Bold),
+                Brushes.Black,
+                new Point(500, 250)
+            );
+            e.Graphics.DrawString(
+                "Data dhe ora e fillimit",
+                new Font(Fonts.primary, 12, FontStyle.Regular),
+                Brushes.Gray, 
+                new Point(80, 300)
+            );
+            e.Graphics.DrawString(
+                this.view.SelectedReservation.StartDateTime.ToString(DateTimeFormats.SQ_DATE_TIME),
+                new Font(Fonts.primary, 12, FontStyle.Bold),
+                Brushes.Black,
+                new Point(500, 300)
+            );
+            e.Graphics.DrawString(
+                $"Data dhe ora e përfundimit",
+                new Font(Fonts.primary, 12, FontStyle.Regular),
+                Brushes.Gray,
+                new Point(80, 350)
+            );
+            e.Graphics.DrawString(
+                this.view.SelectedReservation.EndDateTime.ToString(DateTimeFormats.SQ_DATE_TIME),
+                new Font(Fonts.primary, 12, FontStyle.Bold),
+                Brushes.Black,
+                new Point(500, 350)
+            );
+            e.Graphics.DrawString(
+                "Mjeku",
+                new Font(Fonts.primary, 12, FontStyle.Regular),
+                Brushes.Gray,
+                new Point(80, 400)
+            );
+            e.Graphics.DrawString(
+                this.view.SelectedReservation.Doctor.FullName,
+                new Font(Fonts.primary, 12, FontStyle.Bold),
+                Brushes.Black,
+                new Point(500, 400)
+            );
+            e.Graphics.DrawString(
+                "Infermieri",
+                new Font(Fonts.primary, 12, FontStyle.Regular),
+                Brushes.Gray,
+                new Point(80, 450)
+            );
+            e.Graphics.DrawString(
+                this.view.SelectedReservation.Nurse.FullName,
+                new Font(Fonts.primary, 12, FontStyle.Bold),
+                Brushes.Black,
+                new Point(500, 450)
+            );
+            e.Graphics.DrawString(
+                "Shërbimi",
+                new Font(Fonts.primary, 12, FontStyle.Regular),
+                Brushes.Gray,
+                new Point(80, 500)
+            );
+            e.Graphics.DrawString(
+                this.view.SelectedReservation.Service.Name,
+                new Font(Fonts.primary, 12, FontStyle.Bold),
+                Brushes.Black,
+                new Point(500, 500)
+            );
+            e.Graphics.DrawString(
+                "Totali i kostos",
+                new Font(Fonts.primary, 14, FontStyle.Bold),
+                Brushes.Black,
+                new Point(80, 600)
+            );
+            e.Graphics.DrawString(
+                $"{this.view.SelectedReservation.Service.Fee} Lekë",
+                new Font(Fonts.primary, 14, FontStyle.Bold),
+                Brushes.DarkBlue,
+                new Point(500, 600)
+            );
+            e.Graphics.DrawRectangle(
+                new Pen(Color.Black, 1), 
+                new Rectangle(50, 80, 730, 580)
+            );
+        }
+
         public void handlePrintReservation() {
-            Console.WriteLine("-------------------------------------------");
-            Console.WriteLine(this.view.SelectedReservation.Id);
-            Console.WriteLine("-------------------------------------------");
+            if (this.view.SelectedReservation == null) {
+                MessageBox.Show("Nuk ka rezervim të zgjedhur!", "Gabim", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            } else {
+                this.openPrintDialog();
+            }
         }
 
         /**
-         * Controller to handle printing a reservation fee.
+         * Controller to handle editing a reservation.
          */
 
-        public void handlePrintFee() {
-            Console.WriteLine("-------------------------------------------");
-            Console.WriteLine(this.view.SelectedReservation.Service.Fee);
-            Console.WriteLine("-------------------------------------------");
+        public void handleEdit() {
+            if (this.view.SelectedReservation == null) {
+                MessageBox.Show("Nuk ka rezervim të zgjedhur!", "Gabim", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            } else {
+                this.view.SelectedReservationLabel.Text = this.view.SelectedReservation.Id.ToString();
+                this.view.StartDateTime.Value = this.view.SelectedReservation.StartDateTime;
+                this.view.EndDateTime.Value = this.view.SelectedReservation.EndDateTime;
+                this.view.ServiceCBox.comboBox.SelectedValue = this.view.SelectedReservation.Service.Id;
+                this.view.PatientCBox.comboBox.SelectedValue = this.view.SelectedReservation.Patient.Id;
+                this.view.DoctorCBox.comboBox.SelectedValue = this.view.SelectedReservation.Doctor.Id;
+                this.view.NurseCBox.comboBox.SelectedValue = this.view.SelectedReservation.Nurse.Id;
+            }
         }
 
         /**

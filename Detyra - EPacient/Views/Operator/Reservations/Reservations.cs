@@ -35,7 +35,7 @@ namespace Detyra___EPacient.Views.Operator {
         private GroupBox left;
         private Label searchLabel;
         private Button printReservationBtn;
-        private Button printFeeBtn;
+        private Button editBtn;
         private Label selectedReservationLabel;
         private Label startDateTimeLabel;
         private Label endDateTimeLabel;
@@ -162,20 +162,20 @@ namespace Detyra___EPacient.Views.Operator {
             this.printReservationBtn.Click += new EventHandler(onReservationPrintClicked);
             this.left.Controls.Add(this.printReservationBtn);
 
-            this.printFeeBtn = new Button();
-            this.printFeeBtn.Size = new Size(2 * this.formComponentKeyWidth, this.formComponentHeight);
-            this.printFeeBtn.Location = new Point(
+            this.editBtn = new Button();
+            this.editBtn.Size = new Size(2 * this.formComponentKeyWidth, this.formComponentHeight);
+            this.editBtn.Location = new Point(
                 this.leftPanelWidth - (2 * this.formComponentKeyWidth + Dimensions.PANEL_CARD_PADDING_HORIZONTAL),
                 this.cardHeight - (Dimensions.PANEL_CARD_PADDING_VERTICAL + this.formComponentHeight)
             );
-            this.printFeeBtn.Text = "PRINTO FATURËN";
-            this.printFeeBtn.UseVisualStyleBackColor = true;
-            this.printFeeBtn.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
-            this.printFeeBtn.ForeColor = Colors.WHITE;
-            this.printFeeBtn.BackColor = Colors.PERSIAN_INDIGO;
-            this.printFeeBtn.FlatStyle = FlatStyle.Flat;
-            this.printFeeBtn.Click += new EventHandler(onFeePrintClicked);
-            this.left.Controls.Add(this.printFeeBtn);
+            this.editBtn.Text = "PËRDITËSO";
+            this.editBtn.UseVisualStyleBackColor = true;
+            this.editBtn.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.editBtn.ForeColor = Colors.WHITE;
+            this.editBtn.BackColor = Colors.PERSIAN_INDIGO;
+            this.editBtn.FlatStyle = FlatStyle.Flat;
+            this.editBtn.Click += new EventHandler(onEditClicked);
+            this.left.Controls.Add(this.editBtn);
 
             // Init right container
             right = new GroupBox();
@@ -403,8 +403,8 @@ namespace Detyra___EPacient.Views.Operator {
             this.controller.handlePrintReservation();
         }
 
-        private void onFeePrintClicked(object sender, EventArgs e) {
-            this.controller.handlePrintFee();
+        private void onEditClicked(object sender, EventArgs e) {
+            this.controller.handleEdit();
         }
 
         private void onResetButtonClicked(object sender, EventArgs e) {
