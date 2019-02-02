@@ -30,6 +30,27 @@ namespace Detyra___EPacient.Controllers.Operator {
         }
 
         /**
+         * Helper to populate table with data
+         */
+
+        private void populateTable(List<Models.Reservation> data) {
+            this.view.ReservationsTable.DataGrid.Rows.Clear();
+            this.view.ReservationsTable.DataGrid.Refresh();
+
+            data.ForEach((item) => {
+                this.view.ReservationsTable.DataGrid.Rows.Add(
+                    item.Id,
+                    item.StartDateTime.ToString(DateTimeFormats.SQ_DATE_TIME),
+                    item.EndDateTime.ToString(DateTimeFormats.SQ_DATE_TIME),
+                    $"{item.Patient.FirstName} {item.Patient.LastName}",
+                    $"{item.Doctor.Employee.FirstName} {item.Doctor.Employee.LastName}",
+                    $"{item.Nurse.Employee.FirstName} {item.Nurse.Employee.LastName}",
+                    $"{item.Service.Name}"
+                );
+            });
+        }
+
+        /**
          * Controller to read initial data
          */
 
@@ -40,21 +61,7 @@ namespace Detyra___EPacient.Controllers.Operator {
                 // Read reservations from DB and populate table
                 List<Models.Reservation> reservations = await this.reservationModel.readReservations();
                 this.reservations = reservations;
-
-                this.view.ReservationsTable.DataGrid.Rows.Clear();
-                this.view.ReservationsTable.DataGrid.Refresh();
-
-                reservations.ForEach((item) => {
-                    this.view.ReservationsTable.DataGrid.Rows.Add(
-                        item.Id,
-                        item.StartDateTime.ToString(DateTimeFormats.SQ_DATE_TIME),
-                        item.EndDateTime.ToString(DateTimeFormats.SQ_DATE_TIME),
-                        $"{item.Patient.FirstName} {item.Patient.LastName}",
-                        $"{item.Doctor.Employee.FirstName} {item.Doctor.Employee.LastName}",
-                        $"{item.Nurse.Employee.FirstName} {item.Nurse.Employee.LastName}",
-                        $"{item.Service.Name}"
-                    );
-                });
+                this.populateTable(reservations);
 
                 // Read services and populate combo box
                 List<Models.Service> services = await serviceModel.readServices();
@@ -132,7 +139,26 @@ namespace Detyra___EPacient.Controllers.Operator {
          */
 
         public void handleSearch() {
+            string searchTerm = this.view.SearchTermTxtBox.Text;
+            List<Models.Reservation> filteredReservations = new List<Models.Reservation>();
 
+            if (searchTerm.Length == 0) {
+                this.populateTable(this.reservations);
+
+                return;
+            }
+
+            if (this.reservations != null && this.reservations.Count > 0) {
+                this.reservations.ForEach((item) => {
+                    string patientName = item.Patient.FullName;
+
+                    if (patientName.StartsWith(searchTerm)) {
+                        filteredReservations.Add(item);
+                    }
+                });
+
+                this.populateTable(filteredReservations);
+            }
         }
 
         /**
