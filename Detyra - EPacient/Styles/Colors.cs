@@ -19,6 +19,7 @@ namespace Detyra___EPacient.Styles {
         public static Color BLUE_RIBBON = ColorTranslator.FromHtml("#304FFE");
 
         public static Color WHITE_LILAC = ColorTranslator.FromHtml("#E8EAF6");
+        public static Color HELIOTROPE = ColorTranslator.FromHtml("#EA80FC");
         public static Color LILAC_BUSH = ColorTranslator.FromHtml("#9575CD");
         public static Color PERSIAN_INDIGO = ColorTranslator.FromHtml("#4A148C");
         public static Color AMETHYST = ColorTranslator.FromHtml("#BA68C8");

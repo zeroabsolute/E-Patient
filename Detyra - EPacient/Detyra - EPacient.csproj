@@ -101,6 +101,7 @@
     <Compile Include="Views\Manager\Users\Users.cs" />
     <Compile Include="Views\Nurse\NurseMainPanel.cs" />
     <Compile Include="Views\Nurse\Schedule.cs" />
+    <Compile Include="Views\Operator\PatientCharts\PatientCharts.cs" />
     <Compile Include="Views\Operator\Patients\DynamicPatientsTable.cs" />
     <Compile Include="Views\Operator\Patients\Patients.cs" />
     <Compile Include="Views\Operator\Reservations\ReservationsTable.cs" />

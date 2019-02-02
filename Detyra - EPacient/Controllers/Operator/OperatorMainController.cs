@@ -26,6 +26,10 @@ namespace Detyra___EPacient.Controllers.Operator {
                     Panels.switchPanels(this.view.Panel, this.view.PatientsPanel.Panel);
                     this.view.PatientsPanel.readInitialData();
                     break;
+                case OperatorMainPanel.PATIENT_CHARTS_BTN:
+                    Panels.switchPanels(this.view.Panel, this.view.PatientChartsPanel.Panel);
+                    //this.view.PatientChartsPanel.readInitialData();
+                    break;
                 case OperatorMainPanel.RESERVATIONS_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.ReservationsPanel.Panel);
                     this.view.ReservationsPanel.LoggedInUser = this.view.LoggedInUser;

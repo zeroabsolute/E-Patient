@@ -13,16 +13,19 @@ namespace Detyra___EPacient.Views.Operator {
         public User LoggedInUser { get; set; }
         public Panel Panel { get; set; }
         public Button Patients { get; set; }
+        public Button PatientCharts { get; set; }
         public Button Reservations { get; set; }
         public Button TimeTables { get; set; }
         public Button LogOut { get; set; }
 
         public Patients PatientsPanel { get; set; }
+        public PatientCharts PatientChartsPanel { get; set; }
         public Reservations ReservationsPanel { get; set; }
         public OperatorTimetables TimeTablesPanel { get; set; }
         public LogInPanel LogInPanel { get; set; }
 
         public const string PATIENTS_BTN = "operatorPatientsBtn";
+        public const string PATIENT_CHARTS_BTN = "operatorPatientChartsBtn";
         public const string RESERVATIONS_BTN = "operatorReservationsBtn";
         public const string TIME_TABLES_BTN = "operatorTimeTablesBtn";
         public const string LOG_OUT_BTN = "operatorLogOutBtn";
@@ -55,6 +58,7 @@ namespace Detyra___EPacient.Views.Operator {
             this.avatar.ImageLocation = "../../Resources/operator.png";
 
             this.Panel.Controls.Add(this.avatar);
+
             // Init menu container
             this.menuContainer = new TableLayoutPanel();
             this.menuContainer.Name = "menuContainer";
@@ -62,6 +66,7 @@ namespace Detyra___EPacient.Views.Operator {
             this.menuContainer.Size = new Size(Dimensions.MENU_CONTAINER_WIDTH, Dimensions.MENU_CONTAINER_HEIGHT);
 
             this.Panel.Controls.Add(this.menuContainer);
+
             /* Init menu buttons */
 
             int buttonHeight = (int)Dimensions.MENU_CONTAINER_HEIGHT / 3;
@@ -72,7 +77,7 @@ namespace Detyra___EPacient.Views.Operator {
             this.Patients = new Button();
             this.Patients.Name = PATIENTS_BTN;
             this.Patients.Text = "Pacientët";
-            this.Patients.Size = new Size(bigButtonWidth, buttonHeight);
+            this.Patients.Size = new Size(smallButtonWidth, buttonHeight);
             this.Patients.Image = Image.FromFile("../../Resources/user.png");
             this.Patients.ImageAlign = ContentAlignment.MiddleCenter;
             this.Patients.TextAlign = ContentAlignment.MiddleCenter;
@@ -87,34 +92,32 @@ namespace Detyra___EPacient.Views.Operator {
             this.menuContainer.Controls.Add(this.Patients);
             this.menuContainer.SetRow(this.Patients, 0);
             this.menuContainer.SetColumn(this.Patients, 0);
-            this.menuContainer.SetColumnSpan(this.Patients, 2);
 
-            // Timetables
-            this.TimeTables = new Button();
-            this.TimeTables.Name = TIME_TABLES_BTN;
-            this.TimeTables.Text = "Oraret";
-            this.TimeTables.Size = new Size(bigButtonWidth, buttonHeight);
-            this.TimeTables.Image = Image.FromFile("../../Resources/clock.png");
-            this.TimeTables.ImageAlign = ContentAlignment.MiddleCenter;
-            this.TimeTables.TextAlign = ContentAlignment.MiddleCenter;
-            this.TimeTables.TextImageRelation = TextImageRelation.ImageAboveText;
-            this.TimeTables.UseVisualStyleBackColor = true;
-            this.TimeTables.Font = new Font(Fonts.primary, 18, FontStyle.Bold);
-            this.TimeTables.ForeColor = Colors.WHITE;
-            this.TimeTables.BackColor = Colors.JACKSONS_PURPLE;
-            this.TimeTables.FlatStyle = FlatStyle.Flat;
-            this.TimeTables.Click += new EventHandler(onMenuButtonClicked);
+            // Patient charts
+            this.PatientCharts = new Button();
+            this.PatientCharts.Name = PATIENT_CHARTS_BTN;
+            this.PatientCharts.Text = "Kartelat";
+            this.PatientCharts.Size = new Size(smallButtonWidth, buttonHeight);
+            this.PatientCharts.Image = Image.FromFile("../../Resources/description.png");
+            this.PatientCharts.ImageAlign = ContentAlignment.MiddleCenter;
+            this.PatientCharts.TextAlign = ContentAlignment.MiddleCenter;
+            this.PatientCharts.TextImageRelation = TextImageRelation.ImageAboveText;
+            this.PatientCharts.UseVisualStyleBackColor = true;
+            this.PatientCharts.Font = new Font(Fonts.primary, 18, FontStyle.Bold);
+            this.PatientCharts.ForeColor = Colors.WHITE;
+            this.PatientCharts.BackColor = Colors.HELIOTROPE;
+            this.PatientCharts.FlatStyle = FlatStyle.Flat;
+            this.PatientCharts.Click += new EventHandler(onMenuButtonClicked);
 
-            this.menuContainer.Controls.Add(this.TimeTables);
-            this.menuContainer.SetRow(this.TimeTables, 1);
-            this.menuContainer.SetColumn(this.TimeTables, 0);
-            this.menuContainer.SetColumnSpan(this.TimeTables, 2);
+            this.menuContainer.Controls.Add(this.PatientCharts);
+            this.menuContainer.SetRow(this.PatientCharts, 0);
+            this.menuContainer.SetColumn(this.PatientCharts, 1);
            
             // Reservations
             this.Reservations = new Button();
             this.Reservations.Name = RESERVATIONS_BTN;
             this.Reservations.Text = "Rezervimet";
-            this.Reservations.Size = new Size(smallButtonWidth, buttonHeight);
+            this.Reservations.Size = new Size(bigButtonWidth, buttonHeight);
             this.Reservations.Image = Image.FromFile("../../Resources/calendar.png");
             this.Reservations.ImageAlign = ContentAlignment.MiddleCenter;
             this.Reservations.TextAlign = ContentAlignment.MiddleCenter;
@@ -127,8 +130,29 @@ namespace Detyra___EPacient.Views.Operator {
             this.Reservations.Click += new EventHandler(onMenuButtonClicked);
 
             this.menuContainer.Controls.Add(this.Reservations);
-            this.menuContainer.SetRow(this.Reservations, 2);
+            this.menuContainer.SetRow(this.Reservations, 1);
             this.menuContainer.SetColumn(this.Reservations, 0);
+            this.menuContainer.SetColumnSpan(this.Reservations, 2);
+
+            // Timetables
+            this.TimeTables = new Button();
+            this.TimeTables.Name = TIME_TABLES_BTN;
+            this.TimeTables.Text = "Oraret";
+            this.TimeTables.Size = new Size(smallButtonWidth, buttonHeight);
+            this.TimeTables.Image = Image.FromFile("../../Resources/clock.png");
+            this.TimeTables.ImageAlign = ContentAlignment.MiddleCenter;
+            this.TimeTables.TextAlign = ContentAlignment.MiddleCenter;
+            this.TimeTables.TextImageRelation = TextImageRelation.ImageAboveText;
+            this.TimeTables.UseVisualStyleBackColor = true;
+            this.TimeTables.Font = new Font(Fonts.primary, 18, FontStyle.Bold);
+            this.TimeTables.ForeColor = Colors.WHITE;
+            this.TimeTables.BackColor = Colors.JACKSONS_PURPLE;
+            this.TimeTables.FlatStyle = FlatStyle.Flat;
+            this.TimeTables.Click += new EventHandler(onMenuButtonClicked);
+
+            this.menuContainer.Controls.Add(this.TimeTables);
+            this.menuContainer.SetRow(this.TimeTables, 2);
+            this.menuContainer.SetColumn(this.TimeTables, 0);
 
             // Log out
             this.LogOut = new Button();
@@ -153,11 +177,13 @@ namespace Detyra___EPacient.Views.Operator {
 
         public void initNextPanels(
             Patients p,
+            PatientCharts pc,
             Reservations r,
             OperatorTimetables t,
             LogInPanel l
         ) {
             this.PatientsPanel = p;
+            this.PatientChartsPanel = pc;
             this.ReservationsPanel = r;
             this.TimeTablesPanel = t;
             this.LogInPanel = l;

@@ -49,6 +49,7 @@ namespace Detyra___EPacient {
             Users managerUsersPanel = new Users(managerMainPanel.Panel);
 
             OperatorMainPanel operatorMainPanel = new OperatorMainPanel();
+            PatientCharts operatorPatientChartsPanel = new PatientCharts(operatorMainPanel.Panel);
             Patients operatorPatientsPanel = new Patients(operatorMainPanel.Panel);
             Reservations operatorReservationsPanel = new Reservations(operatorMainPanel.Panel);
             OperatorTimetables operatorTimeTablesPanel = new OperatorTimetables(operatorMainPanel.Panel);
@@ -60,9 +61,6 @@ namespace Detyra___EPacient {
 
             NurseMainPanel nurseMainPanel = new NurseMainPanel();
             Schedule nurseSchedulePanel = new Schedule(nurseMainPanel.Panel);
-
-
-
 
             logInPanel.initNextPanels(
                 managerMainPanel,
@@ -83,6 +81,7 @@ namespace Detyra___EPacient {
 
             operatorMainPanel.initNextPanels(
                 operatorPatientsPanel,
+                operatorPatientChartsPanel,
                 operatorReservationsPanel,
                 operatorTimeTablesPanel,
                 logInPanel
@@ -127,6 +126,7 @@ namespace Detyra___EPacient {
 
             this.Controls.Add(operatorMainPanel.Panel);
             this.Controls.Add(operatorPatientsPanel.Panel);
+            this.Controls.Add(operatorPatientChartsPanel.Panel);
             this.Controls.Add(operatorReservationsPanel.Panel);
             this.Controls.Add(operatorTimeTablesPanel.Panel);
 
