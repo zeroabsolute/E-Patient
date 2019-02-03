@@ -160,6 +160,8 @@ namespace Detyra___EPacient.Views.Operator {
             this.printReservationBtn.BackColor = Colors.PERSIAN_INDIGO;
             this.printReservationBtn.FlatStyle = FlatStyle.Flat;
             this.printReservationBtn.Click += new EventHandler(onReservationPrintClicked);
+            this.printReservationBtn.Image = Image.FromFile("../../Resources/print.png");
+            this.printReservationBtn.ImageAlign = ContentAlignment.MiddleLeft;
             this.left.Controls.Add(this.printReservationBtn);
 
             this.editBtn = new Button();
@@ -175,6 +177,8 @@ namespace Detyra___EPacient.Views.Operator {
             this.editBtn.BackColor = Colors.PERSIAN_INDIGO;
             this.editBtn.FlatStyle = FlatStyle.Flat;
             this.editBtn.Click += new EventHandler(onEditClicked);
+            this.editBtn.Image = Image.FromFile("../../Resources/edit.png");
+            this.editBtn.ImageAlign = ContentAlignment.MiddleLeft;
             this.left.Controls.Add(this.editBtn);
 
             // Init right container
@@ -365,6 +369,8 @@ namespace Detyra___EPacient.Views.Operator {
             this.resetBtn.BackColor = Colors.IMPERIAL_RED;
             this.resetBtn.FlatStyle = FlatStyle.Flat;
             this.resetBtn.Click += new EventHandler(onResetButtonClicked);
+            this.resetBtn.Image = Image.FromFile("../../Resources/clear.png");
+            this.resetBtn.ImageAlign = ContentAlignment.MiddleLeft;
             this.right.Controls.Add(this.resetBtn);
 
             this.submitBtn = new Button();
@@ -380,6 +386,8 @@ namespace Detyra___EPacient.Views.Operator {
             this.submitBtn.BackColor = Colors.MALACHITE;
             this.submitBtn.FlatStyle = FlatStyle.Flat;
             this.submitBtn.Click += new EventHandler(onSubmitButtonClicked);
+            this.submitBtn.Image = Image.FromFile("../../Resources/save.png");
+            this.submitBtn.ImageAlign = ContentAlignment.MiddleLeft;
             this.right.Controls.Add(this.submitBtn);
         }
 

@@ -391,6 +391,8 @@ namespace Detyra___EPacient.Views.Manager {
             this.ClearBtn.BackColor = Colors.IMPERIAL_RED;
             this.ClearBtn.FlatStyle = FlatStyle.Flat;
             this.ClearBtn.Click += new EventHandler(onClearButtonClicked);
+            this.ClearBtn.Image = Image.FromFile("../../Resources/clear.png");
+            this.ClearBtn.ImageAlign = ContentAlignment.MiddleLeft;
             this.right.Controls.Add(this.ClearBtn);
 
             this.SubmitBtn = new Button();
@@ -407,6 +409,8 @@ namespace Detyra___EPacient.Views.Manager {
             this.SubmitBtn.BackColor = Colors.MALACHITE;
             this.SubmitBtn.FlatStyle = FlatStyle.Flat;
             this.SubmitBtn.Click += new EventHandler(onSubmitButtonClicked);
+            this.SubmitBtn.Image = Image.FromFile("../../Resources/save.png");
+            this.SubmitBtn.ImageAlign = ContentAlignment.MiddleLeft;
             this.right.Controls.Add(this.SubmitBtn);
         }
 

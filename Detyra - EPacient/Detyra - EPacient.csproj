@@ -70,6 +70,7 @@
     <Compile Include="Helpers\Panels.cs" />
     <Compile Include="Helpers\PasswordHash.cs" />
     <Compile Include="Helpers\Validators.cs" />
+    <Compile Include="Models\Allergen.cs" />
     <Compile Include="Models\Medicament.cs" />
     <Compile Include="Models\Patient.cs" />
     <Compile Include="Models\ChartDocument.cs" />
@@ -104,6 +105,8 @@
     <Compile Include="Views\Manager\Users\Users.cs" />
     <Compile Include="Views\Nurse\NurseMainPanel.cs" />
     <Compile Include="Views\Nurse\Schedule.cs" />
+    <Compile Include="Views\Operator\PatientCharts\AllergensTable.cs" />
+    <Compile Include="Views\Operator\PatientCharts\DocsTable.cs" />
     <Compile Include="Views\Operator\PatientCharts\PatientsTable.cs" />
     <Compile Include="Views\Operator\PatientCharts\PatientCharts.cs" />
     <Compile Include="Views\Operator\Patients\DynamicPatientsTable.cs" />

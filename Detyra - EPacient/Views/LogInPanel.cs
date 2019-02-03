@@ -138,6 +138,8 @@ namespace Detyra___EPacient.Views {
             this.logInBtn.BackColor = Colors.MALACHITE;
             this.logInBtn.FlatStyle = FlatStyle.Flat;
             this.logInBtn.Margin = logInButtonMargins;
+            this.logInBtn.Image = Image.FromFile("../../Resources/done.png");
+            this.logInBtn.ImageAlign = ContentAlignment.MiddleLeft;
             this.logInBtn.Click += new EventHandler(onLogInBtnClicked);
 
             this.formContainer.Controls.Add(this.logInBtn, 0, 6);
