@@ -11,7 +11,7 @@ using MySql.Data.MySqlClient;
 using System.Data.Common;
 
 namespace Detyra___EPacient.Models {
-    class PatientChart {
+    public class PatientChart {
         public int Id { get; set; }
         public DateTime CreatedAt { get; set; }
         public Patient Patient { get; set; }

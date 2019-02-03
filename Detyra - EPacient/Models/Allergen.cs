@@ -10,7 +10,7 @@ using MySql.Data.MySqlClient;
 using System.Data.Common;
 
 namespace Detyra___EPacient.Models {
-    class Allergen {
+    public class Allergen {
         public int Id { get; set; }
         public PatientChart PatientChart { get; set; }
         public Medicament Medicament { get; set; }

@@ -10,7 +10,7 @@ using MySql.Data.MySqlClient;
 using System.Data.Common;
 
 namespace Detyra___EPacient.Models {
-    class ChartDocument {
+    public class ChartDocument {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }

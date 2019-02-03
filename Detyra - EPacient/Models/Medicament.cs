@@ -10,7 +10,7 @@ using Detyra___EPacient.Config;
 using System.Data.Common;
 
 namespace Detyra___EPacient.Models {
-    class Medicament {
+    public class Medicament {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

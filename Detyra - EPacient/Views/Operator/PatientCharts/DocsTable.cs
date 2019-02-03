@@ -11,7 +11,7 @@ using Detyra___EPacient.Controllers.Operator;
 using Detyra___EPacient.Styles;
 
 namespace Detyra___EPacient.Views.Operator {
-    class DocsTable {
+    public class DocsTable {
         public DataTable Table { get; set; }
         public DataGridView DataGrid { get; set; }
 

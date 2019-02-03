@@ -50,6 +50,7 @@
     <Compile Include="Config\DB.cs" />
     <Compile Include="Constants\DateTimeFormats.cs" />
     <Compile Include="Constants\DBTables.cs" />
+    <Compile Include="Constants\ChartDocTypes.cs" />
     <Compile Include="Constants\Genders.cs" />
     <Compile Include="Constants\Roles.cs" />
     <Compile Include="Constants\Dimensions.cs" />

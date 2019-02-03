@@ -12,7 +12,7 @@ using Detyra___EPacient.Styles;
 using Detyra___EPacient.Views.Common;
 
 namespace Detyra___EPacient.Views.Operator {
-    class OperatorPatientCharts {
+    public class OperatorPatientCharts {
         public Panel PreviousPanel { get; set; }
         public Panel Panel { get; set; }
         public List<Models.Patient> PatientsList { get; set; }

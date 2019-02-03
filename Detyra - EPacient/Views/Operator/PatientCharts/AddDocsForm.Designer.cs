@@ -93,6 +93,7 @@ namespace Detyra___EPacient.Views.Operator.PatientCharts {
             this.choseFileBtn.Image = Image.FromFile("../../Resources/attach.png");
             this.choseFileBtn.ImageAlign = ContentAlignment.MiddleLeft;
             this.choseFileBtn.FlatStyle = FlatStyle.Flat;
+            this.choseFileBtn.Click += new EventHandler(onChoseFileClicked);
             this.choseFileBtn.Text = "Zgjidh";
             this.choseFileBtn.UseVisualStyleBackColor = true;
             this.Controls.Add(this.choseFileBtn);
@@ -123,6 +124,7 @@ namespace Detyra___EPacient.Views.Operator.PatientCharts {
             this.Name = "AddDocsForm";
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Shto Dokument";
+            this.Load += new EventHandler(onFormLoad);
             this.ResumeLayout(false);
             this.PerformLayout();
 

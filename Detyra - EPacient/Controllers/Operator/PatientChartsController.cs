@@ -10,17 +10,15 @@ using Detyra___EPacient.Views.Operator;
 using Detyra___EPacient.Views.Operator.PatientCharts;
 
 namespace Detyra___EPacient.Controllers.Operator {
-    class PatientChartsController {
+    public class PatientChartsController {
         private OperatorPatientCharts view;
-
+        private AddDocsForm addDocsForm;
         private Models.Patient patientModel;
         private Models.PatientChart patientChartModel;
         private Models.ChartDocument chartDocumentModel;
         private Models.Allergen allergenModel;
         private List<Models.Patient> patients;
         private Models.PatientChart selectedChart;
-
-        public string DataTimeFormats { get; private set; }
 
         public PatientChartsController(OperatorPatientCharts view) {
             this.view = view;
@@ -162,8 +160,37 @@ namespace Detyra___EPacient.Controllers.Operator {
          */
 
         public void handleAddDoc() {
-            AddDocsForm form = new AddDocsForm();
-            form.Show();
+            if (this.selectedChart == null) {
+                string message = "Nuk është zgjedhur asnjë pacient";
+                MessageBox.Show(message, "Gabim", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                return;
+            }
+
+            this.addDocsForm = new AddDocsForm(this);
+            this.addDocsForm.Show();
+        }
+
+        public async void handleDocSubmit(string url, string name, string type) {
+            try {
+                Cursor.Current = Cursors.WaitCursor;
+
+                await chartDocumentModel.createChartDocument(
+                    name,
+                    type,
+                    url,
+                    DateTime.Now.ToString(DateTimeFormats.MYSQL_DATE_TIME),
+                    this.selectedChart.Id
+                );
+
+                this.addDocsForm.Hide();
+                this.readPatientChartDocs(this.selectedChart.Id);
+
+                Cursor.Current = Cursors.Arrow;
+            } catch (Exception e) {
+                string caption = "Problem në shkrim";
+                MessageBox.Show(e.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
