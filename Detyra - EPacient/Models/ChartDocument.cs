@@ -52,7 +52,7 @@ namespace Detyra___EPacient.Models {
                         FROM 
                             {DBTables.CHART_DOCUMENT}
                         WHERE
-                            {DBTables.CHART_DOCUMENT}.patient_chart = @chartId";
+                            patient_chart = @chartId";
 
                 MySqlConnection connection = new MySqlConnection(DB.connectionString);
                 connection.Open();

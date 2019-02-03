@@ -48,7 +48,7 @@ namespace Detyra___EPacient.Models {
                                 ON
                                 {DBTables.ALLERGEN}.medicament = {DBTables.MEDICAMENT}.id
                         WHERE
-                            {DBTables.CHART_DOCUMENT}.patient_chart = @chartId";
+                            allergen.patient_chart = @chartId";
 
                 MySqlConnection connection = new MySqlConnection(DB.connectionString);
                 connection.Open();

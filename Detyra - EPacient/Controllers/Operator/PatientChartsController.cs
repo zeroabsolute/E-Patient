@@ -13,11 +13,19 @@ namespace Detyra___EPacient.Controllers.Operator {
         private PatientCharts view;
 
         private Models.Patient patientModel;
+        private Models.PatientChart patientChartModel;
+        private Models.ChartDocument chartDocumentModel;
+        private Models.Allergen allergenModel;
         private List<Models.Patient> patients;
+
+        public string DataTimeFormats { get; private set; }
 
         public PatientChartsController(PatientCharts view) {
             this.view = view;
             this.patientModel = new Models.Patient();
+            this.patientChartModel = new Models.PatientChart();
+            this.chartDocumentModel = new Models.ChartDocument();
+            this.allergenModel = new Models.Allergen();
         }
 
         /**
@@ -67,14 +75,80 @@ namespace Detyra___EPacient.Controllers.Operator {
                 if (selectedRow != null) {
                     int id = (int) selectedRow.Cells[0].Value;
 
-                    this.patients.ForEach((item) => {
+                    this.patients.ForEach(async (item) => {
                         if (item.Id == id) {
                             this.view.SelectedPatient = item;
+                            this.view.PatientLabelValue.Text = item.FullName;
+
+                            Models.PatientChart chart = await this.readPatientChart();
+                            this.readPatientChartDocs(chart.Id);
+                            this.readAllergens(chart.Id);
                         }
                     });
                 }
 
                 Cursor.Current = Cursors.Arrow;
+            } catch (Exception e) {
+                string caption = "Problem në lexim";
+                MessageBox.Show(e.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async Task<Models.PatientChart> readPatientChart() {
+            try {
+                if (this.view.SelectedPatient == null) {
+                    throw new Exception("Nuk është zgjedhur asnjë pacient");
+                }
+
+                Cursor.Current = Cursors.WaitCursor;
+
+                Models.PatientChart chart = await patientChartModel.readPatientChart(this.view.SelectedPatient.Id);
+
+                if (chart == null) {
+                    throw new Exception("Nuk u gjet asnjë kartelë");
+                }
+
+                return chart;
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+
+        private async void readPatientChartDocs(int chartId) {
+            try {
+                List<Models.ChartDocument> docs = await chartDocumentModel.readChartDocuments(chartId);
+
+                this.view.DocsTable.DataGrid.Rows.Clear();
+                this.view.DocsTable.DataGrid.Refresh();
+
+                docs.ForEach((item) => {
+                    this.view.DocsTable.DataGrid.Rows.Add(
+                        item.Id,
+                        item.Name,
+                        item.Type,
+                        item.URL,
+                        item.DateCreated.ToString(DateTimeFormats.SQ_DATE_TIME)
+                    );
+                });
+            } catch (Exception e) {
+                string caption = "Problem në lexim";
+                MessageBox.Show(e.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void readAllergens(int chartId) {
+            try {
+                List<Models.Allergen> allergens = await allergenModel.readAllergens(chartId);
+
+                this.view.AllergensTable.DataGrid.Rows.Clear();
+                this.view.AllergensTable.DataGrid.Refresh();
+
+                allergens.ForEach((item) => {
+                    this.view.AllergensTable.DataGrid.Rows.Add(
+                        item.Id,
+                        item.Medicament.Name
+                    );
+                });
             } catch (Exception e) {
                 string caption = "Problem në lexim";
                 MessageBox.Show(e.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
