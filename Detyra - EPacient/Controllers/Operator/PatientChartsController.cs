@@ -7,20 +7,22 @@ using System.Windows.Forms;
 
 using Detyra___EPacient.Constants;
 using Detyra___EPacient.Views.Operator;
+using Detyra___EPacient.Views.Operator.PatientCharts;
 
 namespace Detyra___EPacient.Controllers.Operator {
     class PatientChartsController {
-        private PatientCharts view;
+        private OperatorPatientCharts view;
 
         private Models.Patient patientModel;
         private Models.PatientChart patientChartModel;
         private Models.ChartDocument chartDocumentModel;
         private Models.Allergen allergenModel;
         private List<Models.Patient> patients;
+        private Models.PatientChart selectedChart;
 
         public string DataTimeFormats { get; private set; }
 
-        public PatientChartsController(PatientCharts view) {
+        public PatientChartsController(OperatorPatientCharts view) {
             this.view = view;
             this.patientModel = new Models.Patient();
             this.patientChartModel = new Models.PatientChart();
@@ -80,9 +82,9 @@ namespace Detyra___EPacient.Controllers.Operator {
                             this.view.SelectedPatient = item;
                             this.view.PatientLabelValue.Text = item.FullName;
 
-                            Models.PatientChart chart = await this.readPatientChart();
-                            this.readPatientChartDocs(chart.Id);
-                            this.readAllergens(chart.Id);
+                            this.selectedChart = await this.readPatientChart();
+                            this.readPatientChartDocs(this.selectedChart.Id);
+                            this.readAllergens(this.selectedChart.Id);
                         }
                     });
                 }
@@ -153,6 +155,15 @@ namespace Detyra___EPacient.Controllers.Operator {
                 string caption = "Problem në lexim";
                 MessageBox.Show(e.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        /**
+         * Handle clicking on add docs button
+         */
+
+        public void handleAddDoc() {
+            AddDocsForm form = new AddDocsForm();
+            form.Show();
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Detyra___EPacient.Views.Operator {
         public Button LogOut { get; set; }
 
         public Patients PatientsPanel { get; set; }
-        public PatientCharts PatientChartsPanel { get; set; }
+        public OperatorPatientCharts PatientChartsPanel { get; set; }
         public Reservations ReservationsPanel { get; set; }
         public OperatorTimetables TimeTablesPanel { get; set; }
         public LogInPanel LogInPanel { get; set; }
@@ -177,7 +177,7 @@ namespace Detyra___EPacient.Views.Operator {
 
         public void initNextPanels(
             Patients p,
-            PatientCharts pc,
+            OperatorPatientCharts pc,
             Reservations r,
             OperatorTimetables t,
             LogInPanel l

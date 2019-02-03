@@ -12,7 +12,7 @@ using Detyra___EPacient.Styles;
 using Detyra___EPacient.Views.Common;
 
 namespace Detyra___EPacient.Views.Operator {
-    class PatientCharts {
+    class OperatorPatientCharts {
         public Panel PreviousPanel { get; set; }
         public Panel Panel { get; set; }
         public List<Models.Patient> PatientsList { get; set; }
@@ -43,7 +43,7 @@ namespace Detyra___EPacient.Views.Operator {
         private int formComponentHeight = 40;
         private int formComponentHorizontalMargin;
 
-        public PatientCharts(Panel previousPanel) {
+        public OperatorPatientCharts(Panel previousPanel) {
             // Dimensions
             tableWidth = (int) (Dimensions.PANEL_WIDTH * 0.4);
             tableHeight = Dimensions.PANEL_HEIGHT - (Dimensions.NAV_BAR_HEIGHT + 40);
@@ -279,7 +279,7 @@ namespace Detyra___EPacient.Views.Operator {
          */
 
         private void onAddDocsClicked(object sender, EventArgs eventArgs) {
-
+            this.controller.handleAddDoc();
         }
 
         private void onAddAllergensClicked(object sender, EventArgs eventArgs) {

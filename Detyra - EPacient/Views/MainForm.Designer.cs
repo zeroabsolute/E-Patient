@@ -49,7 +49,7 @@ namespace Detyra___EPacient {
             Users managerUsersPanel = new Users(managerMainPanel.Panel);
 
             OperatorMainPanel operatorMainPanel = new OperatorMainPanel();
-            PatientCharts operatorPatientChartsPanel = new PatientCharts(operatorMainPanel.Panel);
+            OperatorPatientCharts operatorPatientChartsPanel = new OperatorPatientCharts(operatorMainPanel.Panel);
             Patients operatorPatientsPanel = new Patients(operatorMainPanel.Panel);
             Reservations operatorReservationsPanel = new Reservations(operatorMainPanel.Panel);
             OperatorTimetables operatorTimeTablesPanel = new OperatorTimetables(operatorMainPanel.Panel);

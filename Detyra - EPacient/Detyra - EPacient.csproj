@@ -107,6 +107,12 @@
     <Compile Include="Views\Nurse\Schedule.cs" />
     <Compile Include="Views\Operator\PatientCharts\AllergensTable.cs" />
     <Compile Include="Views\Operator\PatientCharts\DocsTable.cs" />
+    <Compile Include="Views\Operator\PatientCharts\AddDocsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Operator\PatientCharts\AddDocsForm.Designer.cs">
+      <DependentUpon>AddDocsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Operator\PatientCharts\PatientsTable.cs" />
     <Compile Include="Views\Operator\PatientCharts\PatientCharts.cs" />
     <Compile Include="Views\Operator\Patients\DynamicPatientsTable.cs" />
@@ -137,6 +143,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\Operator\PatientCharts\AddDocsForm.resx">
+      <DependentUpon>AddDocsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
