@@ -287,7 +287,7 @@ namespace Detyra___EPacient.Views.Operator {
         }
 
         private void onPrintChartClicked(object sender, EventArgs eventArgs) {
-
+            this.controller.handlePrintChart();
         }
     }
 }

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Detyra___EPacient.Constants;
+using Detyra___EPacient.Styles;
 using Detyra___EPacient.Views.Operator;
 using Detyra___EPacient.Views.Operator.PatientCharts;
 
@@ -86,8 +89,8 @@ namespace Detyra___EPacient.Controllers.Operator {
                             this.view.PatientLabelValue.Text = item.FullName;
 
                             this.selectedChart = await this.readPatientChart();
-                            this.readPatientChartDocs(this.selectedChart.Id);
-                            this.readAllergens(this.selectedChart.Id);
+                            await this.readPatientChartDocs(this.selectedChart.Id);
+                            await this.readAllergens(this.selectedChart.Id);
                         }
                     });
                 }
@@ -119,7 +122,7 @@ namespace Detyra___EPacient.Controllers.Operator {
             }
         }
 
-        private async void readPatientChartDocs(int chartId) {
+        private async Task<List<Models.ChartDocument>> readPatientChartDocs(int chartId) {
             try {
                 List<Models.ChartDocument> docs = await chartDocumentModel.readChartDocuments(chartId);
 
@@ -135,13 +138,17 @@ namespace Detyra___EPacient.Controllers.Operator {
                         item.DateCreated.ToString(DateTimeFormats.SQ_DATE_TIME)
                     );
                 });
+
+                return docs;
             } catch (Exception e) {
                 string caption = "Problem në lexim";
                 MessageBox.Show(e.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return null;
             }
         }
 
-        private async void readAllergens(int chartId) {
+        private async Task<List<Models.Allergen>> readAllergens(int chartId) {
             try {
                 List<Models.Allergen> allergens = await allergenModel.readAllergens(chartId);
 
@@ -154,9 +161,13 @@ namespace Detyra___EPacient.Controllers.Operator {
                         item.Medicament.Name
                     );
                 });
+
+                return allergens;
             } catch (Exception e) {
                 string caption = "Problem në lexim";
                 MessageBox.Show(e.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return null;
             }
         }
 
@@ -189,7 +200,7 @@ namespace Detyra___EPacient.Controllers.Operator {
                 );
 
                 this.addDocsForm.Hide();
-                this.readPatientChartDocs(this.selectedChart.Id);
+                await this.readPatientChartDocs(this.selectedChart.Id);
 
                 Cursor.Current = Cursors.Arrow;
             } catch (Exception e) {
@@ -224,12 +235,225 @@ namespace Detyra___EPacient.Controllers.Operator {
                 );
 
                 this.addAllergensForm.Hide();
-                this.readAllergens(this.selectedChart.Id);
+                await this.readAllergens(this.selectedChart.Id);
 
                 Cursor.Current = Cursors.Arrow;
             } catch (Exception e) {
                 string caption = "Problem në shkrim";
                 MessageBox.Show(e.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /**
+         * Print a patient chart
+         */
+
+        public void handlePrintChart() {
+            if (this.selectedChart == null) {
+                string message = "Nuk është zgjedhur asnjë pacient";
+                MessageBox.Show(message, "Gabim", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                return;
+            }
+
+            using (PrintDialog printDialog = new PrintDialog()) {
+                if (printDialog.ShowDialog() == DialogResult.OK) {
+                    PrintDocument printDocument = new PrintDocument();
+                    printDocument.PrintPage += this.printChart;
+                    printDocument.Print();
+                }
+            }
+        }
+
+        private async void printChart(object sender, System.Drawing.Printing.PrintPageEventArgs e) {
+            try {
+                Cursor.Current = Cursors.WaitCursor;
+
+                List<Models.Allergen> allergens = await this.readAllergens(this.selectedChart.Id);
+                List<Models.ChartDocument> docs = await this.readPatientChartDocs(this.selectedChart.Id);
+                string allergensResult = "";
+
+                allergens.ForEach((item) => {
+                    allergensResult = $"{allergensResult}{(allergensResult.Length > 0 ? ", " : "")}{item.Medicament.Name}";
+                });
+
+                // Printing
+
+                int startY = 50;
+                int margin = 30;
+                int keyX = 80;
+                int valueX = 400;
+                int itemFontSize = 10;
+                int headerFontSize = 14;
+
+                e.Graphics.DrawString(
+                    "EPacient - Kartela e pacientit",
+                    new Font(Fonts.primary, 20, FontStyle.Bold),
+                    Brushes.SaddleBrown,
+                    new Point(250, startY)
+                );
+                e.Graphics.DrawString(
+                    "Gjeneralitetet",
+                    new Font(Fonts.primary, headerFontSize, FontStyle.Bold),
+                    Brushes.DarkBlue,
+                    new Point(keyX, (startY + (int) (2.5 * margin)))
+                );
+                e.Graphics.DrawString(
+                    "ID",
+                    new Font(Fonts.primary, itemFontSize, FontStyle.Regular),
+                    Brushes.Gray,
+                    new Point(keyX, (startY + 4 * margin))
+                );
+                e.Graphics.DrawString(
+                    $"{this.view.SelectedPatient.Id}",
+                    new Font(Fonts.primary, itemFontSize, FontStyle.Bold),
+                    Brushes.Black,
+                    new Point(valueX, (startY + 4 * margin))
+                );
+                e.Graphics.DrawString(
+                    "Emri",
+                    new Font(Fonts.primary, itemFontSize, FontStyle.Regular),
+                    Brushes.Gray,
+                    new Point(keyX, (startY + 5 * margin))
+                );
+                e.Graphics.DrawString(
+                    $"{this.view.SelectedPatient.FirstName}",
+                    new Font(Fonts.primary, itemFontSize, FontStyle.Bold),
+                    Brushes.Black,
+                    new Point(valueX, (startY + 5 * margin))
+                );
+                e.Graphics.DrawString(
+                    "Mbiemri",
+                    new Font(Fonts.primary, itemFontSize, FontStyle.Regular),
+                    Brushes.Gray,
+                    new Point(keyX, (startY + 6 * margin))
+                );
+                e.Graphics.DrawString(
+                    $"{this.view.SelectedPatient.LastName}",
+                    new Font(Fonts.primary, itemFontSize, FontStyle.Bold),
+                    Brushes.Black,
+                    new Point(valueX, (startY + 6 * margin))
+                );
+                e.Graphics.DrawString(
+                    "Gjinia",
+                    new Font(Fonts.primary, itemFontSize, FontStyle.Regular),
+                    Brushes.Gray,
+                    new Point(keyX, (startY + 7 * margin))
+                );
+                e.Graphics.DrawString(
+                    $"{this.view.SelectedPatient.Gender}",
+                    new Font(Fonts.primary, itemFontSize, FontStyle.Bold),
+                    Brushes.Black,
+                    new Point(valueX, (startY + 7 * margin))
+                );
+                e.Graphics.DrawString(
+                    "Datëlindja",
+                    new Font(Fonts.primary, itemFontSize, FontStyle.Regular),
+                    Brushes.Gray,
+                    new Point(keyX, (startY + 8 * margin))
+                );
+                e.Graphics.DrawString(
+                    $"{this.view.SelectedPatient.DateOfBirth.ToString(DateTimeFormats.SQ_DATE)}",
+                    new Font(Fonts.primary, itemFontSize, FontStyle.Bold),
+                    Brushes.Black,
+                    new Point(valueX, (startY + 8 * margin))
+                );
+                e.Graphics.DrawString(
+                    "Celular",
+                    new Font(Fonts.primary, itemFontSize, FontStyle.Regular),
+                    Brushes.Gray,
+                    new Point(keyX, (startY + 9 * margin))
+                );
+                e.Graphics.DrawString(
+                    $"{this.view.SelectedPatient.PhoneNumber}",
+                    new Font(Fonts.primary, itemFontSize, FontStyle.Bold),
+                    Brushes.Black,
+                    new Point(valueX, (startY + 9 * margin))
+                );
+                e.Graphics.DrawString(
+                    "Adresa",
+                    new Font(Fonts.primary, itemFontSize, FontStyle.Regular),
+                    Brushes.Gray,
+                    new Point(keyX, (startY + 10 * margin))
+                );
+                e.Graphics.DrawString(
+                    $"{this.view.SelectedPatient.Address}",
+                    new Font(Fonts.primary, itemFontSize, FontStyle.Bold),
+                    Brushes.Black,
+                    new Point(valueX, (startY + 10 * margin))
+                );
+                e.Graphics.DrawString(
+                    "Alergjitë e pacientit",
+                    new Font(Fonts.primary, headerFontSize, FontStyle.Bold),
+                    Brushes.DarkBlue,
+                    new Point(keyX, (startY + (int) (12.5 * margin)))
+                );
+                e.Graphics.DrawString(
+                    "Medikamente alergenë",
+                    new Font(Fonts.primary, itemFontSize, FontStyle.Regular),
+                    Brushes.Gray,
+                    new Point(keyX, (startY + 14 * margin))
+                );
+                e.Graphics.DrawString(
+                    $"{(allergensResult.Length > 0 ? allergensResult : "-")}",
+                    new Font(Fonts.primary, itemFontSize, FontStyle.Bold),
+                    Brushes.Black,
+                    new Point(valueX, (startY + 14 * margin))
+                );
+                e.Graphics.DrawString(
+                    "Dokumentacioni dhe historiku i pacientit",
+                    new Font(Fonts.primary, headerFontSize, FontStyle.Bold),
+                    Brushes.DarkBlue,
+                    new Point(keyX, (startY + (int) (16.5 * margin)))
+                );
+
+                int nextY = 18;
+
+                docs.ForEach((item) => {
+                    e.Graphics.DrawString(
+                        "Lloji i dokumentit",
+                        new Font(Fonts.primary, itemFontSize, FontStyle.Regular),
+                        Brushes.Gray,
+                        new Point(keyX, (startY + nextY * margin))
+                    );
+                    e.Graphics.DrawString(
+                        $"{item.Type}",
+                        new Font(Fonts.primary, itemFontSize, FontStyle.Bold),
+                        Brushes.Black,
+                        new Point(valueX, (startY + nextY * margin))
+                    );
+                    e.Graphics.DrawString(
+                        "Emri",
+                        new Font(Fonts.primary, itemFontSize, FontStyle.Regular),
+                        Brushes.Gray,
+                        new Point(keyX, (startY + (1 + nextY) * margin))
+                    );
+                    e.Graphics.DrawString(
+                        $"{item.Name}",
+                        new Font(Fonts.primary, itemFontSize, FontStyle.Bold),
+                        Brushes.Black,
+                        new Point(valueX, (startY + (1 + nextY) * margin))
+                    );
+                    e.Graphics.DrawString(
+                        "Data e krijimit",
+                        new Font(Fonts.primary, itemFontSize, FontStyle.Regular),
+                        Brushes.Gray,
+                        new Point(keyX, (startY + (2 + nextY) * margin))
+                    );
+                    e.Graphics.DrawString(
+                        $"{item.DateCreated.ToString(DateTimeFormats.SQ_DATE_TIME)}",
+                        new Font(Fonts.primary, itemFontSize, FontStyle.Bold),
+                        Brushes.Black,
+                        new Point(valueX, (startY + (2 + nextY) * margin))
+                    );
+
+                    nextY += 4;
+                });
+
+                Cursor.Current = Cursors.Arrow;
+            } catch (Exception ex) {
+                string caption = "Problem në lexim";
+                MessageBox.Show(ex.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
