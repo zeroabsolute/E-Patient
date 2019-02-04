@@ -13,11 +13,13 @@ namespace Detyra___EPacient.Controllers.Operator {
     public class PatientChartsController {
         private OperatorPatientCharts view;
         private AddDocsForm addDocsForm;
+        private AddAllergensForm addAllergensForm;
         private Models.Patient patientModel;
         private Models.PatientChart patientChartModel;
         private Models.ChartDocument chartDocumentModel;
         private Models.Allergen allergenModel;
         private List<Models.Patient> patients;
+        public List<Models.Medicament> medicaments;
         private Models.PatientChart selectedChart;
 
         public PatientChartsController(OperatorPatientCharts view) {
@@ -39,6 +41,9 @@ namespace Detyra___EPacient.Controllers.Operator {
                 // Read patients from DB and populate table
                 List<Models.Patient> patients = await this.patientModel.readPatients();
                 this.patients = patients;
+
+                // Read medicaments
+                this.medicaments = await new Models.Medicament().readMedicaments();
 
                 this.view.PatientsTable.DataGrid.Rows.Clear();
                 this.view.PatientsTable.DataGrid.Refresh();
@@ -156,7 +161,7 @@ namespace Detyra___EPacient.Controllers.Operator {
         }
 
         /**
-         * Handle clicking on add docs button
+         * Handle adding docs
          */
 
         public void handleAddDoc() {
@@ -185,6 +190,41 @@ namespace Detyra___EPacient.Controllers.Operator {
 
                 this.addDocsForm.Hide();
                 this.readPatientChartDocs(this.selectedChart.Id);
+
+                Cursor.Current = Cursors.Arrow;
+            } catch (Exception e) {
+                string caption = "Problem në shkrim";
+                MessageBox.Show(e.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /**
+         * Handle adding allergens
+         */
+
+        public void handleAddAllergen() {
+            if (this.selectedChart == null) {
+                string message = "Nuk është zgjedhur asnjë pacient";
+                MessageBox.Show(message, "Gabim", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                return;
+            }
+
+            this.addAllergensForm = new AddAllergensForm(this);
+            this.addAllergensForm.Show();
+        }
+
+        public async void handleAllergenSubmit(int medicamentId) {
+            try {
+                Cursor.Current = Cursors.WaitCursor;
+
+                await allergenModel.createAllergen(
+                    this.selectedChart.Id,
+                    medicamentId
+                );
+
+                this.addAllergensForm.Hide();
+                this.readAllergens(this.selectedChart.Id);
 
                 Cursor.Current = Cursors.Arrow;
             } catch (Exception e) {

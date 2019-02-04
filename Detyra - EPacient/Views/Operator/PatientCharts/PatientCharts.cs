@@ -283,7 +283,7 @@ namespace Detyra___EPacient.Views.Operator {
         }
 
         private void onAddAllergensClicked(object sender, EventArgs eventArgs) {
-
+            this.controller.handleAddAllergen();
         }
 
         private void onPrintChartClicked(object sender, EventArgs eventArgs) {

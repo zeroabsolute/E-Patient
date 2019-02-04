@@ -106,6 +106,12 @@
     <Compile Include="Views\Manager\Users\Users.cs" />
     <Compile Include="Views\Nurse\NurseMainPanel.cs" />
     <Compile Include="Views\Nurse\Schedule.cs" />
+    <Compile Include="Views\Operator\PatientCharts\AddAllergensForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Operator\PatientCharts\AddAllergensForm.Designer.cs">
+      <DependentUpon>AddAllergensForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Operator\PatientCharts\AllergensTable.cs" />
     <Compile Include="Views\Operator\PatientCharts\DocsTable.cs" />
     <Compile Include="Views\Operator\PatientCharts\AddDocsForm.cs">
@@ -144,6 +150,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\Operator\PatientCharts\AddAllergensForm.resx">
+      <DependentUpon>AddAllergensForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Operator\PatientCharts\AddDocsForm.resx">
       <DependentUpon>AddDocsForm.cs</DependentUpon>
     </EmbeddedResource>
