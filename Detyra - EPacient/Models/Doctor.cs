@@ -152,5 +152,29 @@ namespace Detyra___EPacient.Models {
                 throw e;
             }
         }
+
+        /*
+         * Get total number of doctors
+         */
+
+        public async Task<int> getDoctorsCount() {
+            try {
+                string query = $@"
+                    SELECT
+                        COUNT(*)
+                    FROM 
+                        {DBTables.DOCTOR}";
+
+                MySqlConnection connection = new MySqlConnection(DB.connectionString);
+                connection.Open();
+
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.Prepare();
+
+                return Convert.ToInt32(await cmd.ExecuteScalarAsync());
+            } catch (Exception e) {
+                throw e;
+            }
+        }
     }
 }
