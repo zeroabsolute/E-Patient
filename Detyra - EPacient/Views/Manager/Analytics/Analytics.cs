@@ -20,9 +20,13 @@ namespace Detyra___EPacient.Views.Manager {
         public Card PatientsCard { get; set; }
         public Card DoctorsCard { get; set; }
         public Card NursesCard { get; set; }
+        public DynamicComboBox DoctorsCBox { get; set; }
+        public DynamicComboBox MonthCBox { get; set; }
+        public TextBox YearTxtBox { get; set; }
 
         private AnalyticsController controller;
         private NavigationBar header;
+        private Label bottomTitle;
 
         public ManagerAnalytics(Panel previousPanel) {
             this.controller = new AnalyticsController(this);
@@ -30,6 +34,7 @@ namespace Detyra___EPacient.Views.Manager {
             // Dimensions
             int occupiedSpace = (4 * Dimensions.TOP_CARD_SIZE.Width) + 2 * Dimensions.PANEL_PADDING_HORIZONTAL;
             int cardMargin = (int) (Dimensions.PANEL_WIDTH - occupiedSpace) / 3;
+            int bottomContainerHeight = 420;
 
             // Init previous panel
             this.PreviousPanel = previousPanel;
@@ -107,13 +112,34 @@ namespace Detyra___EPacient.Views.Manager {
                 nursesCountLocation
             );
             this.Panel.Controls.Add(this.NursesCard.Container);
+
+            /* Bottom analytics */
+
+            // Title
+            this.bottomTitle = new Label();
+            this.bottomTitle.Location = new Point(
+                Dimensions.PANEL_PADDING_HORIZONTAL,
+                Dimensions.PANEL_HEIGHT - (Dimensions.PANEL_PADDING_HORIZONTAL + bottomContainerHeight)
+            );
+            this.bottomTitle.Size = new Size(
+                Dimensions.PANEL_WIDTH - (2 * Dimensions.PANEL_PADDING_HORIZONTAL),
+                40
+            );
+            this.bottomTitle.Text = "Ngarkesa për çdo mjek";
+            this.bottomTitle.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.bottomTitle.ForeColor = Colors.BLACK;
+            this.bottomTitle.BackColor = Colors.WHITE;
+            this.bottomTitle.TextAlign = ContentAlignment.MiddleLeft;
+            this.Panel.Controls.Add(this.bottomTitle);
+
+            // Init doctor combo box
         }
 
         /**
          * Method to fetch necessary data
          */
 
-        public async void readInitialData() {
+        public void readInitialData() {
             this.controller.init();
         }
     }
