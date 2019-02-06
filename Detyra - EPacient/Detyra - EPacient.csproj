@@ -73,6 +73,7 @@
     <Compile Include="Helpers\PasswordHash.cs" />
     <Compile Include="Helpers\Validators.cs" />
     <Compile Include="Models\Allergen.cs" />
+    <Compile Include="Models\DoctorReservations.cs" />
     <Compile Include="Models\Medicament.cs" />
     <Compile Include="Models\Patient.cs" />
     <Compile Include="Models\ChartDocument.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Views\Doctor\Prescription.cs" />
     <Compile Include="Views\Doctor\ReservationsDoc.cs" />
     <Compile Include="Views\Doctor\TimeTablesDoc.cs" />
+    <Compile Include="Views\Manager\Analytics\DoctorReservationsTable.cs" />
     <Compile Include="Views\Manager\Analytics\Card.cs" />
     <Compile Include="Views\Manager\Medicaments\DynamicMedicamentsTable.cs" />
     <Compile Include="Views\Manager\Services\DynamicServicesTable.cs" />

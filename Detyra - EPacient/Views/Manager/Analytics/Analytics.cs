@@ -23,10 +23,15 @@ namespace Detyra___EPacient.Views.Manager {
         public DynamicComboBox DoctorsCBox { get; set; }
         public DynamicComboBox MonthCBox { get; set; }
         public TextBox YearTxtBox { get; set; }
+        public DoctorReservationsTable DoctorReservationsTable { get; set; }
 
         private AnalyticsController controller;
         private NavigationBar header;
+        private Panel bottomContainer;
         private Label bottomTitle;
+        private Label doctorLabel;
+        private Label monthLabel;
+        private Label yearLabel;
 
         public ManagerAnalytics(Panel previousPanel) {
             this.controller = new AnalyticsController(this);
@@ -34,7 +39,10 @@ namespace Detyra___EPacient.Views.Manager {
             // Dimensions
             int occupiedSpace = (4 * Dimensions.TOP_CARD_SIZE.Width) + 2 * Dimensions.PANEL_PADDING_HORIZONTAL;
             int cardMargin = (int) (Dimensions.PANEL_WIDTH - occupiedSpace) / 3;
-            int bottomContainerHeight = 420;
+            int formComponentWidth = (int) Dimensions.PANEL_WIDTH / 6;
+            int formComponentLabelWidth = 100;
+            int formComponentHeight = 30;
+            Size cBoxSize = new Size(formComponentWidth, formComponentHeight);
 
             // Init previous panel
             this.PreviousPanel = previousPanel;
@@ -115,24 +123,138 @@ namespace Detyra___EPacient.Views.Manager {
 
             /* Bottom analytics */
 
-            // Title
-            this.bottomTitle = new Label();
-            this.bottomTitle.Location = new Point(
+            // Container
+            int bottomContainerHeight = Dimensions.PANEL_HEIGHT - 250;
+
+            this.bottomContainer = new Panel();
+            this.bottomContainer.AutoSize = true;
+            this.bottomContainer.Location = new Point(
                 Dimensions.PANEL_PADDING_HORIZONTAL,
                 Dimensions.PANEL_HEIGHT - (Dimensions.PANEL_PADDING_HORIZONTAL + bottomContainerHeight)
             );
-            this.bottomTitle.Size = new Size(
+            this.bottomContainer.Name = "bottomPanel";
+            this.bottomContainer.Size = new Size(
                 Dimensions.PANEL_WIDTH - (2 * Dimensions.PANEL_PADDING_HORIZONTAL),
-                40
+                bottomContainerHeight
+            );
+            this.bottomContainer.TabIndex = 0;
+            this.bottomContainer.BackColor = Colors.WHITE;
+            this.Panel.Controls.Add(this.bottomContainer);
+
+            // Title
+            this.bottomTitle = new Label();
+            this.bottomTitle.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL, 
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL
+            );
+            this.bottomTitle.Size = new Size(
+                (int) Dimensions.PANEL_WIDTH / 2,
+                formComponentHeight
             );
             this.bottomTitle.Text = "Ngarkesa për çdo mjek";
             this.bottomTitle.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
             this.bottomTitle.ForeColor = Colors.BLACK;
-            this.bottomTitle.BackColor = Colors.WHITE;
             this.bottomTitle.TextAlign = ContentAlignment.MiddleLeft;
-            this.Panel.Controls.Add(this.bottomTitle);
+            this.bottomContainer.Controls.Add(this.bottomTitle);
 
-            // Init doctor combo box
+            // Doctor selection
+            this.doctorLabel = new Label();
+            this.doctorLabel.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL,
+                Dimensions.PANEL_CARD_PADDING_VERTICAL * 3
+            );
+            this.bottomTitle.Size = new Size(
+                formComponentLabelWidth,
+                formComponentHeight
+            );
+            this.doctorLabel.Text = "Mjeku";
+            this.doctorLabel.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
+            this.doctorLabel.ForeColor = Colors.BLACK;
+            this.doctorLabel.TextAlign = ContentAlignment.MiddleLeft;
+            this.bottomContainer.Controls.Add(this.doctorLabel);
+
+            Point doctorCBoxLocation = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL + formComponentLabelWidth,
+                Dimensions.PANEL_CARD_PADDING_VERTICAL * 3
+            );
+            this.DoctorsCBox = new DynamicComboBox(
+                cBoxSize,
+                doctorCBoxLocation
+            );
+            this.bottomContainer.Controls.Add(DoctorsCBox.comboBox);
+
+            // Month selection
+            this.monthLabel = new Label();
+            this.monthLabel.Location = new Point(
+                2 * formComponentWidth,
+                Dimensions.PANEL_CARD_PADDING_VERTICAL * 3
+            );
+            this.monthLabel.Size = new Size(
+                formComponentLabelWidth,
+                formComponentHeight
+            );
+            this.monthLabel.Text = "Muaji";
+            this.monthLabel.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
+            this.monthLabel.ForeColor = Colors.BLACK;
+            this.monthLabel.TextAlign = ContentAlignment.MiddleLeft;
+            this.bottomContainer.Controls.Add(this.monthLabel);
+
+            Point monthCBoxLocation = new Point(
+                2 * formComponentWidth + formComponentLabelWidth,
+                Dimensions.PANEL_CARD_PADDING_VERTICAL * 3
+            );
+            this.MonthCBox = new DynamicComboBox(
+                cBoxSize,
+                monthCBoxLocation
+            );
+            this.bottomContainer.Controls.Add(MonthCBox.comboBox);
+
+            // Year selection
+            this.yearLabel = new Label();
+            this.yearLabel.Location = new Point(
+                4 * formComponentWidth,
+                Dimensions.PANEL_CARD_PADDING_VERTICAL * 3
+            );
+            this.yearLabel.Size = new Size(
+                formComponentLabelWidth,
+                formComponentHeight
+            );
+            this.yearLabel.Text = "Viti";
+            this.yearLabel.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
+            this.yearLabel.ForeColor = Colors.BLACK;
+            this.yearLabel.TextAlign = ContentAlignment.MiddleLeft;
+            this.bottomContainer.Controls.Add(this.yearLabel);
+
+            this.YearTxtBox = new TextBox();
+            this.YearTxtBox.Location = new Point(
+                4 * formComponentWidth + formComponentLabelWidth,
+                Dimensions.PANEL_CARD_PADDING_VERTICAL * 3
+            );
+            this.YearTxtBox.Size = new Size(
+                formComponentWidth,
+                formComponentHeight
+            );
+            this.YearTxtBox.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
+            this.bottomContainer.Controls.Add(this.YearTxtBox);
+
+            // Table
+            Size tableSize = new Size(
+                (int) Dimensions.PANEL_WIDTH / 3,
+                bottomContainerHeight - 130
+            );
+            Point tableLocation = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL,
+                bottomContainerHeight - (Dimensions.PANEL_CARD_PADDING_HORIZONTAL + tableSize.Height)
+            );
+
+            this.DoctorReservationsTable = new DoctorReservationsTable(
+                tableSize,
+                tableLocation,
+                null,
+                this.controller
+            );
+
+            this.bottomContainer.Controls.Add(this.DoctorReservationsTable.DataGrid);
         }
 
         /**
