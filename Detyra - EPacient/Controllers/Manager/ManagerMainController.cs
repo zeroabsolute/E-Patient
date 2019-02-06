@@ -43,6 +43,7 @@ namespace Detyra___EPacient.Controllers.Manager {
                     break;
                 case ManagerMainPanel.ANALYTICS_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.AnalyticsPanel.Panel);
+                    this.view.AnalyticsPanel.readInitialData();
                     break;
                 case ManagerMainPanel.LOG_OUT_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.LogInPanel.Panel);

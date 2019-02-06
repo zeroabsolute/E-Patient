@@ -44,5 +44,11 @@ namespace Detyra___EPacient.Constants {
          */
 
         public static int NAV_BAR_HEIGHT = 60;
+
+        /**
+         * Analytics component dimensions
+         */
+
+        public static Size TOP_CARD_SIZE = new Size(300, 130);
     }
 }

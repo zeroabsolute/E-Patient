@@ -27,7 +27,7 @@ namespace Detyra___EPacient.Views.Manager {
         public Services ServicesPanel { get; set; }
         public Medicaments MedicamentsPanel { get; set; }
         public DoctorInCharge DoctorInChargePanel { get; set; }
-        public Analytics AnalyticsPanel { get; set; }
+        public ManagerAnalytics AnalyticsPanel { get; set; }
         public LogInPanel LogInPanel { get; set; }
 
         public const string USERS_BTN = "managerUsersBtn";
@@ -232,7 +232,7 @@ namespace Detyra___EPacient.Views.Manager {
             Services s,
             Medicaments m,
             DoctorInCharge d,
-            Analytics a,
+            ManagerAnalytics a,
             LogInPanel l
         ) {
             this.UsersPanel = u;

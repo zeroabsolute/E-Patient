@@ -27,18 +27,16 @@ namespace Detyra___EPacient.Styles {
 
         public static Color LINEN = ColorTranslator.FromHtml("#FBE9E7");
         public static Color POMEGRANATE = ColorTranslator.FromHtml("#F4511E");
-
         public static Color PANACHE = ColorTranslator.FromHtml("#E8F5E9");
         public static Color MALACHITE = ColorTranslator.FromHtml("#00C853");
         public static Color PERSIAN_GREEN = ColorTranslator.FromHtml("#009688");
-
-        public static Color SALMON_RED = ColorTranslator.FromHtml("#FA8072");
-        public static Color IMPERIAL_RED = ColorTranslator.FromHtml("#7C0A02");
-
         public static Color MINT = ColorTranslator.FromHtml("#A6D785");
         public static Color PEA = ColorTranslator.FromHtml("#78AB46");
         public static Color PEPER_GREEN = ColorTranslator.FromHtml("#397D02");
         public static Color FOREST = ColorTranslator.FromHtml("#3B5323");
+
+        public static Color SALMON_RED = ColorTranslator.FromHtml("#FA8072");
+        public static Color IMPERIAL_RED = ColorTranslator.FromHtml("#7C0A02");
 
 
     }

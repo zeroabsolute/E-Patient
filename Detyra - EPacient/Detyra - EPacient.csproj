@@ -59,6 +59,7 @@
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\Manager\ManagerMainController.cs" />
     <Compile Include="Controllers\Manager\MedicamentsController.cs" />
+    <Compile Include="Controllers\Manager\AnalyticsController.cs" />
     <Compile Include="Controllers\Manager\ServicesController.cs" />
     <Compile Include="Controllers\Manager\TimetablesController.cs" />
     <Compile Include="Controllers\Manager\UsersController.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Views\Doctor\Prescription.cs" />
     <Compile Include="Views\Doctor\ReservationsDoc.cs" />
     <Compile Include="Views\Doctor\TimeTablesDoc.cs" />
+    <Compile Include="Views\Manager\Analytics\Card.cs" />
     <Compile Include="Views\Manager\Medicaments\DynamicMedicamentsTable.cs" />
     <Compile Include="Views\Manager\Services\DynamicServicesTable.cs" />
     <Compile Include="Views\Manager\Timetables\DynamicEmployeesTable.cs" />
@@ -99,7 +101,7 @@
     <Compile Include="Views\Doctor\DoctorMainPanel.cs" />
     <Compile Include="Views\Manager\ManagerMainPanel.cs" />
     <Compile Include="Views\Manager\Medicaments\Medicaments.cs" />
-    <Compile Include="Views\Manager\Analytics.cs" />
+    <Compile Include="Views\Manager\Analytics\Analytics.cs" />
     <Compile Include="Views\Manager\Timetables\Timetables.cs" />
     <Compile Include="Views\Manager\DoctorInCharge.cs" />
     <Compile Include="Views\Manager\Services\Services.cs" />

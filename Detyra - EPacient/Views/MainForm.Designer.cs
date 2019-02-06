@@ -41,7 +41,7 @@ namespace Detyra___EPacient {
             LogInPanel logInPanel = new LogInPanel();
 
             ManagerMainPanel managerMainPanel = new ManagerMainPanel();
-            Analytics managerAnalyticsPanel = new Analytics(managerMainPanel.Panel);
+            ManagerAnalytics managerAnalyticsPanel = new ManagerAnalytics(managerMainPanel.Panel);
             DoctorInCharge managerDICPanel = new DoctorInCharge(managerMainPanel.Panel);
             Medicaments managerMedicamentsPanel = new Medicaments(managerMainPanel.Panel);
             Services managerServicesPanel = new Services(managerMainPanel.Panel);
