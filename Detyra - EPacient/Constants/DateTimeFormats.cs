@@ -12,5 +12,6 @@ namespace Detyra___EPacient.Constants {
         public static string SQ_DATE_TIME = "dd-MM-yyyy HH:mm";
         public static string SQ_DATE_TIME_EXTENDED = "dd-MM-yyyy HH:mm";
         public static string SQ_SHORT_TIME = "HH:mm";
+        public static string YEAR = "yyyy";
     }
 }

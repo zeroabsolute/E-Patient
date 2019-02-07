@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 using Detyra___EPacient.Constants;
 using Detyra___EPacient.Controllers.Manager;
@@ -24,6 +25,9 @@ namespace Detyra___EPacient.Views.Manager {
         public DynamicComboBox MonthCBox { get; set; }
         public TextBox YearTxtBox { get; set; }
         public DoctorReservationsTable DoctorReservationsTable { get; set; }
+        public Chart DoctorReservationsChart { get; set; }
+        public ChartArea ChartArea { get; set; }
+        public Series ReservationsSeries { get; set; }
 
         private AnalyticsController controller;
         private NavigationBar header;
@@ -43,6 +47,8 @@ namespace Detyra___EPacient.Views.Manager {
             int formComponentLabelWidth = 100;
             int formComponentHeight = 30;
             Size cBoxSize = new Size(formComponentWidth, formComponentHeight);
+            int bottomContainerWidth = Dimensions.PANEL_WIDTH - (2 * Dimensions.PANEL_PADDING_HORIZONTAL);
+            int chartWidth = (int) (0.6 * bottomContainerWidth);
 
             // Init previous panel
             this.PreviousPanel = previousPanel;
@@ -55,7 +61,7 @@ namespace Detyra___EPacient.Views.Manager {
             this.Panel.Size = new Size(Dimensions.PANEL_WIDTH, Dimensions.PANEL_HEIGHT);
             this.Panel.TabIndex = 0;
             this.Panel.BackColor = Colors.ALTO;
-            this.Panel.Visible = true;
+            this.Panel.Visible = false;
 
             // Init header
             this.header = new NavigationBar(
@@ -134,7 +140,7 @@ namespace Detyra___EPacient.Views.Manager {
             );
             this.bottomContainer.Name = "bottomPanel";
             this.bottomContainer.Size = new Size(
-                Dimensions.PANEL_WIDTH - (2 * Dimensions.PANEL_PADDING_HORIZONTAL),
+                bottomContainerWidth,
                 bottomContainerHeight
             );
             this.bottomContainer.TabIndex = 0;
@@ -148,7 +154,7 @@ namespace Detyra___EPacient.Views.Manager {
                 Dimensions.PANEL_CARD_PADDING_HORIZONTAL
             );
             this.bottomTitle.Size = new Size(
-                (int) Dimensions.PANEL_WIDTH / 2,
+                (int) (Dimensions.PANEL_WIDTH / 2),
                 formComponentHeight
             );
             this.bottomTitle.Text = "Ngarkesa për çdo mjek";
@@ -163,7 +169,7 @@ namespace Detyra___EPacient.Views.Manager {
                 Dimensions.PANEL_CARD_PADDING_HORIZONTAL,
                 Dimensions.PANEL_CARD_PADDING_VERTICAL * 3
             );
-            this.bottomTitle.Size = new Size(
+            this.doctorLabel.Size = new Size(
                 formComponentLabelWidth,
                 formComponentHeight
             );
@@ -181,12 +187,13 @@ namespace Detyra___EPacient.Views.Manager {
                 cBoxSize,
                 doctorCBoxLocation
             );
+            this.DoctorsCBox.comboBox.SelectedIndexChanged += new EventHandler(this.onFilterChanged);
             this.bottomContainer.Controls.Add(DoctorsCBox.comboBox);
 
             // Month selection
             this.monthLabel = new Label();
             this.monthLabel.Location = new Point(
-                2 * formComponentWidth,
+                (int) (2.2 * formComponentWidth),
                 Dimensions.PANEL_CARD_PADDING_VERTICAL * 3
             );
             this.monthLabel.Size = new Size(
@@ -200,19 +207,20 @@ namespace Detyra___EPacient.Views.Manager {
             this.bottomContainer.Controls.Add(this.monthLabel);
 
             Point monthCBoxLocation = new Point(
-                2 * formComponentWidth + formComponentLabelWidth,
+                (int) (2.8 * formComponentWidth),
                 Dimensions.PANEL_CARD_PADDING_VERTICAL * 3
             );
             this.MonthCBox = new DynamicComboBox(
                 cBoxSize,
                 monthCBoxLocation
             );
+            this.MonthCBox.comboBox.SelectedIndexChanged += new EventHandler(this.onFilterChanged);
             this.bottomContainer.Controls.Add(MonthCBox.comboBox);
 
             // Year selection
             this.yearLabel = new Label();
             this.yearLabel.Location = new Point(
-                4 * formComponentWidth,
+                bottomContainerWidth - (Dimensions.PANEL_CARD_PADDING_HORIZONTAL + formComponentWidth + formComponentLabelWidth),
                 Dimensions.PANEL_CARD_PADDING_VERTICAL * 3
             );
             this.yearLabel.Size = new Size(
@@ -226,8 +234,9 @@ namespace Detyra___EPacient.Views.Manager {
             this.bottomContainer.Controls.Add(this.yearLabel);
 
             this.YearTxtBox = new TextBox();
+            this.YearTxtBox.Text = DateTime.Now.ToString(DateTimeFormats.YEAR);
             this.YearTxtBox.Location = new Point(
-                4 * formComponentWidth + formComponentLabelWidth,
+                bottomContainerWidth - (Dimensions.PANEL_CARD_PADDING_HORIZONTAL + formComponentWidth),
                 Dimensions.PANEL_CARD_PADDING_VERTICAL * 3
             );
             this.YearTxtBox.Size = new Size(
@@ -235,6 +244,7 @@ namespace Detyra___EPacient.Views.Manager {
                 formComponentHeight
             );
             this.YearTxtBox.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
+            this.YearTxtBox.TextChanged += new EventHandler(this.onFilterChanged);
             this.bottomContainer.Controls.Add(this.YearTxtBox);
 
             // Table
@@ -250,11 +260,49 @@ namespace Detyra___EPacient.Views.Manager {
             this.DoctorReservationsTable = new DoctorReservationsTable(
                 tableSize,
                 tableLocation,
-                null,
                 this.controller
             );
-
             this.bottomContainer.Controls.Add(this.DoctorReservationsTable.DataGrid);
+
+            // Chart
+            this.ChartArea = new ChartArea();
+            this.ChartArea.AxisX.Enabled = AxisEnabled.True;
+            this.ChartArea.AxisX.Name = "Data";
+            this.ChartArea.AxisX.Minimum = 1;
+            this.ChartArea.AxisX.LineColor = Colors.BLACK;
+            this.ChartArea.AxisX.Maximum = 31;
+            this.ChartArea.AxisX.MajorGrid.LineColor = Colors.DOVE_GRAY;
+            this.ChartArea.AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dot;
+            this.ChartArea.AxisY.Enabled = AxisEnabled.True;
+            this.ChartArea.AxisY.Name = "Rezervime";
+            this.ChartArea.AxisY.Maximum = 10;
+            this.ChartArea.AxisY.Minimum = 0;
+            this.ChartArea.AxisY.LineColor = Colors.BLACK;
+            this.ChartArea.AxisY.MajorGrid.LineColor = Colors.DOVE_GRAY;
+            this.ChartArea.AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dot;
+            this.ChartArea.BackColor = Colors.ALTO;
+
+            this.ReservationsSeries = new Series();
+            this.ReservationsSeries.BorderWidth = 2;
+            this.ReservationsSeries.MarkerStyle = MarkerStyle.Circle;
+            this.ReservationsSeries.MarkerSize = 10;
+            this.ReservationsSeries.MarkerColor = Colors.POMEGRANATE;
+            this.ReservationsSeries.ChartType = SeriesChartType.Line;
+
+            this.DoctorReservationsChart = new Chart();
+            this.DoctorReservationsChart.Name = "doctorReservationsChart";
+            this.DoctorReservationsChart.ChartAreas.Add(this.ChartArea);
+            this.DoctorReservationsChart.Series.Add(this.ReservationsSeries);
+            this.DoctorReservationsChart.Size = new Size(
+                chartWidth,
+                bottomContainerHeight - 130
+            );
+            this.DoctorReservationsChart.Location = new Point(
+                bottomContainerWidth - (Dimensions.PANEL_CARD_PADDING_HORIZONTAL + chartWidth),
+                bottomContainerHeight - (Dimensions.PANEL_CARD_PADDING_HORIZONTAL + tableSize.Height)
+            );
+            this.bottomContainer.Controls.Add(this.DoctorReservationsChart);
+            this.bottomContainer.Controls.SetChildIndex(this.DoctorReservationsChart, 0);
         }
 
         /**
@@ -263,6 +311,14 @@ namespace Detyra___EPacient.Views.Manager {
 
         public void readInitialData() {
             this.controller.init();
+        }
+
+        /**
+         * Event handlers 
+         */
+
+        private void onFilterChanged(object sender, EventArgs eventArgs) {
+            this.controller.handleFilterChange();
         }
     }
 }

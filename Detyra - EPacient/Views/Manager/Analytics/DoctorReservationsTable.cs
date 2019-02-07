@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 using Detyra___EPacient.Controllers.Manager;
 using Detyra___EPacient.Controllers.Operator;
 using Detyra___EPacient.Styles;
@@ -15,21 +16,19 @@ namespace Detyra___EPacient.Views.Manager {
         public DataTable Table { get; set; }
         public DataGridView DataGrid { get; set; }
 
+
         private Size tableSize;
         private Point tableLocation;
-        private List<Models.DoctorReservations> data;
         private AnalyticsController controller;
 
         public DoctorReservationsTable(
             Size tableSize, 
             Point tableLocation, 
-            List<Models.DoctorReservations> data,
             AnalyticsController controller
         ) {
             // Init size; location; data source
             this.tableLocation = tableLocation;
             this.tableSize = tableSize;
-            this.data = data;
             this.controller = controller;
 
             // Init table
