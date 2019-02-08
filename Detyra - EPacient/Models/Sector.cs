@@ -10,29 +10,29 @@ using Detyra___EPacient.Constants;
 using MySql.Data.MySqlClient;
 
 namespace Detyra___EPacient.Models {
-    public class Role {
+    class Sector {
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public Role() {
+        public Sector() {
             this.Id = -1;
             this.Name = "";
         }
 
-        public Role(int id, string name) {
+        public Sector(int id, string name) {
             this.Id = id;
             this.Name = name;
         }
 
         /**
-         * Method to read roles from the database
+         * Method to read sectors from the database
          */
         
-        public async Task<List<Role>> readRoles() {
+        public async Task<List<Sector>> readSectors() {
             try {
                 string query = $@"
                         SELECT *
-                        FROM {DBTables.ROLE}";
+                        FROM {DBTables.SECTOR}";
 
                 MySqlConnection connection = new MySqlConnection(DB.connectionString);
                 connection.Open();
@@ -41,17 +41,17 @@ namespace Detyra___EPacient.Models {
                 cmd.Prepare();
 
                 DbDataReader reader = await cmd.ExecuteReaderAsync();
-                List<Role> roles = new List<Role>();
+                List<Sector> sectors = new List<Sector>();
 
                 while (reader.Read()) {
-                    int roleId = reader.GetInt32(reader.GetOrdinal("id"));
-                    string roleName = reader.GetString(reader.GetOrdinal("name"));
-                    Role currentRole = new Role(roleId, roleName);
+                    int sectorId = reader.GetInt32(reader.GetOrdinal("id"));
+                    string sectorName = reader.GetString(reader.GetOrdinal("name"));
+                    Sector currentSector = new Sector(sectorId, sectorName);
 
-                    roles.Add(currentRole);
+                    sectors.Add(currentSector);
                 }
 
-                return roles;
+                return sectors;
             } catch (Exception e) {
                 throw e;
             }

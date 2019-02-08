@@ -13,6 +13,7 @@ namespace Detyra___EPacient.Controllers.Manager {
         private Users view;
 
         private Models.Role roleModel;
+        private Models.Sector sectorModel;
         private Models.User userModel;
         private Models.Employee employeeModel;
         private Models.Operator operatorModel;
@@ -22,6 +23,7 @@ namespace Detyra___EPacient.Controllers.Manager {
         public UsersController(Users view) {
             this.view = view;
             this.roleModel = new Models.Role();
+            this.sectorModel = new Models.Sector();
             this.operatorModel = new Models.Operator();
             this.doctorModel = new Models.Doctor();
             this.nurseModel = new Models.Nurse();
@@ -48,6 +50,13 @@ namespace Detyra___EPacient.Controllers.Manager {
                 this.view.CBox.comboBox.DisplayMember = "name";
                 this.view.CBox.comboBox.ValueMember = "id";
                 this.view.CBox.comboBox.DataSource = filteredRoles;
+
+                // Read sectors from DB and populate combobox
+                List<Models.Sector> sectors = await sectorModel.readSectors();
+
+                this.view.SpecializationCBox.comboBox.DisplayMember = "name";
+                this.view.SpecializationCBox.comboBox.ValueMember = "id";
+                this.view.SpecializationCBox.comboBox.DataSource = sectors;
 
                 Cursor.Current = Cursors.Arrow;
             } catch (Exception e) {
@@ -77,7 +86,7 @@ namespace Detyra___EPacient.Controllers.Manager {
                         this.view.FormPhoneNumberLabel.Visible = false;
                         this.view.FormPhoneNumberTxtBox.Visible = false;
                         this.view.FormSpecializationLabel.Visible = false;
-                        this.view.FormSpecializationTxtBox.Visible = false;
+                        this.view.SpecializationCBox.comboBox.Visible = false;
                         break;
                     case Roles.DOCTOR:
                         List<Models.Doctor> doctors = await doctorModel.readDoctors();
@@ -89,7 +98,7 @@ namespace Detyra___EPacient.Controllers.Manager {
                         this.view.FormPhoneNumberLabel.Visible = true;
                         this.view.FormPhoneNumberTxtBox.Visible = true;
                         this.view.FormSpecializationLabel.Visible = true;
-                        this.view.FormSpecializationTxtBox.Visible = true;
+                        this.view.SpecializationCBox.comboBox.Visible = true;
                         break;
                     case Roles.NURSE:
                         List<Models.Nurse> nurses = await nurseModel.readNurses();
@@ -101,7 +110,7 @@ namespace Detyra___EPacient.Controllers.Manager {
                         this.view.FormPhoneNumberLabel.Visible = true;
                         this.view.FormPhoneNumberTxtBox.Visible = true;
                         this.view.FormSpecializationLabel.Visible = false;
-                        this.view.FormSpecializationTxtBox.Visible = false;
+                        this.view.SpecializationCBox.comboBox.Visible = false;
                         break;
                     default:
                         break;
@@ -174,7 +183,6 @@ namespace Detyra___EPacient.Controllers.Manager {
                 this.view.FormPhoneNumberTxtBox.Text = "";
                 this.view.FormAddressTxtBox.Text = "";
                 this.view.FormAddressTxtBox.Text = "";
-                this.view.FormSpecializationTxtBox.Text = "";
             } catch (Exception e) {
                 string caption = "Problem në fshirje";
                 MessageBox.Show(e.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -197,7 +205,7 @@ namespace Detyra___EPacient.Controllers.Manager {
                 string dob = this.view.FormDOBPicker.Value.ToString(DateTimeFormats.MYSQL_DATE);
                 string phoneNumber = this.view.FormPhoneNumberTxtBox.Text;
                 string address = this.view.FormAddressTxtBox.Text;
-                string specialization = this.view.FormSpecializationTxtBox.Text;
+                int specialization = (int) this.view.SpecializationCBox.comboBox.SelectedValue;
 
                 // Create user
                 userModel = new Models.User();

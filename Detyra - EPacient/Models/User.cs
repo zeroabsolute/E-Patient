@@ -11,7 +11,7 @@ using MySql.Data.MySqlClient;
 using System.Data.Common;
 
 namespace Detyra___EPacient.Models {
-    class User {
+    public class User {
         public int Id { get; set; }
         public Role Role { get; set; }
         public string Email { get; set; }

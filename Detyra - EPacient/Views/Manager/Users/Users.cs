@@ -26,10 +26,10 @@ namespace Detyra___EPacient.Views.Manager {
         public DateTimePicker FormDOBPicker { get; set; }
         public TextBox FormAddressTxtBox { get; set; }
         public TextBox FormPhoneNumberTxtBox { get; set; }
-        public TextBox FormSpecializationTxtBox { get; set; }
         public Label FormAddressLabel { get; set; }
-        public Label FormPhoneNumberLabel { get; set; }
         public Label FormSpecializationLabel { get; set; }
+        public Label FormPhoneNumberLabel { get; set; }
+        public DynamicComboBox SpecializationCBox { get; set; }
         public Button SubmitBtn { get; set; }
         public Button ClearBtn { get; set; }
 
@@ -365,15 +365,16 @@ namespace Detyra___EPacient.Views.Manager {
             this.FormSpecializationLabel.Visible = false;
             this.right.Controls.Add(this.FormSpecializationLabel);
 
-            this.FormSpecializationTxtBox = new TextBox();
-            this.FormSpecializationTxtBox.Location = new Point(
+            Point cBoxLocation2 = new Point(
                 Dimensions.PANEL_CARD_PADDING_HORIZONTAL + this.smallCardKeyWidth + this.smallKeyValueMargin,
                 (8 * this.formComponentVerticalMargin) + (Dimensions.PANEL_CARD_PADDING_VERTICAL * 2)
             );
-            this.FormSpecializationTxtBox.Width = this.smallCardValueWidth;
-            this.FormSpecializationTxtBox.Font = new Font(Fonts.primary, 12, FontStyle.Regular);
-            this.FormSpecializationTxtBox.Visible = false;
-            this.right.Controls.Add(this.FormSpecializationTxtBox);
+            Size cBoxSize2 = new Size(this.smallCardValueWidth, this.formComponentHeight);
+            this.SpecializationCBox = new DynamicComboBox(
+                cBoxSize2,
+                cBoxLocation2
+            );
+            this.right.Controls.Add(SpecializationCBox.comboBox);
 
             /* Buttons */
 

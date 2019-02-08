@@ -14,5 +14,7 @@
         public static string PATIENT_CHART = "patient_chart";
         public static string CHART_DOCUMENT = "chart_document";
         public static string ALLERGEN = "allergen";
+        public static string SECTOR = "sector";
+        public static string EMERGENCY_DOCTOR = "emergency_doctor";
     }
 }
