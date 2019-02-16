@@ -12,5 +12,6 @@ namespace Detyra___EPacient.Constants
         public const string OPERATOR = "Operator";
         public const string DOCTOR = "Doctor";
         public const string NURSE = "Nurse";
+        public const string ALL = "All";
     }
 }

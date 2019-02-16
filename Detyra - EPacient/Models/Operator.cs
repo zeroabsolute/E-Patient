@@ -51,6 +51,7 @@ namespace Detyra___EPacient.Models {
                             role.id as roleId,
                             role.name as roleName,
                             user.id as userId,
+                            user.status as userStatus,
                             user.email as userEmail,
                             operator.id as operatorId,
                             operator.first_name as firstName,
@@ -80,6 +81,7 @@ namespace Detyra___EPacient.Models {
                     int roleId = reader.GetInt32(reader.GetOrdinal("roleId"));
                     string roleName = reader.GetString(reader.GetOrdinal("roleName"));
                     int userId = reader.GetInt32(reader.GetOrdinal("userId"));
+                    int userStatus = reader.GetInt32(reader.GetOrdinal("userStatus"));
                     string userEmail = reader.GetString(reader.GetOrdinal("userEmail"));
                     int operatorId = reader.GetInt32(reader.GetOrdinal("operatorId"));
                     string firstName = reader.GetString(reader.GetOrdinal("firstName"));
@@ -87,7 +89,7 @@ namespace Detyra___EPacient.Models {
                     DateTime dob = reader.GetDateTime(reader.GetOrdinal("dateOfBirth"));
 
                     Role currentRole = new Role(roleId, roleName);
-                    User currentUser = new User(userId, currentRole, userEmail, null);
+                    User currentUser = new User(userId, currentRole, userStatus, userEmail, null);
                     Operator currentOperator = new Operator(
                         currentUser,
                         operatorId,
@@ -160,7 +162,8 @@ namespace Detyra___EPacient.Models {
                             @firstName,
                             @lastName,
                             @dateOfBirth,
-                            @user
+                            @user,
+                            @status
                         )";
 
                     MySqlConnection connection = new MySqlConnection(DB.connectionString);
@@ -171,6 +174,7 @@ namespace Detyra___EPacient.Models {
                     cmd.Parameters.AddWithValue("@lastName", lastName);
                     cmd.Parameters.AddWithValue("@dateOfBirth", dateOfBirth);
                     cmd.Parameters.AddWithValue("@user", user);
+                    cmd.Parameters.AddWithValue("@status", Statuses.ACTIVE.Id);
                     cmd.Prepare();
 
                     await cmd.ExecuteNonQueryAsync();

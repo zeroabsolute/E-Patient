@@ -63,6 +63,7 @@
     <Compile Include="Constants\Months.cs" />
     <Compile Include="Constants\Roles.cs" />
     <Compile Include="Constants\Dimensions.cs" />
+    <Compile Include="Constants\Statuses.cs" />
     <Compile Include="Constants\WeekDays.cs" />
     <Compile Include="Controllers\Doctor\DoctorMainController.cs" />
     <Compile Include="Controllers\LogInController.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Models\Operator.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\PatientChart.cs" />
+    <Compile Include="Models\Status.cs" />
     <Compile Include="Models\WorkingHours.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Styles\Colors.cs" />

@@ -81,6 +81,7 @@ namespace Detyra___EPacient.Models {
                             role.name as roleName,
                             user.id as userId,
                             user.email as userEmail,
+                            user.status as userStatus,
                             employee.id as employeeId,
                             employee.first_name as employeeFirstName,
                             employee.last_name as employeeLastName,
@@ -132,6 +133,7 @@ namespace Detyra___EPacient.Models {
                     int roleId = reader.GetInt32(reader.GetOrdinal("roleId"));
                     string roleName = reader.GetString(reader.GetOrdinal("roleName"));
                     int userId = reader.GetInt32(reader.GetOrdinal("userId"));
+                    int userStatus = reader.GetInt32(reader.GetOrdinal("userStatus"));
                     string userEmail = reader.GetString(reader.GetOrdinal("userEmail"));
                     int employee = reader.GetInt32(reader.GetOrdinal("employeeId"));
                     string employeeFirstName = reader.GetString(reader.GetOrdinal("employeeFirstName"));
@@ -141,7 +143,7 @@ namespace Detyra___EPacient.Models {
                     DateTime employeeDOB = reader.GetDateTime(reader.GetOrdinal("employeeDateOfBirth"));
 
                     Role currentRole = new Role(roleId, roleName);
-                    User currentUser = new User(userId, currentRole, userEmail, null);
+                    User currentUser = new User(userId, currentRole, userStatus, userEmail, null);
                     Employee currentEmployee = new Employee(
                         employeeId,
                         employeeFirstName,

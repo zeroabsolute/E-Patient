@@ -40,6 +40,7 @@ namespace Detyra___EPacient.Models {
                             role.name as roleName,
                             user.id as userId,
                             user.email as userEmail,
+                            user.status as userStatus,
                             employee.id as employeeId,
                             employee.first_name as employeeFirstName,
                             employee.last_name as employeeLastName,
@@ -75,6 +76,7 @@ namespace Detyra___EPacient.Models {
                     int roleId = reader.GetInt32(reader.GetOrdinal("roleId"));
                     string roleName = reader.GetString(reader.GetOrdinal("roleName"));
                     int userId = reader.GetInt32(reader.GetOrdinal("userId"));
+                    int userStatus = reader.GetInt32(reader.GetOrdinal("userStatus"));
                     string userEmail = reader.GetString(reader.GetOrdinal("userEmail"));
                     int employeeId = reader.GetInt32(reader.GetOrdinal("employeeId"));
                     string employeeFirstName = reader.GetString(reader.GetOrdinal("employeeFirstName"));
@@ -85,7 +87,7 @@ namespace Detyra___EPacient.Models {
                     int nurseId = reader.GetInt32(reader.GetOrdinal("nurseId"));
 
                     Role currentRole = new Role(roleId, roleName);
-                    User currentUser = new User(userId, currentRole, userEmail, null);
+                    User currentUser = new User(userId, currentRole, userStatus, userEmail, null);
                     Employee currentEmployee = new Employee(
                         employeeId,
                         employeeFirstName,
@@ -118,7 +120,8 @@ namespace Detyra___EPacient.Models {
                             {DBTables.NURSE}
                         VALUES (
                             null,
-                            @employee
+                            @employee,
+                            @status
                         )";
 
                     MySqlConnection connection = new MySqlConnection(DB.connectionString);
@@ -126,6 +129,7 @@ namespace Detyra___EPacient.Models {
 
                     MySqlCommand cmd = new MySqlCommand(query, connection);
                     cmd.Parameters.AddWithValue("@employee", employee);
+                    cmd.Parameters.AddWithValue("@status", Statuses.ACTIVE.Id);
                     cmd.Prepare();
 
                     await cmd.ExecuteNonQueryAsync();

@@ -32,6 +32,7 @@ namespace Detyra___EPacient.Views.Manager {
         public DynamicComboBox SpecializationCBox { get; set; }
         public Button SubmitBtn { get; set; }
         public Button ClearBtn { get; set; }
+        public Button DeleteBtn { get; set; }
 
         public string SelectedRole { get; set; }
         public List<Models.Operator> Operators { get; set; }
@@ -56,6 +57,7 @@ namespace Detyra___EPacient.Views.Manager {
         private int bigCardKeyWidth;
         private int bigCardValueWidth;
         private int smallCardKeyWidth;
+        private int buttonWidth;
         private int smallCardValueWidth;
         private int formComponentHeight;
         private int keyValueMargin = 50;
@@ -73,6 +75,7 @@ namespace Detyra___EPacient.Views.Manager {
             smallCardValueWidth = (int) (smallCardWidth / 2);
             formComponentHeight = 40;
             formComponentVerticalMargin = formComponentHeight + 10;
+            buttonWidth = 160;
 
             this.tableLocation = new Point(Dimensions.PANEL_CARD_PADDING_HORIZONTAL, 100);
             this.tableSize = new Size(
@@ -147,7 +150,8 @@ namespace Detyra___EPacient.Views.Manager {
                 this.tableLocation,
                 this.Operators,
                 this.Doctors,
-                this.Nurses
+                this.Nurses,
+                this.controller
             );
 
             this.left.Controls.Add(this.UsersTable.DataGrid);
@@ -378,18 +382,36 @@ namespace Detyra___EPacient.Views.Manager {
 
             /* Buttons */
 
+            this.DeleteBtn = new Button();
+            this.DeleteBtn.Name = "deleteButton";
+            this.DeleteBtn.Size = new Size(this.buttonWidth, this.formComponentHeight);
+            this.DeleteBtn.Location = new Point(
+                Dimensions.PANEL_CARD_PADDING_HORIZONTAL,
+                this.cardHeight - (Dimensions.PANEL_CARD_PADDING_VERTICAL + this.formComponentHeight)
+            );
+            this.DeleteBtn.Text = "ÇAKTIVIZO";
+            this.DeleteBtn.UseVisualStyleBackColor = true;
+            this.DeleteBtn.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.DeleteBtn.ForeColor = Colors.WHITE;
+            this.DeleteBtn.BackColor = Colors.IMPERIAL_RED;
+            this.DeleteBtn.FlatStyle = FlatStyle.Flat;
+            this.DeleteBtn.Click += new EventHandler(onDeactivateButtonClicked);
+            this.DeleteBtn.Image = Image.FromFile("../../Resources/delete.png");
+            this.DeleteBtn.ImageAlign = ContentAlignment.MiddleLeft;
+            this.right.Controls.Add(this.DeleteBtn);
+
             this.ClearBtn = new Button();
             this.ClearBtn.Name = "clearButton";
-            this.ClearBtn.Size = new Size(this.smallCardKeyWidth, this.formComponentHeight);
+            this.ClearBtn.Size = new Size(this.buttonWidth, this.formComponentHeight);
             this.ClearBtn.Location = new Point(
-                Dimensions.PANEL_CARD_PADDING_HORIZONTAL,
+                190,
                 this.cardHeight - (Dimensions.PANEL_CARD_PADDING_VERTICAL + this.formComponentHeight)
             );
             this.ClearBtn.Text = "RESET";
             this.ClearBtn.UseVisualStyleBackColor = true;
             this.ClearBtn.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
             this.ClearBtn.ForeColor = Colors.WHITE;
-            this.ClearBtn.BackColor = Colors.IMPERIAL_RED;
+            this.ClearBtn.BackColor = Colors.SALMON_RED;
             this.ClearBtn.FlatStyle = FlatStyle.Flat;
             this.ClearBtn.Click += new EventHandler(onClearButtonClicked);
             this.ClearBtn.Image = Image.FromFile("../../Resources/clear.png");
@@ -398,9 +420,9 @@ namespace Detyra___EPacient.Views.Manager {
 
             this.SubmitBtn = new Button();
             this.SubmitBtn.Name = "submitButton";
-            this.SubmitBtn.Size = new Size(this.smallCardKeyWidth, this.formComponentHeight);
+            this.SubmitBtn.Size = new Size(this.buttonWidth, this.formComponentHeight);
             this.SubmitBtn.Location = new Point(
-                this.smallCardWidth - (this.smallCardKeyWidth + Dimensions.PANEL_CARD_PADDING_HORIZONTAL),
+                this.smallCardWidth - (this.buttonWidth + Dimensions.PANEL_CARD_PADDING_HORIZONTAL),
                 this.cardHeight - (Dimensions.PANEL_CARD_PADDING_VERTICAL + this.formComponentHeight)
             );
             this.SubmitBtn.Text = "RUAJ";
@@ -429,6 +451,10 @@ namespace Detyra___EPacient.Views.Manager {
 
         private void onRoleChanged(object sender, EventArgs eventArgs) {
             this.controller.handleRoleSelection();
+        }
+
+        private void onDeactivateButtonClicked(object sender, EventArgs eventArgs) {
+            this.controller.handleDeactivate();
         }
 
         private void onClearButtonClicked(object sender, EventArgs eventArgs) {

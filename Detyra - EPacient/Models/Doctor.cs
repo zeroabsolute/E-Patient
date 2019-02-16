@@ -49,6 +49,7 @@ namespace Detyra___EPacient.Models {
                             role.name as roleName,
                             user.id as userId,
                             user.email as userEmail,
+                            user.status as userStatus,
                             employee.id as employeeId,
                             employee.first_name as employeeFirstName,
                             employee.last_name as employeeLastName,
@@ -86,6 +87,7 @@ namespace Detyra___EPacient.Models {
                     string roleName = reader.GetString(reader.GetOrdinal("roleName"));
                     int userId = reader.GetInt32(reader.GetOrdinal("userId"));
                     string userEmail = reader.GetString(reader.GetOrdinal("userEmail"));
+                    int userStatus = reader.GetInt32(reader.GetOrdinal("userStatus"));
                     int employeeId = reader.GetInt32(reader.GetOrdinal("employeeId"));
                     string employeeFirstName = reader.GetString(reader.GetOrdinal("employeeFirstName"));
                     string employeeLastName = reader.GetString(reader.GetOrdinal("employeeLastName"));
@@ -96,7 +98,7 @@ namespace Detyra___EPacient.Models {
                     string doctorSpecialization = reader.GetString(reader.GetOrdinal("doctorSpecialization"));
 
                     Role currentRole = new Role(roleId, roleName);
-                    User currentUser = new User(userId, currentRole, userEmail, null);
+                    User currentUser = new User(userId, currentRole, userStatus, userEmail, null);
                     Employee currentEmployee = new Employee(
                         employeeId,
                         employeeFirstName,
@@ -127,6 +129,7 @@ namespace Detyra___EPacient.Models {
                             role.name as roleName,
                             user.id as userId,
                             user.email as userEmail,
+                            user.status as userStatus,
                             employee.id as employeeId,
                             employee.first_name as employeeFirstName,
                             employee.last_name as employeeLastName,
@@ -167,6 +170,7 @@ namespace Detyra___EPacient.Models {
                     string roleName = reader.GetString(reader.GetOrdinal("roleName"));
                     int userId = reader.GetInt32(reader.GetOrdinal("userId"));
                     string userEmail = reader.GetString(reader.GetOrdinal("userEmail"));
+                    int userStatus = reader.GetInt32(reader.GetOrdinal("userStatus"));
                     int employeeId = reader.GetInt32(reader.GetOrdinal("employeeId"));
                     string employeeFirstName = reader.GetString(reader.GetOrdinal("employeeFirstName"));
                     string employeeLastName = reader.GetString(reader.GetOrdinal("employeeLastName"));
@@ -177,7 +181,7 @@ namespace Detyra___EPacient.Models {
                     string doctorSpecialization = reader.GetString(reader.GetOrdinal("doctorSpecialization"));
 
                     Role currentRole = new Role(roleId, roleName);
-                    User currentUser = new User(userId, currentRole, userEmail, null);
+                    User currentUser = new User(userId, currentRole, userStatus, userEmail, null);
                     Employee currentEmployee = new Employee(
                         employeeId,
                         employeeFirstName,
@@ -212,7 +216,8 @@ namespace Detyra___EPacient.Models {
                         VALUES (
                             null,
                             @employee,
-                            @specializedIn
+                            @specializedIn,
+                            @status
                         )";
 
                     MySqlConnection connection = new MySqlConnection(DB.connectionString);
@@ -221,6 +226,7 @@ namespace Detyra___EPacient.Models {
                     MySqlCommand cmd = new MySqlCommand(query, connection);
                     cmd.Parameters.AddWithValue("@specializedIn", specialization);
                     cmd.Parameters.AddWithValue("@employee", employee);
+                    cmd.Parameters.AddWithValue("@status", Statuses.ACTIVE.Id);
                     cmd.Prepare();
 
                     await cmd.ExecuteNonQueryAsync();
