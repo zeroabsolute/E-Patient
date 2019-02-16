@@ -11,13 +11,19 @@ namespace Detyra___EPacient.Views.Nurse {
     class NurseMainPanel {
         public User LoggedInUser { get; set; }
         public Panel Panel { get; set; }
+        public Button Reservations { get; set; }
+        public Button Analysis { get; set; }
         public Button Schedule { get; set; }
         public Button LogOut { get; set; }
 
         public Schedule SchedulePanel { get; set; }
+        public Analysis AnalysisPanel { get; set; }
+        public ReservationsNurse ReservationsPanel { get; set; }
         public LogInPanel LogInPanel { get; set; }
 
         public const string SCHEDULE_BTN = "nurseScheduleBtn";
+        public const string RESERVATIONS_BTN = "nurseReservationsBtn";
+        public const string ANALYSIS_BTN = "nurseAnalysisBtn";
         public const string LOG_OUT_BTN = "nurseLogOutBtn";
 
         private PictureBox avatar;
@@ -37,7 +43,7 @@ namespace Detyra___EPacient.Views.Nurse {
             this.Panel.Size = new Size(Dimensions.PANEL_WIDTH, Dimensions.PANEL_HEIGHT);
             this.Panel.TabIndex = 0;
             this.Panel.BackColor = Colors.WHITE;
-            this.Panel.Visible = false;
+            this.Panel.Visible = true;
 
             // Init picture box
             this.avatar = new PictureBox();
@@ -59,8 +65,9 @@ namespace Detyra___EPacient.Views.Nurse {
 
             /* Init menu buttons */
 
-            int buttonHeight = (int)Dimensions.MENU_CONTAINER_HEIGHT / 2;
+            int buttonHeight = (int)Dimensions.MENU_CONTAINER_HEIGHT / 3;
             int bigButtonWidth = (int)(Dimensions.MENU_CONTAINER_WIDTH);
+            int smallButtonWidth = (int) (Dimensions.MENU_CONTAINER_WIDTH * 0.5);
 
             // Schedule
             this.Schedule = new Button();
@@ -72,9 +79,9 @@ namespace Detyra___EPacient.Views.Nurse {
             this.Schedule.TextAlign = ContentAlignment.MiddleCenter;
             this.Schedule.TextImageRelation = TextImageRelation.ImageAboveText;
             this.Schedule.UseVisualStyleBackColor = true;
-            this.Schedule.Font = new Font(Fonts.primary, 28, FontStyle.Bold);
+            this.Schedule.Font = new Font(Fonts.primary, 18, FontStyle.Bold);
             this.Schedule.ForeColor = Colors.WHITE;
-            this.Schedule.BackColor = Colors.SALMON_RED;
+            this.Schedule.BackColor = Colors.SUNGLO;
             this.Schedule.FlatStyle = FlatStyle.Flat;
             this.Schedule.Click += new EventHandler(onMenuButtonClicked);
 
@@ -82,7 +89,47 @@ namespace Detyra___EPacient.Views.Nurse {
             this.menuContainer.SetRow(this.Schedule, 0);
             this.menuContainer.SetColumn(this.Schedule, 0);
             this.menuContainer.SetColumnSpan(this.Schedule, 2);
-   
+
+            // Reservations
+            this.Reservations = new Button();
+            this.Reservations.Name = RESERVATIONS_BTN;
+            this.Reservations.Text = "Rezervimet";
+            this.Reservations.Size = new Size(smallButtonWidth, buttonHeight);
+            this.Reservations.Image = Image.FromFile("../../Resources/calendar.png");
+            this.Reservations.ImageAlign = ContentAlignment.BottomCenter;
+            this.Reservations.TextAlign = ContentAlignment.MiddleCenter;
+            this.Reservations.TextImageRelation = TextImageRelation.ImageAboveText;
+            this.Reservations.UseVisualStyleBackColor = true;
+            this.Reservations.Font = new Font(Fonts.primary, 18, FontStyle.Bold);
+            this.Reservations.ForeColor = Colors.WHITE;
+            this.Reservations.BackColor = Colors.POMEGRANATE;
+            this.Reservations.FlatStyle = FlatStyle.Flat;
+            this.Reservations.Click += new EventHandler(onMenuButtonClicked);
+
+            this.menuContainer.Controls.Add(this.Reservations);
+            this.menuContainer.SetRow(this.Reservations, 1);
+            this.menuContainer.SetColumn(this.Reservations, 0);
+
+            // Analysis
+            this.Analysis = new Button();
+            this.Analysis.Name = ANALYSIS_BTN;
+            this.Analysis.Text = "Analizat";
+            this.Analysis.Size = new Size(smallButtonWidth, buttonHeight);
+            this.Analysis.Image = Image.FromFile("../../Resources/description.png");
+            this.Analysis.ImageAlign = ContentAlignment.BottomCenter;
+            this.Analysis.TextAlign = ContentAlignment.MiddleCenter;
+            this.Analysis.TextImageRelation = TextImageRelation.ImageAboveText;
+            this.Analysis.UseVisualStyleBackColor = true;
+            this.Analysis.Font = new Font(Fonts.primary, 18, FontStyle.Bold);
+            this.Analysis.ForeColor = Colors.WHITE;
+            this.Analysis.BackColor = Colors.GUARDSMAN_RED;
+            this.Analysis.FlatStyle = FlatStyle.Flat;
+            this.Analysis.Click += new EventHandler(onMenuButtonClicked);
+
+            this.menuContainer.Controls.Add(this.Analysis);
+            this.menuContainer.SetRow(this.Analysis, 1);
+            this.menuContainer.SetColumn(this.Analysis, 1);
+
             // Log out
             this.LogOut = new Button();
             this.LogOut.Name = LOG_OUT_BTN;
@@ -100,16 +147,21 @@ namespace Detyra___EPacient.Views.Nurse {
             this.LogOut.Click += new EventHandler(onMenuButtonClicked);
 
             this.menuContainer.Controls.Add(this.LogOut);
-            this.menuContainer.SetRow(this.LogOut, 1);
+            this.menuContainer.SetRow(this.LogOut, 2);
             this.menuContainer.SetColumn(this.LogOut, 0);
+            this.menuContainer.SetColumnSpan(this.LogOut, 2);
         }
 
         public void initNextPanels(
            Schedule s,    
-           LogInPanel l
+           LogInPanel l,
+           ReservationsNurse r,
+           Analysis a
        ) {
             this.SchedulePanel = s;
             this.LogInPanel = l;
+            this.AnalysisPanel = a;
+            this.ReservationsPanel = r;
         }
 
         /* Event handlers */

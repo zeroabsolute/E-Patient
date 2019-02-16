@@ -25,6 +25,12 @@ namespace Detyra___EPacient.Controllers.Nurse {
                 case NurseMainPanel.SCHEDULE_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.SchedulePanel.Panel);
                     break;
+                case NurseMainPanel.RESERVATIONS_BTN:
+                    Panels.switchPanels(this.view.Panel, this.view.ReservationsPanel.Panel);
+                    break;
+                case NurseMainPanel.ANALYSIS_BTN:
+                    Panels.switchPanels(this.view.Panel, this.view.AnalysisPanel.Panel);
+                    break;
                 case NurseMainPanel.LOG_OUT_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.LogInPanel.Panel);
                     break;

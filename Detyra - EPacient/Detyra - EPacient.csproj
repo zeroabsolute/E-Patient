@@ -125,6 +125,8 @@
     <Compile Include="Views\Manager\Services\Services.cs" />
     <Compile Include="Views\Manager\Users\Users.cs" />
     <Compile Include="Views\Nurse\NurseMainPanel.cs" />
+    <Compile Include="Views\Nurse\Analysis.cs" />
+    <Compile Include="Views\Nurse\ReservationsNurse.cs" />
     <Compile Include="Views\Nurse\Schedule.cs" />
     <Compile Include="Views\Operator\PatientCharts\AddAllergensForm.cs">
       <SubType>Form</SubType>

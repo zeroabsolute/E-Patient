@@ -25,8 +25,6 @@ namespace Detyra___EPacient.Styles {
         public static Color AMETHYST = ColorTranslator.FromHtml("#BA68C8");
         public static Color JACKSONS_PURPLE = ColorTranslator.FromHtml("#1A237E");
 
-        public static Color LINEN = ColorTranslator.FromHtml("#FBE9E7");
-        public static Color POMEGRANATE = ColorTranslator.FromHtml("#F4511E");
         public static Color PANACHE = ColorTranslator.FromHtml("#E8F5E9");
         public static Color MALACHITE = ColorTranslator.FromHtml("#00C853");
         public static Color PERSIAN_GREEN = ColorTranslator.FromHtml("#009688");
@@ -35,6 +33,10 @@ namespace Detyra___EPacient.Styles {
         public static Color PEPER_GREEN = ColorTranslator.FromHtml("#397D02");
         public static Color FOREST = ColorTranslator.FromHtml("#3B5323");
 
+        public static Color LINEN = ColorTranslator.FromHtml("#FBE9E7");
+        public static Color SUNGLO = ColorTranslator.FromHtml("#E57373");
+        public static Color GUARDSMAN_RED = ColorTranslator.FromHtml("#D50000");
+        public static Color POMEGRANATE = ColorTranslator.FromHtml("#F4511E");
         public static Color SALMON_RED = ColorTranslator.FromHtml("#FA8072");
         public static Color IMPERIAL_RED = ColorTranslator.FromHtml("#7C0A02");
 
