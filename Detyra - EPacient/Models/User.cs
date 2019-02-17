@@ -158,7 +158,8 @@ namespace Detyra___EPacient.Models {
                             null,
                             @email,
                             @hashedPassword,
-                            @role
+                            @role,
+                            @status
                         )";
 
                     MySqlConnection connection = new MySqlConnection(DB.connectionString);
@@ -168,6 +169,7 @@ namespace Detyra___EPacient.Models {
                     cmd.Parameters.AddWithValue("@email", email);
                     cmd.Parameters.AddWithValue("@hashedPassword", hashedPassword);
                     cmd.Parameters.AddWithValue("@role", role);
+                    cmd.Parameters.AddWithValue("@status", Statuses.ACTIVE.Id);
                     cmd.Prepare();
 
                     await cmd.ExecuteNonQueryAsync();

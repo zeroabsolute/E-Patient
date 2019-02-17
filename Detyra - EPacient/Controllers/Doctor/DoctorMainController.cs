@@ -24,12 +24,16 @@ namespace Detyra___EPacient.Controllers.Doctor{
             switch (eventOrigin) {
                 case DoctorMainPanel.TIME_TABLES_DOC_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.TimeTablesDocPanel.Panel);
+                    this.view.TimeTablesDocPanel.LoggedInUser = this.view.LoggedInUser;
+                    this.view.TimeTablesDocPanel.readInitialData();
                     break;
                 case DoctorMainPanel.RESERVATIONS_DOC_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.ReservationsDocPanel.Panel);
+                    this.view.ReservationsDocPanel.LoggedInUser = this.view.LoggedInUser;
                     break;
                 case DoctorMainPanel.PRESCRIPTION_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.PrescriptionPanel.Panel);
+                    this.view.PrescriptionPanel.LoggedInUser = this.view.LoggedInUser;
                     break;
                 case DoctorMainPanel.LOG_OUT_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.LogInPanel.Panel);

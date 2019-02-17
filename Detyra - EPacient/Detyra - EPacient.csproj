@@ -66,6 +66,7 @@
     <Compile Include="Constants\Statuses.cs" />
     <Compile Include="Constants\WeekDays.cs" />
     <Compile Include="Controllers\Doctor\DoctorMainController.cs" />
+    <Compile Include="Controllers\Doctor\DoctorTimetablesController.cs" />
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\Manager\ManagerMainController.cs" />
     <Compile Include="Controllers\Manager\MedicamentsController.cs" />

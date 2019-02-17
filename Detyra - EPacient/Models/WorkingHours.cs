@@ -230,7 +230,8 @@ namespace Detyra___EPacient.Models {
                             @saturdayEnd,
                             @sundayStart,
                             @sundayEnd,
-                            @employee
+                            @employee,
+                            @status
                         )";
                 } else {
                     query = $@"
@@ -259,6 +260,7 @@ namespace Detyra___EPacient.Models {
 
                 if (id == -1) {
                     cmd.Parameters.AddWithValue("@employee", employeeId);
+                    cmd.Parameters.AddWithValue("@status", Statuses.ACTIVE.Id);
                 } else {
                     cmd.Parameters.AddWithValue("@workingHoursId", id);
                 }

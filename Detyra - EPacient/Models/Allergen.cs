@@ -103,7 +103,8 @@ namespace Detyra___EPacient.Models {
                         VALUES (
                             null,
                             @patientChartId,
-                            @medicamentId
+                            @medicamentId,
+                            @status
                         )";
 
                 MySqlConnection connection = new MySqlConnection(DB.connectionString);
@@ -112,6 +113,7 @@ namespace Detyra___EPacient.Models {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 cmd.Parameters.AddWithValue("@patientChartId", patientChart);
                 cmd.Parameters.AddWithValue("@medicamentId", medicament);
+                cmd.Parameters.AddWithValue("@status", Statuses.ACTIVE.Id);
                 cmd.Prepare();
 
                 await cmd.ExecuteNonQueryAsync();

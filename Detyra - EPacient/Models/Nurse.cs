@@ -168,5 +168,41 @@ namespace Detyra___EPacient.Models {
                 throw e;
             }
         }
+
+        /* Get one nurse by user id */
+
+        public async Task<int> getNurseByUserId(int userId) {
+            try {
+                string query = $@"
+                        SELECT
+                            nurse.id as nurseId
+                        FROM 
+                            {DBTables.NURSE} as nurse
+                            INNER JOIN
+                            {DBTables.EMPLOYEE}
+                            ON
+                            {DBTables.NURSE}.employee = {DBTables.EMPLOYEE}.id
+                        WHERE
+                            {DBTables.EMPLOYEE}.user = @userId";
+
+                MySqlConnection connection = new MySqlConnection(DB.connectionString);
+                connection.Open();
+
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.Prepare();
+
+                DbDataReader reader = await cmd.ExecuteReaderAsync();
+
+                while (reader.Read()) {
+                    return reader.GetInt32(reader.GetOrdinal("nurseId"));
+                }
+
+                return -1;
+            } catch (Exception e) {
+                return -1;
+            }
+        }
     }
 }

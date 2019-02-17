@@ -100,7 +100,8 @@ namespace Detyra___EPacient.Models {
                             @name,
                             @description,
                             @expirationDate,
-                            @ingredients
+                            @ingredients,
+                            @status
                         )";
 
                     MySqlConnection connection = new MySqlConnection(DB.connectionString);
@@ -111,6 +112,7 @@ namespace Detyra___EPacient.Models {
                     cmd.Parameters.AddWithValue("@description", description);
                     cmd.Parameters.AddWithValue("@expirationDate", expirationDate);
                     cmd.Parameters.AddWithValue("@ingredients", ingredients);
+                    cmd.Parameters.AddWithValue("@status", Statuses.ACTIVE.Id);
                     cmd.Prepare();
 
                     await cmd.ExecuteNonQueryAsync();

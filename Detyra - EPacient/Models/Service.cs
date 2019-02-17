@@ -91,7 +91,8 @@ namespace Detyra___EPacient.Models {
                             null,
                             @name,
                             @fee,
-                            @description
+                            @description,
+                            @status
                         )";
 
                     MySqlConnection connection = new MySqlConnection(DB.connectionString);
@@ -101,6 +102,7 @@ namespace Detyra___EPacient.Models {
                     cmd.Parameters.AddWithValue("@name", name);
                     cmd.Parameters.AddWithValue("@fee", fee);
                     cmd.Parameters.AddWithValue("@description", description);
+                    cmd.Parameters.AddWithValue("@status", Statuses.ACTIVE.Id);
                     cmd.Prepare();
 
                     await cmd.ExecuteNonQueryAsync();
