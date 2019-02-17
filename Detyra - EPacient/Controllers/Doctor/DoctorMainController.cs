@@ -35,6 +35,7 @@ namespace Detyra___EPacient.Controllers.Doctor{
                 case DoctorMainPanel.PRESCRIPTION_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.PrescriptionPanel.Panel);
                     this.view.PrescriptionPanel.LoggedInUser = this.view.LoggedInUser;
+                    this.view.PrescriptionPanel.readInitialData();
                     break;
                 case DoctorMainPanel.LOG_OUT_BTN:
                     Panels.switchPanels(this.view.Panel, this.view.LogInPanel.Panel);
