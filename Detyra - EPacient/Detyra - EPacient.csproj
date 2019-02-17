@@ -67,6 +67,7 @@
     <Compile Include="Constants\WeekDays.cs" />
     <Compile Include="Controllers\Doctor\DoctorMainController.cs" />
     <Compile Include="Controllers\Doctor\DoctorTimetablesController.cs" />
+    <Compile Include="Controllers\Doctor\DoctorReservationsController.cs" />
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\Manager\ManagerMainController.cs" />
     <Compile Include="Controllers\Manager\MedicamentsController.cs" />
@@ -106,9 +107,10 @@
     <Compile Include="Styles\Colors.cs" />
     <Compile Include="Styles\Fonts.cs" />
     <Compile Include="Views\Common\DynamicComboBox.cs" />
-    <Compile Include="Views\Doctor\Prescription.cs" />
-    <Compile Include="Views\Doctor\ReservationsDoc.cs" />
-    <Compile Include="Views\Doctor\TimeTablesDoc.cs" />
+    <Compile Include="Views\Doctor\Prescriptions\Prescription.cs" />
+    <Compile Include="Views\Doctor\Reservations\ReservationsDoc.cs" />
+    <Compile Include="Views\Doctor\Reservations\ReservationsTable.cs" />
+    <Compile Include="Views\Doctor\TimeTables\TimeTablesDoc.cs" />
     <Compile Include="Views\Manager\Analytics\DoctorReservationsTable.cs" />
     <Compile Include="Views\Manager\Analytics\Card.cs" />
     <Compile Include="Views\Manager\DoctorInCharge\EmergencyDoctorsTable.cs" />

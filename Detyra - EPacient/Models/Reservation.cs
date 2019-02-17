@@ -195,6 +195,307 @@ namespace Detyra___EPacient.Models {
             }
         }
 
+        /**
+         * Method to read reservations for one doctor
+         */
+
+        public async Task<List<Reservation>> readReservationsForDoctors(int doctorId) {
+            try {
+                string query = $@"
+                        SELECT
+                            reservation.id as reservationId,
+                            reservation.start_datetime as reservationStart,
+                            reservation.end_datetime as reservationEnd,
+                            service.id as serviceId,
+                            service.name as serviceName,
+                            service.fee as serviceFee,
+                            service.description as serviceDescription,
+                            operator.id as operatorId,
+                            operator.first_name as operatorFirstName,
+                            operator.last_name as operatorLastName,
+                            patient.id as patientId,
+                            patient.first_name as patientFirstName,
+                            patient.last_name as patientLastName,
+                            nurse.id as nurseId,
+                            nurseEmployee.first_name as nurseFirstName,
+                            nurseEmployee.last_name as nurseLastName,
+                            doctor.id as doctorId,
+                            doctorEmployee.first_name as doctorFirstName,
+                            doctorEmployee.last_name as doctorLastName
+                        FROM 
+                            {DBTables.RESERVATION} as reservation
+                            INNER JOIN
+                            {DBTables.SERVICE} as service
+                            ON
+                            {DBTables.RESERVATION}.service = {DBTables.SERVICE}.id
+                            INNER JOIN
+                            {DBTables.OPERATOR} as operator
+                            ON
+                            {DBTables.RESERVATION}.created_by = {DBTables.OPERATOR}.id
+                            INNER JOIN
+                            {DBTables.PATIENT} as patient
+                            ON
+                            {DBTables.RESERVATION}.patient = {DBTables.PATIENT}.id
+                            INNER JOIN (
+                                {DBTables.NURSE} as nurse
+                                INNER JOIN
+                                {DBTables.EMPLOYEE} as nurseEmployee
+                                ON
+                                {DBTables.NURSE}.employee = nurseEmployee.id
+                            )
+                            ON
+                            {DBTables.RESERVATION}.nurse = {DBTables.NURSE}.id
+                            INNER JOIN (
+                                {DBTables.DOCTOR} as doctor
+                                INNER JOIN
+                                {DBTables.EMPLOYEE} as doctorEmployee
+                                ON
+                                {DBTables.DOCTOR}.employee = doctorEmployee.id
+                            )
+                            ON
+                            {DBTables.RESERVATION}.doctor = {DBTables.DOCTOR}.id
+                        WHERE
+                            doctor.id = @doctorId";
+
+                MySqlConnection connection = new MySqlConnection(DB.connectionString);
+                connection.Open();
+
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@doctorId", doctorId);
+
+                cmd.Prepare();
+
+                DbDataReader reader = await cmd.ExecuteReaderAsync();
+                List<Reservation> reservations = new List<Reservation>();
+
+                while (reader.Read()) {
+                    Service currentService = new Service(
+                        reader.GetInt32(reader.GetOrdinal("serviceId")),
+                        reader.GetString(reader.GetOrdinal("serviceName")),
+                        reader.GetInt32(reader.GetOrdinal("serviceFee")),
+                        reader.GetString(reader.GetOrdinal("serviceDescription"))
+                    );
+
+                    Operator currentOperator = new Operator(
+                        null,
+                        reader.GetInt32(reader.GetOrdinal("operatorId")),
+                        reader.GetString(reader.GetOrdinal("operatorFirstName")),
+                        reader.GetString(reader.GetOrdinal("operatorLastName")),
+                        DateTime.Now
+                    );
+
+                    Patient currentPatient = new Patient(
+                        reader.GetInt32(reader.GetOrdinal("patientId")),
+                        reader.GetString(reader.GetOrdinal("patientFirstName")),
+                        reader.GetString(reader.GetOrdinal("patientLastName")),
+                        "",
+                        "",
+                        DateTime.Now,
+                        ""
+                    );
+
+                    Employee nurseEmployee = new Employee(
+                        -1,
+                        reader.GetString(reader.GetOrdinal("nurseFirstName")),
+                        reader.GetString(reader.GetOrdinal("nurseLastName")),
+                        "",
+                        "",
+                        DateTime.Now,
+                        null
+                    );
+                    Nurse currentNurse = new Nurse(
+                        reader.GetInt32(reader.GetOrdinal("nurseId")),
+                        nurseEmployee
+                    );
+
+                    Employee doctorEmployee = new Employee(
+                        -1,
+                        reader.GetString(reader.GetOrdinal("doctorFirstName")),
+                        reader.GetString(reader.GetOrdinal("doctorLastName")),
+                        "",
+                        "",
+                        DateTime.Now,
+                        null
+                    );
+                    Doctor currentDoctor = new Doctor(
+                        reader.GetInt32(reader.GetOrdinal("doctorId")),
+                        doctorEmployee,
+                        ""
+                    );
+
+                    Reservation currentReservation = new Reservation(
+                        reader.GetInt32(reader.GetOrdinal("reservationId")),
+                        reader.GetDateTime(reader.GetOrdinal("reservationStart")),
+                        reader.GetDateTime(reader.GetOrdinal("reservationEnd")),
+                        currentService,
+                        currentOperator,
+                        currentPatient,
+                        currentNurse,
+                        currentDoctor
+                    );
+
+                    reservations.Add(currentReservation);
+                }
+
+                return reservations;
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+
+        /**
+         * Method to read reservations for one doctor
+         */
+
+        public async Task<List<Reservation>> readReservationsForNurses(int nurseId) {
+            try {
+                string query = $@"
+                        SELECT
+                            reservation.id as reservationId,
+                            reservation.start_datetime as reservationStart,
+                            reservation.end_datetime as reservationEnd,
+                            service.id as serviceId,
+                            service.name as serviceName,
+                            service.fee as serviceFee,
+                            service.description as serviceDescription,
+                            operator.id as operatorId,
+                            operator.first_name as operatorFirstName,
+                            operator.last_name as operatorLastName,
+                            patient.id as patientId,
+                            patient.first_name as patientFirstName,
+                            patient.last_name as patientLastName,
+                            nurse.id as nurseId,
+                            nurseEmployee.first_name as nurseFirstName,
+                            nurseEmployee.last_name as nurseLastName,
+                            doctor.id as doctorId,
+                            doctorEmployee.first_name as doctorFirstName,
+                            doctorEmployee.last_name as doctorLastName
+                        FROM 
+                            {DBTables.RESERVATION} as reservation
+                            INNER JOIN
+                            {DBTables.SERVICE} as service
+                            ON
+                            {DBTables.RESERVATION}.service = {DBTables.SERVICE}.id
+                            INNER JOIN
+                            {DBTables.OPERATOR} as operator
+                            ON
+                            {DBTables.RESERVATION}.created_by = {DBTables.OPERATOR}.id
+                            INNER JOIN
+                            {DBTables.PATIENT} as patient
+                            ON
+                            {DBTables.RESERVATION}.patient = {DBTables.PATIENT}.id
+                            INNER JOIN (
+                                {DBTables.NURSE} as nurse
+                                INNER JOIN
+                                {DBTables.EMPLOYEE} as nurseEmployee
+                                ON
+                                {DBTables.NURSE}.employee = nurseEmployee.id
+                            )
+                            ON
+                            {DBTables.RESERVATION}.nurse = {DBTables.NURSE}.id
+                            INNER JOIN (
+                                {DBTables.DOCTOR} as doctor
+                                INNER JOIN
+                                {DBTables.EMPLOYEE} as doctorEmployee
+                                ON
+                                {DBTables.DOCTOR}.employee = doctorEmployee.id
+                            )
+                            ON
+                            {DBTables.RESERVATION}.doctor = {DBTables.DOCTOR}.id
+                        WHERE
+                            nurse.id = @nurseId";
+
+                MySqlConnection connection = new MySqlConnection(DB.connectionString);
+                connection.Open();
+
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@nurseId", nurseId);
+
+                cmd.Prepare();
+
+                DbDataReader reader = await cmd.ExecuteReaderAsync();
+                List<Reservation> reservations = new List<Reservation>();
+
+                while (reader.Read()) {
+                    Service currentService = new Service(
+                        reader.GetInt32(reader.GetOrdinal("serviceId")),
+                        reader.GetString(reader.GetOrdinal("serviceName")),
+                        reader.GetInt32(reader.GetOrdinal("serviceFee")),
+                        reader.GetString(reader.GetOrdinal("serviceDescription"))
+                    );
+
+                    Operator currentOperator = new Operator(
+                        null,
+                        reader.GetInt32(reader.GetOrdinal("operatorId")),
+                        reader.GetString(reader.GetOrdinal("operatorFirstName")),
+                        reader.GetString(reader.GetOrdinal("operatorLastName")),
+                        DateTime.Now
+                    );
+
+                    Patient currentPatient = new Patient(
+                        reader.GetInt32(reader.GetOrdinal("patientId")),
+                        reader.GetString(reader.GetOrdinal("patientFirstName")),
+                        reader.GetString(reader.GetOrdinal("patientLastName")),
+                        "",
+                        "",
+                        DateTime.Now,
+                        ""
+                    );
+
+                    Employee nurseEmployee = new Employee(
+                        -1,
+                        reader.GetString(reader.GetOrdinal("nurseFirstName")),
+                        reader.GetString(reader.GetOrdinal("nurseLastName")),
+                        "",
+                        "",
+                        DateTime.Now,
+                        null
+                    );
+                    Nurse currentNurse = new Nurse(
+                        reader.GetInt32(reader.GetOrdinal("nurseId")),
+                        nurseEmployee
+                    );
+
+                    Employee doctorEmployee = new Employee(
+                        -1,
+                        reader.GetString(reader.GetOrdinal("doctorFirstName")),
+                        reader.GetString(reader.GetOrdinal("doctorLastName")),
+                        "",
+                        "",
+                        DateTime.Now,
+                        null
+                    );
+                    Doctor currentDoctor = new Doctor(
+                        reader.GetInt32(reader.GetOrdinal("doctorId")),
+                        doctorEmployee,
+                        ""
+                    );
+
+                    Reservation currentReservation = new Reservation(
+                        reader.GetInt32(reader.GetOrdinal("reservationId")),
+                        reader.GetDateTime(reader.GetOrdinal("reservationStart")),
+                        reader.GetDateTime(reader.GetOrdinal("reservationEnd")),
+                        currentService,
+                        currentOperator,
+                        currentPatient,
+                        currentNurse,
+                        currentDoctor
+                    );
+
+                    reservations.Add(currentReservation);
+                }
+
+                return reservations;
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+
+
+        /**
+         * Reservation CREATE logic.
+         */
+
         /* Validates start and end times */
 
         private void validateTimes(DateTime start, DateTime end) {
@@ -433,7 +734,9 @@ namespace Detyra___EPacient.Models {
             }
         }
 
-        /* Update reservation */
+        /**
+         * Reservation UPDATE logic 
+         */
 
         public async Task<long> updateReservation(
             long id,
