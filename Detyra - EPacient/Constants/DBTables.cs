@@ -16,5 +16,7 @@
         public static string ALLERGEN = "allergen";
         public static string SECTOR = "sector";
         public static string EMERGENCY_DOCTOR = "emergency_doctor";
+        public static string PRESCRIPTION = "prescription";
+        public static string PRESCRIPTION_MEDICAMENT = "prescription_medicament";
     }
 }

@@ -22,6 +22,7 @@ namespace Detyra___EPacient.Views.Doctor {
         public Label SelectedReservationLabel { get; set; }
         public TextBox DescriptionTxtBox { get; set; }
         public ListBox MedicamentsListBox { get; set; }
+        public Button SubmitBtn { get; set; }
 
         private PrescriptionsController controller;
         private NavigationBar header;
@@ -33,7 +34,6 @@ namespace Detyra___EPacient.Views.Doctor {
         private Label descriptionLabel;
         private Label medicamentsLabel;
         private Button resetBtn;
-        private Button submitBtn;
 
         private int cardHeight;
         private int leftPanelWidth;
@@ -262,22 +262,22 @@ namespace Detyra___EPacient.Views.Doctor {
             this.resetBtn.ImageAlign = ContentAlignment.MiddleLeft;
             this.right.Controls.Add(this.resetBtn);
 
-            this.submitBtn = new Button();
-            this.submitBtn.Size = new Size(this.formComponentKeyWidth, this.formComponentHeight);
-            this.submitBtn.Location = new Point(
+            this.SubmitBtn = new Button();
+            this.SubmitBtn.Size = new Size(this.formComponentKeyWidth, this.formComponentHeight);
+            this.SubmitBtn.Location = new Point(
                 this.rightPanelWidth - (this.formComponentKeyWidth + Dimensions.PANEL_CARD_PADDING_HORIZONTAL),
                 this.cardHeight - (Dimensions.PANEL_CARD_PADDING_VERTICAL + this.formComponentHeight)
             );
-            this.submitBtn.Text = "RUAJ";
-            this.submitBtn.UseVisualStyleBackColor = true;
-            this.submitBtn.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
-            this.submitBtn.ForeColor = Colors.WHITE;
-            this.submitBtn.BackColor = Colors.MALACHITE;
-            this.submitBtn.FlatStyle = FlatStyle.Flat;
-            this.submitBtn.Click += new EventHandler(onSubmitButtonClicked);
-            this.submitBtn.Image = Image.FromFile("../../Resources/save.png");
-            this.submitBtn.ImageAlign = ContentAlignment.MiddleLeft;
-            this.right.Controls.Add(this.submitBtn);
+            this.SubmitBtn.Text = "RUAJ";
+            this.SubmitBtn.UseVisualStyleBackColor = true;
+            this.SubmitBtn.Font = new Font(Fonts.primary, 12, FontStyle.Bold);
+            this.SubmitBtn.ForeColor = Colors.WHITE;
+            this.SubmitBtn.BackColor = Colors.MALACHITE;
+            this.SubmitBtn.FlatStyle = FlatStyle.Flat;
+            this.SubmitBtn.Click += new EventHandler(onSubmitButtonClicked);
+            this.SubmitBtn.Image = Image.FromFile("../../Resources/save.png");
+            this.SubmitBtn.ImageAlign = ContentAlignment.MiddleLeft;
+            this.right.Controls.Add(this.SubmitBtn);
         }
 
         /**

@@ -16,8 +16,11 @@ namespace Detyra___EPacient.Controllers.Doctor {
 
         private Models.Reservation reservationModel;
         private Models.Reservation selectedReservation;
+        private Models.Prescription selectedPrescription;
         private Models.Doctor doctorModel;
         private Models.Medicament medicamentModel;
+        private Models.Prescription prescriptionModel;
+        private Models.PrescriptionMedicament prescriptionMedicamentModel;
         private List<Models.Reservation> reservations;
         private List<Models.Medicament> medicaments;
 
@@ -26,6 +29,8 @@ namespace Detyra___EPacient.Controllers.Doctor {
             this.reservationModel = new Models.Reservation();
             this.doctorModel = new Models.Doctor();
             this.medicamentModel = new Models.Medicament();
+            this.prescriptionModel = new Models.Prescription();
+            this.prescriptionMedicamentModel = new Models.PrescriptionMedicament();
         }
 
         /**
@@ -81,6 +86,8 @@ namespace Detyra___EPacient.Controllers.Doctor {
             try {
                 Cursor.Current = Cursors.WaitCursor;
 
+                this.handleResetButton();
+
                 var selectedRow = this.view.ReservationsTable.DataGrid.SelectedRows.Count > 0
                     ? this.view.ReservationsTable.DataGrid.SelectedRows[0]
                     : null;
@@ -88,7 +95,7 @@ namespace Detyra___EPacient.Controllers.Doctor {
                 if (selectedRow != null) {
                     int id = (int) selectedRow.Cells[0].Value;
 
-                    this.reservations.ForEach((item) => {
+                    this.reservations.ForEach(async (item) => {
                         if (item.Id == id) {
                             this.selectedReservation = item;
                             this.view.SelectedReservationLabel.Text = this.selectedReservation.Id.ToString();
@@ -101,6 +108,33 @@ namespace Detyra___EPacient.Controllers.Doctor {
                                 this.medicaments.ForEach((medicament) => {
                                     this.view.MedicamentsListBox.Items.Add(medicament);
                                 });
+                            }
+
+                            // Read prescription for selected reservation
+                            this.selectedPrescription = await prescriptionModel.readPrescriptionForReservation(
+                                this.selectedReservation.Id
+                            );
+
+                            // If there is an existing prescription, show its content
+                            if (this.selectedPrescription != null) {
+                                List<Models.PrescriptionMedicament> pm = await prescriptionMedicamentModel.readMedicamentsForPrescription(
+                                    this.selectedPrescription.Id
+                                );
+
+                                this.view.DescriptionTxtBox.ReadOnly = true;
+                                this.view.MedicamentsListBox.Enabled = false;
+                                this.view.SubmitBtn.Enabled = false;
+                                this.view.DescriptionTxtBox.Text = this.selectedPrescription.Description;
+
+                                for (int i = 0; i < this.view.MedicamentsListBox.Items.Count; i += 1) {
+                                    Models.Medicament m = (Models.Medicament) this.view.MedicamentsListBox.Items[i];
+
+                                    pm.ForEach((pmItem) => {
+                                        if (pmItem.Id == m.Id) {
+                                            this.view.MedicamentsListBox.SetSelected(i, true);
+                                        }
+                                    });
+                                }
                             }
                         }
                     });
@@ -278,6 +312,9 @@ namespace Detyra___EPacient.Controllers.Doctor {
          */
 
         public void handleResetButton() {
+            this.view.SubmitBtn.Enabled = true;
+            this.view.DescriptionTxtBox.ReadOnly = false;
+            this.view.MedicamentsListBox.Enabled = true;
             this.selectedReservation = null;
             this.view.SelectedReservationLabel.Text = "-";
             this.view.DescriptionTxtBox.Text = "";
