@@ -90,6 +90,69 @@ namespace Detyra___EPacient.Models {
             }
         }
 
+        /* Read all allergens for one patient */
+
+        public async Task<List<Allergen>> readAllergensForPatient(int patientId) {
+            try {
+                string query = $@"
+                        SELECT
+                            allergen.id as allergenId,
+                            allergen.patient_chart as allergenPatientChartId,
+                            medicament.id as medicamentId,
+                            medicament.name as medicamentName
+                        FROM 
+                            {DBTables.ALLERGEN} as allergen
+                            INNER JOIN
+                                {DBTables.MEDICAMENT} as medicament
+                                ON
+                                {DBTables.ALLERGEN}.medicament = {DBTables.MEDICAMENT}.id
+                            INNER JOIN
+                                {DBTables.PATIENT_CHART}
+                                ON
+                                {DBTables.PATIENT_CHART}.id = {DBTables.ALLERGEN}.patient_chart
+                        WHERE
+                            {DBTables.PATIENT_CHART}.patient = @patientId";
+
+                MySqlConnection connection = new MySqlConnection(DB.connectionString);
+                connection.Open();
+
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@patientId", patientId);
+                cmd.Prepare();
+
+                DbDataReader reader = await cmd.ExecuteReaderAsync();
+                List<Allergen> allergens = new List<Allergen>();
+
+                while (reader.Read()) {
+                    PatientChart chart = new PatientChart(
+                        reader.GetInt32(reader.GetOrdinal("allergenPatientChartId")),
+                        DateTime.Now,
+                        null
+                    );
+
+                    Medicament medicament = new Medicament(
+                        reader.GetInt32(reader.GetOrdinal("medicamentId")),
+                        reader.GetString(reader.GetOrdinal("medicamentName")),
+                        "",
+                        DateTime.Now,
+                        ""
+                    );
+
+                    Allergen allergen = new Allergen(
+                        reader.GetInt32(reader.GetOrdinal("allergenId")),
+                        chart,
+                        medicament
+                    );
+
+                    allergens.Add(allergen);
+                }
+
+                return allergens;
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+
         /* Create allergen */
 
         public async Task<long> createAllergen(

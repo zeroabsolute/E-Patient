@@ -17,6 +17,7 @@ namespace Detyra___EPacient.Controllers.Doctor {
         private Models.Reservation reservationModel;
         private Models.Reservation selectedReservation;
         private Models.Prescription selectedPrescription;
+        private Models.Allergen allergenModel;
         private Models.Doctor doctorModel;
         private Models.Medicament medicamentModel;
         private Models.Prescription prescriptionModel;
@@ -28,6 +29,7 @@ namespace Detyra___EPacient.Controllers.Doctor {
             this.view = view;
             this.reservationModel = new Models.Reservation();
             this.doctorModel = new Models.Doctor();
+            this.allergenModel = new Models.Allergen();
             this.medicamentModel = new Models.Medicament();
             this.prescriptionModel = new Models.Prescription();
             this.prescriptionMedicamentModel = new Models.PrescriptionMedicament();
@@ -130,7 +132,7 @@ namespace Detyra___EPacient.Controllers.Doctor {
                                     Models.Medicament m = (Models.Medicament) this.view.MedicamentsListBox.Items[i];
 
                                     pm.ForEach((pmItem) => {
-                                        if (pmItem.Id == m.Id) {
+                                        if (pmItem.Medicament == m.Id) {
                                             this.view.MedicamentsListBox.SetSelected(i, true);
                                         }
                                     });
@@ -324,9 +326,59 @@ namespace Detyra___EPacient.Controllers.Doctor {
          * Controller to handle submit button
          */
 
-        public void handleSubmitButton() {
+        public async void handleSubmitButton() {
             try {
+                if (this.selectedReservation == null) {
+                    string message = "Nuk është zgjedhur asnjë rezervim";
+                    MessageBox.Show(message, "Problem", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
+                    return;
+                }
+
+                // Extract selected medicaments
+                List<Models.Medicament> selectedMedicaments = new List<Models.Medicament>();
+
+                for (int i = 0; i < this.view.MedicamentsListBox.SelectedItems.Count; i += 1) {
+                    Models.Medicament medicament = (Models.Medicament) this.view.MedicamentsListBox.SelectedItems[i];
+                    selectedMedicaments.Add(medicament);
+                }
+
+                // Check for allergens
+                int patientId = this.selectedReservation.Patient.Id;
+                List<Models.Allergen> allergens = await this.allergenModel.readAllergensForPatient(patientId);
+                string patientAllergens = "";
+
+                if (allergens != null && allergens.Count > 0) {
+                    allergens.ForEach((item) => {
+                        for (int i = 0; i < selectedMedicaments.Count; i += 1) {
+                            if (item.Medicament.Id == selectedMedicaments[i].Id) {
+                                patientAllergens = $"{patientAllergens}{(patientAllergens.Length > 0 ? ", " : "")}{selectedMedicaments[i].Name}";
+                            }
+                        }
+                    });
+                }
+
+                if (patientAllergens.Length > 0) {
+                    string message = $"Pacienti është alergjik ndaj medikamenteve të mëposhtme:\n{patientAllergens}";
+                    MessageBox.Show(message, "Problem", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                    return;
+                }
+
+                // If no allergens, create prescription and prescription medicaments
+                long prescriptionId = await prescriptionModel.createPrescription(
+                    this.view.DescriptionTxtBox.Text,
+                    this.selectedReservation.Id
+                );
+                await prescriptionMedicamentModel.createPrescriptionMedicaments(
+                    prescriptionId,
+                    selectedMedicaments
+                );
+
+                string message2 = "Receta u shtua me sukses";
+                MessageBox.Show(message2, "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                this.handleTableRowSelection();
             } catch (Exception e) {
                 string caption = "Problem në shkrim";
                 MessageBox.Show(e.Message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);

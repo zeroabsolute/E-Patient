@@ -89,7 +89,7 @@ namespace Detyra___EPacient.Models {
 
                     int index = 0;
                     medicaments.ForEach((item) => {
-                        query = $"{query} (null, {prescriptionId}, {item.Id})";
+                        query = $"{query} (null, {prescriptionId}, {item.Id}, {Statuses.ACTIVE.Id})";
 
                         if (index != medicaments.Count - 1) {
                             query = $"{query},";
