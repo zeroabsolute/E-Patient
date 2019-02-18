@@ -17,6 +17,7 @@ namespace Detyra___EPacient.Controllers.Doctor {
         private Models.Reservation reservationModel;
         private Models.Reservation selectedReservation;
         private Models.Prescription selectedPrescription;
+        private List<Models.PrescriptionMedicament> selectedPrescriptionMedicaments;
         private Models.Allergen allergenModel;
         private Models.Doctor doctorModel;
         private Models.Medicament medicamentModel;
@@ -122,6 +123,7 @@ namespace Detyra___EPacient.Controllers.Doctor {
                                 List<Models.PrescriptionMedicament> pm = await prescriptionMedicamentModel.readMedicamentsForPrescription(
                                     this.selectedPrescription.Id
                                 );
+                                this.selectedPrescriptionMedicaments = pm;
 
                                 this.view.DescriptionTxtBox.ReadOnly = true;
                                 this.view.MedicamentsListBox.Enabled = false;
@@ -190,120 +192,114 @@ namespace Detyra___EPacient.Controllers.Doctor {
             }
         }
 
-        private void printPrescription(object sender, System.Drawing.Printing.PrintPageEventArgs e) {
+        private string medicamentsToString() {
+            if (this.selectedPrescriptionMedicaments != null && this.selectedPrescriptionMedicaments.Count > 0) {
+                string medicaments = "";
+
+                this.selectedPrescriptionMedicaments.ForEach((pm) => {
+                    this.medicaments.ForEach((m) => {
+                        if (pm.Medicament == m.Id) {
+                            medicaments = $"{medicaments}{(medicaments.Length > 0 ? ", " : "")}{m.Name}";
+                        }
+                    });
+                });
+
+                return medicaments;
+            } else {
+                return "-";
+            }
+        }
+
+        private void printPrescription(object sender, PrintPageEventArgs e) {
             var reservation = this.selectedReservation;
 
             e.Graphics.DrawString(
-                "EPacient - Rezervimi",
+                "EPacient - Recetë",
                 new Font(Fonts.primary, 20, FontStyle.Bold), 
                 Brushes.SaddleBrown, 
                 new Point(300, 100)
             );
             e.Graphics.DrawString(
-                "ID e rezervimit",
+                "ID e recetës",
                 new Font(Fonts.primary, 12, FontStyle.Regular),
                 Brushes.Gray, 
                 new Point(80, 200)
             );
             e.Graphics.DrawString(
-                $"{this.selectedReservation.Id}",
+                $"{this.selectedPrescription.Id}",
                 new Font(Fonts.primary, 12, FontStyle.Bold),
                 Brushes.Black,
-                new Point(500, 200)
+                new Point(300, 200)
             );
             e.Graphics.DrawString(
-                "Pacienti",
+                "Data",
                 new Font(Fonts.primary, 12, FontStyle.Regular),
                 Brushes.Gray,
                 new Point(80, 250)
             );
             e.Graphics.DrawString(
-                this.selectedReservation.Patient.FullName,
+                DateTime.Now.ToString(DateTimeFormats.SQ_DATE_TIME),
                 new Font(Fonts.primary, 12, FontStyle.Bold),
                 Brushes.Black,
-                new Point(500, 250)
+                new Point(300, 250)
             );
             e.Graphics.DrawString(
-                "Data dhe ora e fillimit",
+                "Pacienti",
                 new Font(Fonts.primary, 12, FontStyle.Regular),
-                Brushes.Gray, 
+                Brushes.Gray,
                 new Point(80, 300)
             );
             e.Graphics.DrawString(
-                this.selectedReservation.StartDateTime.ToString(DateTimeFormats.SQ_DATE_TIME),
+                this.selectedReservation.Patient.FullName,
                 new Font(Fonts.primary, 12, FontStyle.Bold),
                 Brushes.Black,
-                new Point(500, 300)
-            );
-            e.Graphics.DrawString(
-                $"Data dhe ora e përfundimit",
-                new Font(Fonts.primary, 12, FontStyle.Regular),
-                Brushes.Gray,
-                new Point(80, 350)
-            );
-            e.Graphics.DrawString(
-                this.selectedReservation.EndDateTime.ToString(DateTimeFormats.SQ_DATE_TIME),
-                new Font(Fonts.primary, 12, FontStyle.Bold),
-                Brushes.Black,
-                new Point(500, 350)
+                new Point(300, 300)
             );
             e.Graphics.DrawString(
                 "Mjeku",
                 new Font(Fonts.primary, 12, FontStyle.Regular),
                 Brushes.Gray,
-                new Point(80, 400)
+                new Point(80, 350)
             );
             e.Graphics.DrawString(
                 this.selectedReservation.Doctor.FullName,
                 new Font(Fonts.primary, 12, FontStyle.Bold),
                 Brushes.Black,
-                new Point(500, 400)
+                new Point(300, 350)
             );
             e.Graphics.DrawString(
-                "Infermieri",
+                "Medikamentet",
+                new Font(Fonts.primary, 12, FontStyle.Regular),
+                Brushes.Gray,
+                new Point(80, 400)
+            );
+            e.Graphics.DrawString(
+                this.medicamentsToString(),
+                new Font(Fonts.primary, 12, FontStyle.Bold),
+                Brushes.Black,
+                new Point(300, 400)
+            );
+            e.Graphics.DrawString(
+                "Përshkrimi",
                 new Font(Fonts.primary, 12, FontStyle.Regular),
                 Brushes.Gray,
                 new Point(80, 450)
             );
-            e.Graphics.DrawString(
-                this.selectedReservation.Nurse.FullName,
-                new Font(Fonts.primary, 12, FontStyle.Bold),
-                Brushes.Black,
-                new Point(500, 450)
-            );
-            e.Graphics.DrawString(
-                "Shërbimi",
-                new Font(Fonts.primary, 12, FontStyle.Regular),
-                Brushes.Gray,
-                new Point(80, 500)
-            );
-            e.Graphics.DrawString(
-                this.selectedReservation.Service.Name,
-                new Font(Fonts.primary, 12, FontStyle.Bold),
-                Brushes.Black,
-                new Point(500, 500)
-            );
-            e.Graphics.DrawString(
-                "Totali i kostos",
-                new Font(Fonts.primary, 14, FontStyle.Bold),
-                Brushes.Black,
-                new Point(80, 600)
-            );
-            e.Graphics.DrawString(
-                $"{this.selectedReservation.Service.Fee} Lekë",
-                new Font(Fonts.primary, 14, FontStyle.Bold),
-                Brushes.DarkBlue,
-                new Point(500, 600)
-            );
-            e.Graphics.DrawRectangle(
-                new Pen(Color.Black, 1), 
-                new Rectangle(50, 80, 730, 580)
-            );
+            for (int i = 0; i < this.view.DescriptionTxtBox.Text.Length; i += 1) {
+                if (i % 50 == 0 && (i / 50 > 0)) {
+                    e.Graphics.DrawString(
+                        this.view.DescriptionTxtBox.Text.Substring(i - 50, 50),
+                        new Font(Fonts.primary, 12, FontStyle.Bold),
+                        Brushes.Black,
+                        new Point(300, 400 + (50 * (i / 50)))
+                    );
+                }
+            }
         }
 
         public void handlePrintPrescription() {
-            if (this.selectedReservation == null) {
-                MessageBox.Show("Nuk ka rezervim të zgjedhur!", "Gabim", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            if (this.selectedReservation == null || this.selectedPrescription == null) {
+                MessageBox.Show("Nuk ka recetë të zgjedhur!", "Gabim", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             } else {
                 this.openPrintDialog();
             }
