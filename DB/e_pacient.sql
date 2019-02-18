@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 16, 2019 at 07:03 PM
+-- Generation Time: Feb 18, 2019 at 02:01 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -43,8 +43,7 @@ INSERT INTO `allergen` (`id`, `patient_chart`, `medicament`, `status`) VALUES
 (1, 1, 1, 0),
 (2, 1, 2, 0),
 (3, 3, 2, 0),
-(6, 3, 1, 0),
-(9, 2, 1, 0);
+(6, 3, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -408,7 +407,7 @@ CREATE TABLE `manager` (
 --
 
 INSERT INTO `manager` (`id`, `first_name`, `last_name`, `user`, `status`) VALUES
-(1, 'Manager', '1', 2, 0);
+(1, 'Manager', '1', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -475,7 +474,8 @@ CREATE TABLE `operator` (
 INSERT INTO `operator` (`id`, `first_name`, `last_name`, `date_of_birth`, `user`, `status`) VALUES
 (1, 'Operator', '1', '1970-01-01', 1, 0),
 (2, 'Operator', '2', '1983-01-01', 12, 0),
-(3, 'Operator', '3', '1990-01-21', 13, 0);
+(3, 'Operator', '3', '1990-01-21', 13, 0),
+(4, 'Operator', '4', '1990-02-17', 30, 1);
 
 -- --------------------------------------------------------
 
@@ -528,28 +528,42 @@ INSERT INTO `patient_chart` (`id`, `date_created`, `patient`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `receipt`
+-- Table structure for table `prescription`
 --
 
-CREATE TABLE `receipt` (
+CREATE TABLE `prescription` (
   `id` int(11) NOT NULL,
   `description` text NOT NULL,
   `reservation` int(11) NOT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `prescription`
+--
+
+INSERT INTO `prescription` (`id`, `description`, `reservation`, `status`) VALUES
+(1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse elementum lacus at nisi ultricies, eu gravida metus lobortis. Donec suscipit, nulla nec efficitur sagittis, augue nulla ullamcorper augue, et convallis mi felis in sem. Curabitur elementum mauris id neque fermentum mollis. Aliquam erat volutpat.', 2, 1);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `receipt_medicament`
+-- Table structure for table `prescription_medicament`
 --
 
-CREATE TABLE `receipt_medicament` (
+CREATE TABLE `prescription_medicament` (
   `id` int(11) NOT NULL,
-  `recipt` int(11) NOT NULL,
+  `prescription` int(11) NOT NULL,
   `medicament` int(11) NOT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `prescription_medicament`
+--
+
+INSERT INTO `prescription_medicament` (`id`, `prescription`, `medicament`, `status`) VALUES
+(1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -568,6 +582,15 @@ CREATE TABLE `reservation` (
   `doctor` int(11) NOT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `reservation`
+--
+
+INSERT INTO `reservation` (`id`, `start_datetime`, `end_datetime`, `service`, `created_by`, `patient`, `nurse`, `doctor`, `status`) VALUES
+(1, '2019-02-19 08:00:00', '2019-02-19 09:00:00', 1, 1, 1, 2, 13, 1),
+(2, '2019-02-19 09:30:00', '2019-02-19 10:00:00', 1, 1, 2, 2, 13, 1),
+(3, '2019-02-19 11:30:00', '2019-02-19 13:00:00', 1, 1, 3, 2, 13, 1);
 
 -- --------------------------------------------------------
 
@@ -656,17 +679,18 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `password`, `role`, `status`) VALUES
-(1, 'operator1@epacient.al', 'lOK3eARkD6HpVqWrR/XwqkaIPRZN481FQXias4ioJrEPR6bl', 1, 0),
-(2, 'manager1@epacient.al', 'hLRx8jFeExamFEOx+9VttCMJDbnugy6HuWGX2Zaa/ae48Kdo', 2, 0),
+(1, 'operator1@epacient.al', 'lOK3eARkD6HpVqWrR/XwqkaIPRZN481FQXias4ioJrEPR6bl', 1, 1),
+(2, 'manager1@epacient.al', 'hLRx8jFeExamFEOx+9VttCMJDbnugy6HuWGX2Zaa/ae48Kdo', 2, 1),
 (4, 'nurse1@epacient.al', 'hDwwlUS12iBOHb5U+hWottB+QmFJPL9cTdTebhbozKtfClhW', 3, 0),
 (12, 'operator2@epacient.al', 'WWK7/AaPdOBibFnDdtDqLy+CqiVFWlbuetT/pd8M4EnkPf6R', 1, 0),
 (13, 'operator3@epacient.al', '6fFx+jo6ay12hK1v5YiRrUY1TDx6dojiKHfpZuKeQXa9NXQE', 1, 0),
-(14, 'nurse2@epacient.al', '1qMCIFNnQRXgaZUJZpFFonU4ufYYJsMzxco6r3NKvV0rZsyB', 3, 0),
-(25, 'doctor1@epacient.al', 'Z5A7BZ0971plGwbCqe4GUk4MUQm5iPZbHsq8ZZ9O9OYe5UvV', 4, 0),
-(26, 'doctor2@epacient.al', 'nBHV83XgTd8nTWryCiKtHwzJNtu2TAGTH6JZ3160/jxFaKyz', 4, 0),
+(14, 'nurse2@epacient.al', '1qMCIFNnQRXgaZUJZpFFonU4ufYYJsMzxco6r3NKvV0rZsyB', 3, 1),
+(25, 'doctor1@epacient.al', 'Z5A7BZ0971plGwbCqe4GUk4MUQm5iPZbHsq8ZZ9O9OYe5UvV', 4, 1),
+(26, 'doctor2@epacient.al', 'nBHV83XgTd8nTWryCiKtHwzJNtu2TAGTH6JZ3160/jxFaKyz', 4, 1),
 (27, 'doctor3@epacient.al', 'ey3cnZBdMfZsCKB1zIWHo4vXBhakx1QVmdbZ/55amx/cWNyj', 4, 0),
 (28, 'doctor4@epacient.al', 'SmkmHpLwCx2FoX+vDTqZmc7XQ8rYTw1/tpq9FzVmT2BftWKg', 4, 0),
-(29, 'doctor5@epacient.al', 'uh92sNH2kudGfr0RAc8x9v4lJH6LMKOuANDqrnFWLjdT29TS', 4, 0);
+(29, 'doctor5@epacient.al', 'uh92sNH2kudGfr0RAc8x9v4lJH6LMKOuANDqrnFWLjdT29TS', 4, 0),
+(30, 'operator4@epacient.al', 'U6bvuERbSDKHWtMkIctS4jvP0NoVxHcKvW7OlxS7B8b/l5f6', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -700,7 +724,8 @@ CREATE TABLE `working_hours` (
 
 INSERT INTO `working_hours` (`id`, `monday_start_time`, `monday_end_time`, `tuesday_start_time`, `tuesday_end_time`, `wednesday_start_time`, `wednesday_end_time`, `thursday_start_time`, `thursday_end_time`, `friday_start_time`, `friday_end_time`, `saturday_start_time`, `saturday_end_time`, `sunday_start_time`, `sunday_end_time`, `employee`, `status`) VALUES
 (5, '2019-01-23 02:00:00', '2019-01-23 10:00:00', '2019-01-23 20:00:00', '2019-01-23 04:00:00', '2019-01-23 00:00:00', '2019-01-23 00:00:00', '2019-01-23 00:00:00', '2019-01-23 00:00:00', '2019-01-23 00:00:00', '2019-01-23 00:00:00', '2019-01-23 00:00:00', '2019-01-23 00:00:00', '2019-01-23 00:00:00', '2019-01-23 00:00:00', 3, 0),
-(6, '2019-02-01 08:00:00', '2019-02-01 16:00:00', '2019-02-01 08:00:00', '2019-02-01 16:00:00', '2019-02-01 08:00:00', '2019-02-01 16:00:00', '2019-02-01 08:00:00', '2019-02-01 16:00:00', '2019-02-01 08:00:00', '2019-02-01 16:00:00', '2019-02-01 08:00:00', '2019-02-01 16:00:00', '2019-02-01 08:00:00', '2019-02-01 16:00:00', 2, 0);
+(6, '2019-02-01 08:00:00', '2019-02-01 16:00:00', '2019-02-01 08:00:00', '2019-02-01 16:00:00', '2019-02-01 08:00:00', '2019-02-01 16:00:00', '2019-02-01 08:00:00', '2019-02-01 16:00:00', '2019-02-01 08:00:00', '2019-02-01 16:00:00', '2019-02-01 08:00:00', '2019-02-01 16:00:00', '2019-02-01 08:00:00', '2019-02-01 16:00:00', 2, 0),
+(7, '2019-02-17 04:00:00', '2019-02-17 12:00:00', '2019-02-17 05:00:00', '2019-02-17 13:00:00', '2019-02-17 06:00:00', '2019-02-17 14:00:00', '2019-02-17 07:00:00', '2019-02-17 15:00:00', '2019-02-17 08:00:00', '2019-02-17 16:00:00', '2019-02-17 09:00:00', '2019-02-17 17:00:00', '2019-02-17 10:00:00', '2019-02-17 18:00:00', 13, 0);
 
 --
 -- Indexes for dumped tables
@@ -784,19 +809,19 @@ ALTER TABLE `patient_chart`
   ADD KEY `patient` (`patient`);
 
 --
--- Indexes for table `receipt`
+-- Indexes for table `prescription`
 --
-ALTER TABLE `receipt`
+ALTER TABLE `prescription`
   ADD PRIMARY KEY (`id`),
   ADD KEY `reservation` (`reservation`);
 
 --
--- Indexes for table `receipt_medicament`
+-- Indexes for table `prescription_medicament`
 --
-ALTER TABLE `receipt_medicament`
+ALTER TABLE `prescription_medicament`
   ADD PRIMARY KEY (`id`),
   ADD KEY `medicament` (`medicament`),
-  ADD KEY `recipt` (`recipt`);
+  ADD KEY `recipt` (`prescription`);
 
 --
 -- Indexes for table `reservation`
@@ -898,7 +923,7 @@ ALTER TABLE `nurse`
 -- AUTO_INCREMENT for table `operator`
 --
 ALTER TABLE `operator`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `patient`
@@ -913,22 +938,22 @@ ALTER TABLE `patient_chart`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `receipt`
+-- AUTO_INCREMENT for table `prescription`
 --
-ALTER TABLE `receipt`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `prescription`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `receipt_medicament`
+-- AUTO_INCREMENT for table `prescription_medicament`
 --
-ALTER TABLE `receipt_medicament`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `prescription_medicament`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -952,13 +977,13 @@ ALTER TABLE `service`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `working_hours`
 --
 ALTER TABLE `working_hours`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
@@ -1021,17 +1046,17 @@ ALTER TABLE `patient_chart`
   ADD CONSTRAINT `patient_chart_ibfk_1` FOREIGN KEY (`patient`) REFERENCES `patient` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `receipt`
+-- Constraints for table `prescription`
 --
-ALTER TABLE `receipt`
-  ADD CONSTRAINT `receipt_ibfk_1` FOREIGN KEY (`reservation`) REFERENCES `reservation` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `prescription`
+  ADD CONSTRAINT `prescription_ibfk_1` FOREIGN KEY (`reservation`) REFERENCES `reservation` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `receipt_medicament`
+-- Constraints for table `prescription_medicament`
 --
-ALTER TABLE `receipt_medicament`
-  ADD CONSTRAINT `receipt_medicament_ibfk_1` FOREIGN KEY (`medicament`) REFERENCES `medicament` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `receipt_medicament_ibfk_2` FOREIGN KEY (`recipt`) REFERENCES `receipt` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `prescription_medicament`
+  ADD CONSTRAINT `prescription_medicament_ibfk_1` FOREIGN KEY (`medicament`) REFERENCES `medicament` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `prescription_medicament_ibfk_2` FOREIGN KEY (`prescription`) REFERENCES `prescription` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `reservation`
