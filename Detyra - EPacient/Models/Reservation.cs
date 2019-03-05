@@ -344,7 +344,7 @@ namespace Detyra___EPacient.Models {
         }
 
         /**
-         * Method to read reservations for one doctor
+         * Method to read reservations for one nurse
          */
 
         public async Task<List<Reservation>> readReservationsForNurses(int nurseId) {

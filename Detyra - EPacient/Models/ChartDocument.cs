@@ -54,6 +54,7 @@ namespace Detyra___EPacient.Models {
                         WHERE
                             patient_chart = @chartId";
 
+
                 MySqlConnection connection = new MySqlConnection(DB.connectionString);
                 connection.Open();
 
@@ -87,8 +88,7 @@ namespace Detyra___EPacient.Models {
             } catch (Exception e) {
                 throw e;
             }
-        }
-
+        }     
         /* Create chart document */
 
         public async Task<long> createChartDocument(

@@ -10,14 +10,14 @@ using Detyra___EPacient.Constants;
 using Detyra___EPacient.Styles;
 using Detyra___EPacient.Views.Common;
 
-namespace Detyra___EPacient.Views.Nurse {
-    class Schedule {
+namespace Detyra___EPacient.Views.Operator {
+    class Chart {
         public Panel PreviousPanel { get; set; }
         public Panel Panel { get; set; }
 
         private NavigationBar header;
 
-        public Schedule(Panel previousPanel) {
+        public Chart (Panel previousPanel) {
             // Init previous panel
             this.PreviousPanel = previousPanel;
 
@@ -25,7 +25,7 @@ namespace Detyra___EPacient.Views.Nurse {
             this.Panel = new Panel();
             this.Panel.AutoSize = true;
             this.Panel.Location = new Point(0, 0);
-            this.Panel.Name = "scheduleMainPanel";
+            this.Panel.Name = "chartMainPanel";
             this.Panel.Size = new Size(Dimensions.PANEL_WIDTH, Dimensions.PANEL_HEIGHT);
             this.Panel.TabIndex = 0;
             this.Panel.BackColor = Colors.WHITE;
@@ -33,11 +33,11 @@ namespace Detyra___EPacient.Views.Nurse {
 
             // Init header
             this.header = new NavigationBar(
-                Colors.IMPERIAL_RED,
-                "Oraret",
+                Colors.PERSIAN_INDIGO,
+                "Kartela Mjekësore",
                 this.Panel,
                 this.PreviousPanel,
-                "../../Resources/nurse.png"
+                "../../Resources/operator.png"
             );
             this.Panel.Controls.Add(this.header.Panel);
         }

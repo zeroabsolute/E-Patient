@@ -12,13 +12,13 @@ namespace Detyra___EPacient.Views.Nurse {
         public User LoggedInUser { get; set; }
         public Panel Panel { get; set; }
         public Button Reservations { get; set; }
-        public Button Analysis { get; set; }
+        public Button AnalysisNurse { get; set; }
         public Button Schedule { get; set; }
         public Button LogOut { get; set; }
 
         public Schedule SchedulePanel { get; set; }
-        public Analysis AnalysisPanel { get; set; }
-        public ReservationsNurse ReservationsPanel { get; set; }
+        public AnalysisNurse AnalysisPanel { get; set; }
+        public ReservationsNurse ReservationsNursePanel { get; set; }
         public LogInPanel LogInPanel { get; set; }
 
         public const string SCHEDULE_BTN = "nurseScheduleBtn";
@@ -43,7 +43,7 @@ namespace Detyra___EPacient.Views.Nurse {
             this.Panel.Size = new Size(Dimensions.PANEL_WIDTH, Dimensions.PANEL_HEIGHT);
             this.Panel.TabIndex = 0;
             this.Panel.BackColor = Colors.WHITE;
-            this.Panel.Visible = false;
+            this.Panel.Visible = true;
 
             // Init picture box
             this.avatar = new PictureBox();
@@ -102,7 +102,7 @@ namespace Detyra___EPacient.Views.Nurse {
             this.Reservations.UseVisualStyleBackColor = true;
             this.Reservations.Font = new Font(Fonts.primary, 18, FontStyle.Bold);
             this.Reservations.ForeColor = Colors.WHITE;
-            this.Reservations.BackColor = Colors.POMEGRANATE;
+            this.Reservations.BackColor = Colors.SALMON_RED;
             this.Reservations.FlatStyle = FlatStyle.Flat;
             this.Reservations.Click += new EventHandler(onMenuButtonClicked);
 
@@ -111,24 +111,24 @@ namespace Detyra___EPacient.Views.Nurse {
             this.menuContainer.SetColumn(this.Reservations, 0);
 
             // Analysis
-            this.Analysis = new Button();
-            this.Analysis.Name = ANALYSIS_BTN;
-            this.Analysis.Text = "Analizat";
-            this.Analysis.Size = new Size(smallButtonWidth, buttonHeight);
-            this.Analysis.Image = Image.FromFile("../../Resources/description.png");
-            this.Analysis.ImageAlign = ContentAlignment.BottomCenter;
-            this.Analysis.TextAlign = ContentAlignment.MiddleCenter;
-            this.Analysis.TextImageRelation = TextImageRelation.ImageAboveText;
-            this.Analysis.UseVisualStyleBackColor = true;
-            this.Analysis.Font = new Font(Fonts.primary, 18, FontStyle.Bold);
-            this.Analysis.ForeColor = Colors.WHITE;
-            this.Analysis.BackColor = Colors.GUARDSMAN_RED;
-            this.Analysis.FlatStyle = FlatStyle.Flat;
-            this.Analysis.Click += new EventHandler(onMenuButtonClicked);
+            this.AnalysisNurse = new Button();
+            this.AnalysisNurse.Name = ANALYSIS_BTN;
+            this.AnalysisNurse.Text = "Analizat";
+            this.AnalysisNurse.Size = new Size(smallButtonWidth, buttonHeight);
+            this.AnalysisNurse.Image = Image.FromFile("../../Resources/description.png");
+            this.AnalysisNurse.ImageAlign = ContentAlignment.BottomCenter;
+            this.AnalysisNurse.TextAlign = ContentAlignment.MiddleCenter;
+            this.AnalysisNurse.TextImageRelation = TextImageRelation.ImageAboveText;
+            this.AnalysisNurse.UseVisualStyleBackColor = true;
+            this.AnalysisNurse.Font = new Font(Fonts.primary, 18, FontStyle.Bold);
+            this.AnalysisNurse.ForeColor = Colors.WHITE;
+            this.AnalysisNurse.BackColor = Colors.GUARDSMAN_RED;
+            this.AnalysisNurse.FlatStyle = FlatStyle.Flat;
+            this.AnalysisNurse.Click += new EventHandler(onMenuButtonClicked);
 
-            this.menuContainer.Controls.Add(this.Analysis);
-            this.menuContainer.SetRow(this.Analysis, 1);
-            this.menuContainer.SetColumn(this.Analysis, 1);
+            this.menuContainer.Controls.Add(this.AnalysisNurse);
+            this.menuContainer.SetRow(this.AnalysisNurse, 1);
+            this.menuContainer.SetColumn(this.AnalysisNurse, 1);
 
             // Log out
             this.LogOut = new Button();
@@ -156,12 +156,12 @@ namespace Detyra___EPacient.Views.Nurse {
            Schedule s,    
            LogInPanel l,
            ReservationsNurse r,
-           Analysis a
+           AnalysisNurse a
        ) {
             this.SchedulePanel = s;
             this.LogInPanel = l;
             this.AnalysisPanel = a;
-            this.ReservationsPanel = r;
+            this.ReservationsNursePanel = r;
         }
 
         /* Event handlers */

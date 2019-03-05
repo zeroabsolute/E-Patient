@@ -77,6 +77,9 @@
     <Compile Include="Controllers\Manager\EmergencyDoctorsController.cs" />
     <Compile Include="Controllers\Manager\TimetablesController.cs" />
     <Compile Include="Controllers\Manager\UsersController.cs" />
+    <Compile Include="Controllers\Nurse\NurseAnalysisController.cs" />
+    <Compile Include="Controllers\Nurse\NurseReservationsController.cs" />
+    <Compile Include="Controllers\Nurse\NurseScheduleController.cs" />
     <Compile Include="Controllers\Nurse\NurseMainController.cs" />
     <Compile Include="Controllers\Operator\OperatorMainController.cs" />
     <Compile Include="Controllers\Operator\PatientChartsController.cs" />
@@ -131,10 +134,19 @@
     <Compile Include="Views\Manager\DoctorInCharge\DoctorInCharge.cs" />
     <Compile Include="Views\Manager\Services\Services.cs" />
     <Compile Include="Views\Manager\Users\Users.cs" />
+    <Compile Include="Views\Nurse\Analysis\AddAnalysisForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Nurse\Analysis\AddAnalysisForm.Designer.cs">
+      <DependentUpon>AddAnalysisForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Nurse\Analysis\AnalysisTable.cs" />
+    <Compile Include="Views\Nurse\Analysis\PatientsTable.cs" />
     <Compile Include="Views\Nurse\NurseMainPanel.cs" />
-    <Compile Include="Views\Nurse\Analysis.cs" />
-    <Compile Include="Views\Nurse\ReservationsNurse.cs" />
-    <Compile Include="Views\Nurse\Schedule.cs" />
+    <Compile Include="Views\Nurse\Analysis\Analysis.cs" />
+    <Compile Include="Views\Nurse\ReservationsNurse\ReservationsNurse.cs" />
+    <Compile Include="Views\Nurse\ReservationsNurse\ReservationsTableNurse.cs" />
+    <Compile Include="Views\Nurse\ScheduleNurse\Schedule.cs" />
     <Compile Include="Views\Operator\PatientCharts\AddAllergensForm.cs">
       <SubType>Form</SubType>
     </Compile>

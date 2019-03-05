@@ -61,8 +61,8 @@ namespace Detyra___EPacient {
 
             NurseMainPanel nurseMainPanel = new NurseMainPanel();
             Schedule nurseSchedulePanel = new Schedule(nurseMainPanel.Panel);
-            ReservationsNurse nurseReservationsPanel = new ReservationsNurse(nurseMainPanel.Panel);
-            Analysis nurseAnalysisPanel = new Analysis(nurseMainPanel.Panel);
+            ReservationsNurse nurseReservationsNursePanel = new ReservationsNurse(nurseMainPanel.Panel);
+            AnalysisNurse nurseAnalysisPanel = new AnalysisNurse(nurseMainPanel.Panel);
 
             logInPanel.initNextPanels(
                 managerMainPanel,
@@ -99,7 +99,7 @@ namespace Detyra___EPacient {
             nurseMainPanel.initNextPanels(
                   nurseSchedulePanel,
                   logInPanel,
-                  nurseReservationsPanel,
+                  nurseReservationsNursePanel,
                   nurseAnalysisPanel
               );
 
@@ -142,7 +142,7 @@ namespace Detyra___EPacient {
             this.Controls.Add(nurseMainPanel.Panel);
             this.Controls.Add(nurseSchedulePanel.Panel);
             this.Controls.Add(nurseAnalysisPanel.Panel);
-            this.Controls.Add(nurseReservationsPanel.Panel);
+            this.Controls.Add(nurseReservationsNursePanel.Panel);
         }
 
         #endregion

@@ -11,13 +11,13 @@ using Detyra___EPacient.Styles;
 using Detyra___EPacient.Views.Common;
 
 namespace Detyra___EPacient.Views.Nurse {
-    class Analysis {
+    class ReservationsNurse {
         public Panel PreviousPanel { get; set; }
         public Panel Panel { get; set; }
 
         private NavigationBar header;
 
-        public Analysis(Panel previousPanel) {
+        public ReservationsNurse(Panel previousPanel) {
             // Init previous panel
             this.PreviousPanel = previousPanel;
 
@@ -25,7 +25,7 @@ namespace Detyra___EPacient.Views.Nurse {
             this.Panel = new Panel();
             this.Panel.AutoSize = true;
             this.Panel.Location = new Point(0, 0);
-            this.Panel.Name = "analysisMainPanel";
+            this.Panel.Name = "reservationsnurseMainPanel";
             this.Panel.Size = new Size(Dimensions.PANEL_WIDTH, Dimensions.PANEL_HEIGHT);
             this.Panel.TabIndex = 0;
             this.Panel.BackColor = Colors.WHITE;
@@ -34,10 +34,10 @@ namespace Detyra___EPacient.Views.Nurse {
             // Init header
             this.header = new NavigationBar(
                 Colors.IMPERIAL_RED,
-                "Analizat",
+                "Rezervimet",
                 this.Panel,
                 this.PreviousPanel,
-                "../../Resources/surgeon.png"
+                "../../Resources/nurse.png"
             );
             this.Panel.Controls.Add(this.header.Panel);
         }
