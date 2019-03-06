@@ -477,6 +477,7 @@ namespace Detyra___EPacient.Controllers.Operator {
                     this.counter += 1;
                 }
 
+                this.counter = 0;
                 Cursor.Current = Cursors.Arrow;
             } catch (Exception ex) {
                 string caption = "Problem në lexim";
