@@ -112,6 +112,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Styles\Colors.cs" />
     <Compile Include="Styles\Fonts.cs" />
+    <Compile Include="Views\Common\StaticComboBox.cs" />
     <Compile Include="Views\Common\DynamicComboBox.cs" />
     <Compile Include="Views\Doctor\Prescriptions\Prescription.cs" />
     <Compile Include="Views\Doctor\Prescriptions\ReservationsTable.cs" />
@@ -191,6 +192,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\Nurse\Analysis\AddAnalysisForm.resx">
+      <DependentUpon>AddAnalysisForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Operator\PatientCharts\AddAllergensForm.resx">
       <DependentUpon>AddAllergensForm.cs</DependentUpon>
     </EmbeddedResource>

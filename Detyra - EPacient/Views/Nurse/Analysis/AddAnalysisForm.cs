@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Detyra___EPacient.Constants;
+using Detyra___EPacient.Controllers.Operator;
+using Detyra___EPacient.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,10 +10,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Detyra___EPacient.Constants;
+
 using Detyra___EPacient.Controllers.Nurse;
 
 namespace Detyra___EPacient.Views.Nurse.Analysis {
+
     public partial class AddAnalysisForm : Form {
         private AnalysisController controller;
         private string url;
@@ -22,9 +26,7 @@ namespace Detyra___EPacient.Views.Nurse.Analysis {
 
         public void onFormLoad(object sender, EventArgs e) {
             this.docTypesComboBox.comboBox.DataSource = new List<string> {
-                ChartDocTypes.GRAFI,
                 ChartDocTypes.ANALIZE,
-                ChartDocTypes.OTHER
             };
         }
 

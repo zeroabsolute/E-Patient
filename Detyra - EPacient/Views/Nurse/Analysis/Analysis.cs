@@ -172,7 +172,7 @@ namespace Detyra___EPacient.Views.Nurse {
             );
             Size analysisTableSize = new Size(
                 this.rightPanelWidth - (2 * Dimensions.PANEL_CARD_PADDING_HORIZONTAL),
-                180
+                this.tableHeight - 150
             );
 
             this.AnalysisTable = new AnalysisTable(

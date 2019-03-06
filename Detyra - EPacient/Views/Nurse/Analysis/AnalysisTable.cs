@@ -44,7 +44,7 @@ namespace Detyra___EPacient.Views.Nurse {
             DataGrid.RowTemplate.Height = 40;
             DataGrid.ColumnHeadersHeight = 40;
             DataGrid.BackgroundColor = Colors.ALTO;
-            DataGrid.ColumnCount = 5;
+            DataGrid.ColumnCount = 4;
             DataGrid.Columns[0].Name = "ID";
             DataGrid.Columns[1].Name = "Emri";
             DataGrid.Columns[2].Name = "URL";
