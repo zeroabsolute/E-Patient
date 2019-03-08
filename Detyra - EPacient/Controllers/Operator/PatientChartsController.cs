@@ -198,13 +198,13 @@ namespace Detyra___EPacient.Controllers.Operator {
             try {
                 Cursor.Current = Cursors.WaitCursor;
 
-                await chartDocumentModel.createChartDocument(
+                /*await chartDocumentModel.createChartDocument(
                     name,
                     type,
                     url,
                     DateTime.Now.ToString(DateTimeFormats.MYSQL_DATE_TIME),
                     this.selectedChart.Id
-                );
+                );*/
 
                 this.addDocsForm.Hide();
                 await this.readPatientChartDocs(this.selectedChart.Id);

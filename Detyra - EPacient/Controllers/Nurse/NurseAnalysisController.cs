@@ -162,16 +162,20 @@ namespace Detyra___EPacient.Controllers.Nurse {
             this.addAnalysisForm.Show();
         }
 
-        public async void handleDocSubmit(string url, string name, string type) {
+        public async void handleDocSubmit(string url, string name, string type, byte[] file, int fileSize) {
             try {
                 Cursor.Current = Cursors.WaitCursor;
+
+
 
                 await chartDocumentModel.createChartDocument(
                     name,
                     type,
                     url,
                     DateTime.Now.ToString(DateTimeFormats.MYSQL_DATE_TIME),
-                    this.selectedChart.Id
+                    this.selectedChart.Id,
+                    file,
+                    fileSize
                 );
 
                 this.addAnalysisForm.Hide();

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Detyra___EPacient.Controllers.Nurse;
+using System.IO;
 
 namespace Detyra___EPacient.Views.Nurse.Analysis {
 
@@ -44,10 +45,19 @@ namespace Detyra___EPacient.Views.Nurse.Analysis {
                 return;
             }
 
+            byte[] file;
+            using (var stream = new FileStream(this.url, FileMode.Open, FileAccess.Read)) {
+                using (var reader = new BinaryReader(stream)) {
+                    file = reader.ReadBytes((int) stream.Length);
+                }
+            }
+
             this.controller.handleDocSubmit(
                 this.url,
                 this.nameTxtBox.Text,
-                this.docTypesComboBox.comboBox.SelectedValue.ToString()
+                this.docTypesComboBox.comboBox.SelectedValue.ToString(),
+                file,
+                file.Length
             );
         }
 
